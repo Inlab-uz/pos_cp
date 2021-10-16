@@ -66,6 +66,13 @@ Route::group(['middleware' => 'auth'],function (){
     Route::post('/api-user/update/{id}',[ApiUserController::class,'update'])->name('api-userUpdate');
     Route::delete('/api-user/delete/{id}',[ApiUserController::class,'destroy'])->name('api-userDestroy');
     Route::delete('/api-user-token/delete/{id}',[ApiUserController::class,'destroyToken'])->name('api-tokenDestroy');
+
+    Route::get('/category', 'Blade\CategoryController@index');
+    Route::get('/category/add', 'Blade\CategoryController@add');
+    Route::post('/category/store', 'Blade\CategoryController@store');
+    Route::get('/category/edit', 'Blade\CategoryController@edit');
+    Route::post('/category/update', 'Blade\CategoryController@update');
+
 });
 
 // Change language session condition

@@ -86,6 +86,14 @@
                 </li>
             </ul>
         </li>
+        <li class="nav-item">
+            <a href="/category" class="nav-link {{ Request::is('category*') ? "active":'' }}">
+                <i class="fa fa-list-alt" aria-hidden="true"></i>
+                <p>
+                    Category
+                </p>
+            </a>
+        </li>
     </ul>
 {{--    @can('card.main')--}}
 

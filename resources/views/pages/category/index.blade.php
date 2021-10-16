@@ -32,6 +32,7 @@
                                     <th>Company</th>
                                     <th>Logo</th>
                                     <th>User</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -39,13 +40,27 @@
                                 $index = 1
                                 @endphp
                                 @foreach($categories as $c)
-                                    <tr>
-                                        <td>{{$index++}}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                    <tr style=" align-items: center">
+                                        <td style="vertical-align: middle;">{{$index++}}</td>
+                                        <td style="vertical-align: middle;">{{$c->name}}</td>
+                                        <td style="vertical-align: middle;">{{$c->parent->name ?? ''}}</td>
+                                        <td style="vertical-align: middle;">{{$c->company->name ?? ''}}</td>
+                                        <td width="100px">
+                                            <img src="/category/img/{{$c->id}}" alt="" style="max-width: 100px">
+                                        </td>
+                                        <td style="vertical-align: middle;">
+                                            {{$c->user->name}}
+                                        </td>
+                                        <td width="100px" style="vertical-align: middle;">
+                                            <div class="btn-group">
+                                                <a href="/category/view/{{$c->id}}" class="btn btn-info btn-flat">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a href="/category/edit/{{$c->id}}" class="btn btn-info btn-flat">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

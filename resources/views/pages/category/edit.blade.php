@@ -20,14 +20,14 @@
                             </div>
                         </div>
                         <!-- ./card-header -->
-                        <form method="POST" action="/category/store" enctype="multipart/form-data">
+                        <form method="POST" action="/category/update/{{$cat->id}}" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="categoryName">Name</label>
-                                            <input type="text" class="form-control" id="categoryName" name="Category[name]" placeholder="Name of category">
+                                            <input type="text" class="form-control" id="categoryName" name="Category[name]" placeholder="Name of category" value="{{$cat->name}}">
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -36,7 +36,7 @@
                                             <select class="form-control" name="Category[parent_id]" id="categoryParent">
                                                 <option value="">Select Parent</option>
                                                 @foreach($categories as $c)
-                                                    <option value="{{$c->id}}">{{$c->name}}</option>
+                                                    <option value="{{$c->id}}" {{$c->id == $cat->parent_id ? "selected" : ""}}>{{$c->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>

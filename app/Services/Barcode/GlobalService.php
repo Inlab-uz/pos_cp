@@ -6,7 +6,8 @@ class GlobalService
 {
 
 
-    public function search($barcode){
+    public function search($barcode)
+    {
 
 
         $curl = curl_init();
@@ -25,7 +26,16 @@ class GlobalService
         $response = curl_exec($curl);
 
         curl_close($curl);
-        echo $response;
+        if ($response == null) {
+            return false;
+        } else {
+            return [
+                "title" => $response["products"][0]["title"],
+                "brand" => $response["products"][0]["brand"],
+                "images" => $response["products"][0]["images"],
+
+            ];
+        }
 
 
     }

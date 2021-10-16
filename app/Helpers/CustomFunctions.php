@@ -25,8 +25,17 @@ if (!function_exists('apiUserName')) {
 
 if (!function_exists('abort_if_forbidden')) {
     function abort_if_forbidden(string $permission,$message = "You have not permission to this page!"):void
+    { if (env('PERMISSION_WRITABLE',false))
     {
-        abort_if(is_null(auth()->user()) || !auth()->user()->can($permission),403,$message);
+        @\Spatie\Permission\Models\Permission::firstOrCreate([
+            'name' => $permission,
+        ]);
+    }
+        abort_if (
+            is_null(auth()->user()) || !auth()->user()->can($permission),
+            403,
+            $message
+        );
     }
 }
 

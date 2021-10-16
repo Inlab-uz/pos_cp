@@ -70,8 +70,11 @@ Route::group(['middleware' => 'auth'],function (){
     Route::get('/category', 'Blade\CategoryController@index');
     Route::get('/category/add', 'Blade\CategoryController@add');
     Route::post('/category/store', 'Blade\CategoryController@store');
-    Route::get('/category/edit', 'Blade\CategoryController@edit');
-    Route::post('/category/update', 'Blade\CategoryController@update');
+    Route::get('/category/edit/{id}', 'Blade\CategoryController@edit');
+    Route::post('/category/update/{id}', 'Blade\CategoryController@update');
+    Route::get('/category/img/{resource}', 'Blade\CategoryController@img');
+    Route::get('/category/view/{id}', 'Blade\CategoryController@view');
+
 
 });
 

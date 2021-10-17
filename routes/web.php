@@ -90,6 +90,8 @@ Route::get('/language/{lang}',function ($lang){
     return redirect()->back();
 });
 
+Route::get('/generate-barcode', [\App\Http\Controllers\HomeController::class, 'barcodeTest'])->name('generate.barcode');
+
 /*
 |--------------------------------------------------------------------------
 | This is the end of Blade (front-end) Routes

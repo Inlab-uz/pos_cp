@@ -45,15 +45,15 @@
                                         <td style="vertical-align: middle;">{{$company->user_id}}</td>
                                         <td style="vertical-align: middle;">{{$company->name}}</td>
                                         <td width="100px">
-                                            <img src="/company/{{$company->logo}}" alt="" style="max-width: 100px">
+                                            <img src="{{ route('companyImg',$company->id) }}" alt="" style="max-width: 100px">
                                         </td>
                                         <td style="vertical-align: middle;">{{$company->description}}</td>
                                         <td width="100px" style="vertical-align: middle;">
                                             <div class="btn-group">
-                                                <a href="{{ route('companyShow') }}" class="btn btn-info btn-flat">
+                                                <a href="{{ route('companyView',$company->id) }}" class="btn btn-info btn-flat">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                                <a href="/category/edit/{{$company->id}}" class="btn btn-info btn-flat">
+                                                <a href="{{ route('companyEdit',$company->id) }}" class="btn btn-info btn-flat">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                             </div>

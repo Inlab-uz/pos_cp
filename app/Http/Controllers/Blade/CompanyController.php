@@ -44,6 +44,53 @@ class CompanyController extends Controller
         return redirect()->route('companyIndex')->with("success","Saved!");
     }
 
+    public function img($resource){
+        dd('1234');
+        $com = Company::where('id', $resource)->first();
+        return response()->download(storage_path().($com->logo ?? "/category/not-found.png"));
+    }
 
+    public function view($id){
+        $company = Company::where('id', $id)->firstOrFail();
+        return view('pages.company.view', [
+            'company'=>$company,
+        ]);
+    }
+
+    public function edit($id){
+        $company = Company::where('id', $id)->firstOrFail();
+        return view('pages.company.edit', [
+            'company'=>$company,
+        ]);
+    }
+
+    public function update(Request $request,$id){
+        $v = Validator::make($request->all(), [
+            'Company' => 'required|array',
+            'Company.name' => 'required',
+        ]);
+        if($v->failed()){
+            error_message($v->errors()->first());
+            return redirect()->back();
+        }
+        $file_name = null;
+        if($request->file('Category.logo')){
+            $name = Str::random(40);
+
+            $file_name = "/" . $name . "." . $request->file('Category.logo')->extension();
+            $request->file('Category.logo')->move(storage_path('category') , $file_name);
+        }
+
+
+        Company::where('id', $id)->update(
+            [
+                'name' => $request->Company['name'],
+                'description' => $request->Company['description'],
+            ]
+            +
+            ($file_name ? ['logo' => "/company/" . $file_name] : [])
+        );
+        return redirect()->route('companyIndex')->with("success","Update!");
+    }
 
 }

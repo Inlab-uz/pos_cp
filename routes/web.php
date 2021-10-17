@@ -37,7 +37,17 @@ Route::group(['middleware' => 'auth'],function (){
     Route::get('/company/index',[\App\Http\Controllers\Blade\CompanyController::class,'index'])->name('companyIndex');
     Route::get('/company/create',[\App\Http\Controllers\Blade\CompanyController::class,'create'])->name('companyCreate');
     Route::post('/company/store',[\App\Http\Controllers\Blade\CompanyController::class,'store'])->name('companyStore');
-    Route::get('/company/edit',[\App\Http\Controllers\Blade\CompanyController::class,'edit'])->name('companyEdit');
+    Route::get('/company/img',[\App\Http\Controllers\Blade\CompanyController::class,'img'])->name('companyImg');
+    Route::get('/company/edit/{id}',[\App\Http\Controllers\Blade\CompanyController::class,'edit'])->name('companyEdit');
+    Route::post('/company/update/{id}',[\App\Http\Controllers\Blade\CompanyController::class,'update'])->name('companyUpdate');
+    Route::get('/company/view/{id}',[\App\Http\Controllers\Blade\CompanyController::class,'view'])->name('companyView');
+    // Branch
+    Route::get('/branch/index',[\App\Http\Controllers\Blade\BranchController::class,'index'])->name('branchIndex');
+    Route::get('/branch/create',[\App\Http\Controllers\Blade\BranchController::class,'create'])->name('branchCreate');
+    Route::post('/branch/store',[\App\Http\Controllers\Blade\BranchController::class,'store'])->name('branchStore');
+    Route::get('/branch/edit/{id}',[\App\Http\Controllers\Blade\BranchController::class,'edit'])->name('branchEdit');
+    Route::post('/branch/update/{id}',[\App\Http\Controllers\Blade\BranchController::class,'update'])->name('branchUpdate');
+    Route::get('/branch/view/{id}',[\App\Http\Controllers\Blade\BranchController::class,'view'])->name('branchView');
 
     Route::post('/import/barcode',[\App\Http\Controllers\ImportController::class,'getbarcode'])->name('getBarCode');
     // there should be graphics, diagrams about total conditions

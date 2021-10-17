@@ -21,6 +21,13 @@
             </a>
         </li>
 
+        <li class="nav-item">
+            <a href="{{ route('branchIndex') }}" class="nav-link {{ Request::is('branch*') ? "active":'' }}">
+                <i class="fas fa-compact-disc"></i>
+                <p>Branch</p>
+            </a>
+        </li>
+
         @canany([
           'permission.show',
           'roles.show',

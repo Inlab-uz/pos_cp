@@ -27,6 +27,22 @@ class Import extends Model
         'updated_at',
     ];
 
+    public static $createRules = [
+        'product_id'=>'required',
+        'quantity'=>'required',
+        'price'=>'required',
+        'sale_price'=>'required',
+
+    ];
+
+    public static $updateRules = [
+        'product_id'=>'required',
+        'quantity'=>'required',
+        'price'=>'required',
+        'sale_price'=>'required',
+
+    ];
+
     public function category(){
         return $this->belongsTo();
     }

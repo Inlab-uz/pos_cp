@@ -3,6 +3,18 @@
 
     <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
         @canany([
+                'import.view',
+                'import.create',
+            ])
+            <li class="nav-item">
+                <a href="{{ route('importIndex') }}" class="nav-link {{ Request::is('import*') ? "active":'' }}">
+                    <i class="fas fa-wind"></i>
+                    <p>Import</p>
+                </a>
+            </li>
+        @endcan
+
+        @canany([
           'permission.show',
           'roles.show',
           'user.show'

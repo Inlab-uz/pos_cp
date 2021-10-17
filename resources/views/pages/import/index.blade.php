@@ -59,7 +59,7 @@
                                         <td>{{ $import->price }}</td>
                                         <td>{{ $import->sale_price }}</td>
                                         <td>{{ $import->nds }}</td>
-                                        <td>{{ date("y-m-d", strtotime($import->date_produce)) }} - {{ date("y-m-d", strtotime($import->date_expire)) }}</td>
+                                        <td>{{ date("y-m-d", strtotime($import->date_produce)) }}/{{ date("y-m-d", strtotime($import->date_expire)) }}</td>
                                         <th>
                                             <a style="margin-left: 10px" href="{{route('importEdit',$import->id)}}" class="float-left fa fa-edit btn btn-info btn-sm" ></a>
                                         </th>

@@ -19,4 +19,16 @@ class Category extends Model
         'status',
         'user_id',
     ];
+
+    public function parent(){
+        return $this->hasOne(self::class, 'id', 'parent_id');
+    }
+
+    public function user(){
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function child(){
+        return self::where('parent_id', $this->id)->get();
+    }
 }

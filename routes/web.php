@@ -28,7 +28,18 @@ Route::get('/', function (){
 
 // Web pages
 Route::group(['middleware' => 'auth'],function (){
+    // Import
+    Route::get('/import/index',[\App\Http\Controllers\ImportController::class,'index'])->name('importIndex');
+    Route::get('/import/create',[\App\Http\Controllers\ImportController::class,'create'])->name('importCreate');
+    Route::post('/import/store',[\App\Http\Controllers\ImportController::class,'store'])->name('importStore');
+    Route::get('/import/edit',[\App\Http\Controllers\ImportController::class,'edit'])->name('importEdit');
+    // Company
+    Route::get('/company/index',[\App\Http\Controllers\Blade\CompanyController::class,'index'])->name('companyIndex');
+    Route::get('/company/create',[\App\Http\Controllers\Blade\CompanyController::class,'create'])->name('companyCreate');
+    Route::post('/company/store',[\App\Http\Controllers\Blade\CompanyController::class,'store'])->name('companyStore');
+    Route::get('/company/edit',[\App\Http\Controllers\Blade\CompanyController::class,'edit'])->name('companyEdit');
 
+    Route::post('/import/barcode',[\App\Http\Controllers\ImportController::class,'getbarcode'])->name('getBarCode');
     // there should be graphics, diagrams about total conditions
     Route::get('/home', [HomeController::class,'index'])->name('home');
 

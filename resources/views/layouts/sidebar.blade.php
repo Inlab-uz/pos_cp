@@ -14,6 +14,13 @@
             </li>
         @endcan
 
+        <li class="nav-item">
+            <a href="{{ route('companyIndex') }}" class="nav-link {{ Request::is('company*') ? "active":'' }}">
+                <i class="fas fa-compact-disc"></i>
+                <p>Company</p>
+            </a>
+        </li>
+
         @canany([
           'permission.show',
           'roles.show',

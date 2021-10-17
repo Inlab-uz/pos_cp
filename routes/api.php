@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Mobile\AuthController;
+use App\Http\Controllers\Mobile\ManagerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiAuthController;
@@ -29,4 +31,16 @@ Route::group(['middleware' => 'ajax.check'],function (){
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group(['prefix' => 'mobile'],function (){
+    Route::post('/register',[AuthController::class,'register']);
+    Route::post('/login',[AuthController::class,'login'])->middleware('auth:sanctum');
+});
+Route::group(['prefix' => 'mobile','middleware' => 'auth:sanctum'],function (){
+    Route::get('/get-category',[ManagerController::class,'getCategory']);
+    Route::post('/get-product-by-category',[ManagerController::class,'getProductByCategory']);
+    Route::post('/get-product-by-barcode',[ManagerController::class,'getProductByBarCode']);
+    Route::post('/add-product',[ManagerController::class,'addProduct']);
+    Route::post('/update-product',[ManagerController::class,'updateProduct']);
 });

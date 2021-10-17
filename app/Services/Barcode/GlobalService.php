@@ -2,7 +2,7 @@
 
 namespace App\Services\Barcode;
 
-use App\Models\BarcodeAPI\Product;
+use App\Models\BarcodeAPI\ProductGlobal;
 
 class GlobalService
 {
@@ -11,7 +11,7 @@ class GlobalService
     public function search($barcode)
     {
 
-        $product = Product::where("barcode_number", $barcode)->first();
+        $product = ProductGlobal::where("barcode_number", $barcode)->first();
 
         if ($product != null) {
             return self::productB($barcode);
@@ -41,7 +41,7 @@ class GlobalService
             $products = $response["products"];
             if (count($products) > 0)
                 foreach ($products as $p) {
-                    $product = new Product();
+                    $product = new ProductGlobal();
                     $product->barcode_number = $p["barcode_number"];
                     $product->barcode_formats = $p["barcode_formats"];
                     $product->title = $p["title"];
@@ -77,7 +77,7 @@ class GlobalService
 
     static function productB($barcode)
     {
-        $products = Product::where("barcode_number", $barcode)->get();
+        $products = ProductGlobal::where("barcode_number", $barcode)->get();
         return response()->json(["products" => $products]);
     }
 }

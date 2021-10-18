@@ -89,9 +89,6 @@ Route::group(['middleware' => 'auth'],function (){
     Route::delete('/api-user/delete/{id}',[ApiUserController::class,'destroy'])->name('api-userDestroy');
     Route::delete('/api-user-token/delete/{id}',[ApiUserController::class,'destroyToken'])->name('api-tokenDestroy');
 
-<<<<<<< HEAD
-    Route::resource('companies',CompanyController::class);
-=======
     Route::get('/category', 'Blade\CategoryController@index');
     Route::get('/category/add', 'Blade\CategoryController@add');
     Route::post('/category/store', 'Blade\CategoryController@store');
@@ -100,8 +97,6 @@ Route::group(['middleware' => 'auth'],function (){
     Route::get('/category/img/{resource}', 'Blade\CategoryController@img');
     Route::get('/category/view/{id}', 'Blade\CategoryController@view');
 
-
->>>>>>> cfb08140a40df43f65a60bfb3b13a35addd84dd4
 });
 
 // Change language session condition

@@ -29,7 +29,28 @@ Route::get('/', function (){
 
 // Web pages
 Route::group(['middleware' => 'auth'],function (){
+    // Import
+    Route::get('/import/index',[\App\Http\Controllers\ImportController::class,'index'])->name('importIndex');
+    Route::get('/import/create',[\App\Http\Controllers\ImportController::class,'create'])->name('importCreate');
+    Route::post('/import/store',[\App\Http\Controllers\ImportController::class,'store'])->name('importStore');
+    Route::get('/import/edit',[\App\Http\Controllers\ImportController::class,'edit'])->name('importEdit');
+    // Company
+    Route::get('/company/index',[\App\Http\Controllers\Blade\CompanyController::class,'index'])->name('companyIndex');
+    Route::get('/company/create',[\App\Http\Controllers\Blade\CompanyController::class,'create'])->name('companyCreate');
+    Route::post('/company/store',[\App\Http\Controllers\Blade\CompanyController::class,'store'])->name('companyStore');
+    Route::get('/company/img',[\App\Http\Controllers\Blade\CompanyController::class,'img'])->name('companyImg');
+    Route::get('/company/edit/{id}',[\App\Http\Controllers\Blade\CompanyController::class,'edit'])->name('companyEdit');
+    Route::post('/company/update/{id}',[\App\Http\Controllers\Blade\CompanyController::class,'update'])->name('companyUpdate');
+    Route::get('/company/view/{id}',[\App\Http\Controllers\Blade\CompanyController::class,'view'])->name('companyView');
+    // Branch
+    Route::get('/branch/index',[\App\Http\Controllers\Blade\BranchController::class,'index'])->name('branchIndex');
+    Route::get('/branch/create',[\App\Http\Controllers\Blade\BranchController::class,'create'])->name('branchCreate');
+    Route::post('/branch/store',[\App\Http\Controllers\Blade\BranchController::class,'store'])->name('branchStore');
+    Route::get('/branch/edit/{id}',[\App\Http\Controllers\Blade\BranchController::class,'edit'])->name('branchEdit');
+    Route::post('/branch/update/{id}',[\App\Http\Controllers\Blade\BranchController::class,'update'])->name('branchUpdate');
+    Route::get('/branch/view/{id}',[\App\Http\Controllers\Blade\BranchController::class,'view'])->name('branchView');
 
+    Route::post('/import/barcode',[\App\Http\Controllers\ImportController::class,'getbarcode'])->name('getBarCode');
     // there should be graphics, diagrams about total conditions
     Route::get('/home', [HomeController::class,'index'])->name('home');
 
@@ -68,7 +89,19 @@ Route::group(['middleware' => 'auth'],function (){
     Route::delete('/api-user/delete/{id}',[ApiUserController::class,'destroy'])->name('api-userDestroy');
     Route::delete('/api-user-token/delete/{id}',[ApiUserController::class,'destroyToken'])->name('api-tokenDestroy');
 
+<<<<<<< HEAD
     Route::resource('companies',CompanyController::class);
+=======
+    Route::get('/category', 'Blade\CategoryController@index');
+    Route::get('/category/add', 'Blade\CategoryController@add');
+    Route::post('/category/store', 'Blade\CategoryController@store');
+    Route::get('/category/edit/{id}', 'Blade\CategoryController@edit');
+    Route::post('/category/update/{id}', 'Blade\CategoryController@update');
+    Route::get('/category/img/{resource}', 'Blade\CategoryController@img');
+    Route::get('/category/view/{id}', 'Blade\CategoryController@view');
+
+
+>>>>>>> cfb08140a40df43f65a60bfb3b13a35addd84dd4
 });
 
 // Change language session condition
@@ -82,6 +115,8 @@ Route::get('/language/{lang}',function ($lang){
     }
     return redirect()->back();
 });
+
+Route::get('/generate-barcode', [\App\Http\Controllers\HomeController::class, 'barcodeTest'])->name('generate.barcode');
 
 /*
 |--------------------------------------------------------------------------

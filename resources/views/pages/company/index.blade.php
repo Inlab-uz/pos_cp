@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+<<<<<<< HEAD
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
@@ -18,10 +19,18 @@
     </section>
     <section class="content">
         <div class="container-fluid">
+=======
+    <section class="content-header">
+
+    </section>
+    <section class="content">
+        <div class="container-fluit">
+>>>>>>> cfb08140a40df43f65a60bfb3b13a35addd84dd4
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
+<<<<<<< HEAD
                             <h3 class="card-title">@lang('global.cards')</h3>
                             <span class="badge badge-light">@lang('global.amount') : {{ $companies->total() ?? 0 }}</span>
                             <div class="card-tools">
@@ -120,6 +129,55 @@
                                                         @endcan
                                                     </div>
                                                 </form>
+=======
+                            <div class="row">
+                                <div class="col-6">
+                                    <h3 class="card-title">Company</h3>
+                                </div>
+                                <div class="col-6">
+                                    <a href="{{ route('companyCreate') }}" class="btn btn-xs btn-flat btn-success" style="float: right">
+                                        Add New
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ./card-header -->
+                        <div class="card-body">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>User</th>
+                                    <th>Name</th>
+                                    <th>Logo</th>
+                                    <th>Description</th>
+                                    <th>User</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @php
+                                    $index = 1
+                                @endphp
+                                @foreach($companies as $company)
+                                    <tr style=" align-items: center">
+                                        <td style="vertical-align: middle;">{{$index++}}</td>
+                                        <td style="vertical-align: middle;">{{$company->user_id}}</td>
+                                        <td style="vertical-align: middle;">{{$company->name}}</td>
+                                        <td width="100px">
+                                            <img src="{{ route('companyImg',$company->id) }}" alt="" style="max-width: 100px">
+                                        </td>
+                                        <td style="vertical-align: middle;">{{$company->description}}</td>
+                                        <td width="100px" style="vertical-align: middle;">
+                                            <div class="btn-group">
+                                                <a href="{{ route('companyView',$company->id) }}" class="btn btn-info btn-flat">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a href="{{ route('companyEdit',$company->id) }}" class="btn btn-info btn-flat">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            </div>
+>>>>>>> cfb08140a40df43f65a60bfb3b13a35addd84dd4
                                         </td>
                                     </tr>
                                 @endforeach
@@ -127,12 +185,21 @@
                             </table>
                         </div>
                         <!-- /.card-body -->
+<<<<<<< HEAD
                         <div class="card-footer">
                             {{ $companies->withQueryString()->links() }}
                         </div>
                     </div>
+=======
+                    </div>
+                    <!-- /.card -->
+>>>>>>> cfb08140a40df43f65a60bfb3b13a35addd84dd4
                 </div>
             </div>
         </div>
     </section>
+<<<<<<< HEAD
+=======
+
+>>>>>>> cfb08140a40df43f65a60bfb3b13a35addd84dd4
 @endsection

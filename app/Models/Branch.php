@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 class Branch extends Model
 {
     use HasFactory,HasFilters;
+
+    protected $table = 'branches';
+
     protected $fillable = [
         'company_id',
         'name',
@@ -16,8 +19,8 @@ class Branch extends Model
         'phone'
     ];
 
-    public function company()
-    {
+    public function company(){
+
         return $this->belongsTo(Company::class);
     }
 }

@@ -3,6 +3,32 @@
 
     <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
         @canany([
+                'import.view',
+                'import.create',
+            ])
+            <li class="nav-item">
+                <a href="{{ route('importIndex') }}" class="nav-link {{ Request::is('import*') ? "active":'' }}">
+                    <i class="fas fa-wind"></i>
+                    <p>Import</p>
+                </a>
+            </li>
+        @endcan
+
+        <li class="nav-item">
+            <a href="{{ route('companyIndex') }}" class="nav-link {{ Request::is('company*') ? "active":'' }}">
+                <i class="fas fa-compact-disc"></i>
+                <p>Company</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ route('branchIndex') }}" class="nav-link {{ Request::is('branch*') ? "active":'' }}">
+                <i class="fas fa-compact-disc"></i>
+                <p>Branch</p>
+            </a>
+        </li>
+
+        @canany([
           'permission.show',
           'roles.show',
           'user.show'
@@ -93,6 +119,14 @@
                     </a>
                 </li>
             </ul>
+        </li>
+        <li class="nav-item">
+            <a href="/category" class="nav-link {{ Request::is('category*') ? "active":'' }}">
+                <i class="fa fa-list-alt" aria-hidden="true"></i>
+                <p>
+                    Category
+                </p>
+            </a>
         </li>
     </ul>
 {{--    @can('card.main')--}}

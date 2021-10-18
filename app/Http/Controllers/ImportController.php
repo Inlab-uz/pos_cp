@@ -11,6 +11,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Import;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -51,11 +52,12 @@ class ImportController extends Controller
     }
 
     public function getBarCode(Request $request){
+        $product = Product::where('barcode_number', $request->bar_code)->first();
         $data = [
-                'id'=>"10",
-                'name'=>"Zizi",
-                'bar_code'=>"123456",
-            ];
+            'id'=> $product->id ?? null,
+            'name'=> $product->title ?? 'tovar topilmadi',
+            'bar_code'=> $product->barcode_number ?? null
+        ];
         return response()->json($data);
     }
 

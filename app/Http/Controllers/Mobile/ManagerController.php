@@ -20,6 +20,9 @@ class ManagerController extends MobileResponseController
         return $this->success(ProductResource::collection($products));
     }
     public function getProductByBarCode(Request $request){
+        $product = Product::where('barcode_number', $request->barcode)->first();
+        if ($product)
+            return $this->success($product);
         $product = (new GlobalService())->search($request->barcode);
         if (isset($product->original['products']))
             return $this->success($product->original['products'][0]);

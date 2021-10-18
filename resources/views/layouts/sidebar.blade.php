@@ -54,6 +54,14 @@
                 </a>
             </li>
         @endcan
+        @can('company.view')
+            <li class="nav-item">
+                <a href="{{ route('companies.index') }}" class="nav-link {{ Request::is('companies*') ? "active":'' }}">
+                    <i class="fas fa-arrow-right"></i>
+                    <p> Companies</p>
+                </a>
+            </li>
+        @endcan
     </ul>
 
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">

@@ -6,6 +6,7 @@ use App\Http\Controllers\Blade\RoleController;
 use App\Http\Controllers\Blade\PermissionController;
 use App\Http\Controllers\Blade\HomeController;
 use App\Http\Controllers\Blade\ApiUserController;
+use App\Http\Controllers\Blade\CompanyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +67,8 @@ Route::group(['middleware' => 'auth'],function (){
     Route::post('/api-user/update/{id}',[ApiUserController::class,'update'])->name('api-userUpdate');
     Route::delete('/api-user/delete/{id}',[ApiUserController::class,'destroy'])->name('api-userDestroy');
     Route::delete('/api-user-token/delete/{id}',[ApiUserController::class,'destroyToken'])->name('api-tokenDestroy');
+
+    Route::resource('companies',CompanyController::class);
 });
 
 // Change language session condition

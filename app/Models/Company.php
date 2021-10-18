@@ -15,4 +15,24 @@ class Company extends Model
         'logo',
         'description',
     ];
+
+    public function branches()
+    {
+        return $this->hasMany(Branch::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function getOwner():string
+    {
+        return (string)($this->user->name ?? 'undefined');
+    }
+
+    public function shortDescription():string
+    {
+        return substr($this->description ?? '',0,50).'...';
+    }
 }

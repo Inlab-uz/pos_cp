@@ -15,4 +15,9 @@ class Branch extends Model
         'address',
         'phone'
     ];
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 }

@@ -6,6 +6,7 @@ use App\Http\Resources\Category\CategoryResource;
 use App\Http\Resources\Product\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Unit;
 use App\Services\Barcode\GlobalService;
 use Illuminate\Http\Request;
 
@@ -36,5 +37,9 @@ class ManagerController extends MobileResponseController
     }
     public function updateProduct(Request $request){
 
+    }
+    public function measurement(){
+        $unit = Unit::all();
+        return $this->success($unit);
     }
 }

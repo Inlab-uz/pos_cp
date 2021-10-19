@@ -21,6 +21,7 @@ Route::group(['middleware' => 'api-auth'],function (){
     Route::post('/me',[ApiAuthController::class,'me']);
     Route::post('/tokens',[ApiAuthController::class,'getAllTokens']);
     Route::post('/logout',[ApiAuthController::class,'logout']);
+
 });
 
 Route::group(['middleware' => 'ajax.check'],function (){
@@ -43,4 +44,6 @@ Route::group(['prefix' => 'mobile','middleware' => 'auth:sanctum'],function (){
     Route::post('/get-product-by-barcode',[ManagerController::class,'getProductByBarCode']);
     Route::post('/add-product',[ManagerController::class,'addProduct']);
     Route::post('/update-product',[ManagerController::class,'updateProduct']);
+    Route::get('/measurement',[ManagerController::class,'measurement']);
+
 });

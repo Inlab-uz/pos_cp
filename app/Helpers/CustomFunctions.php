@@ -219,5 +219,20 @@ if (!function_exists('logObj'))
 
         return json_encode($object);
     }
+
+}
+ function success($data = []){
+    return response()->json([
+        'status' => true,
+        'data' => $data,
+        'message' => 'Muvofaqqiyatli!'
+    ]);
+}
+ function error($message){
+    return response()->json([
+        'status' => false,
+        'data' => [],
+        'message' => $message
+    ]);
 }
 

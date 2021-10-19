@@ -42,8 +42,8 @@ Route::group(['prefix' => 'mobile','middleware' => 'auth:sanctum'],function (){
     Route::get('/get-category',[ManagerController::class,'getCategory']);
     Route::post('/get-product-by-category',[ManagerController::class,'getProductByCategory']);
     Route::post('/get-product-by-barcode',[ManagerController::class,'getProductByBarCode']);
-    Route::post('/add-product',[ManagerController::class,'addProduct']);
     Route::post('/update-product',[ManagerController::class,'updateProduct']);
     Route::get('/measurement',[ManagerController::class,'measurement']);
 
 });
+Route::post('/add-product',[ManagerController::class,'addProduct']);

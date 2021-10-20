@@ -39,13 +39,21 @@ class ManagerController extends MobileResponseController
         ]);
         if ($validator->fails())
             return $this->validationError($validator->errors());
-        $product = \App\Services\Product::productCreate($request->all());
-        if ($product)
+        $import = \App\Services\Product::productCreate($request->all());
+        if ($import)
             return $this->success();
         return $this->error('Ma\'lumot saqlanmadi!');
     }
     public function updateProduct(Request $request){
-
+        $validator = Validator::make($request->all(),[
+            'barcode_number' =>  'required'
+        ]);
+        if ($validator->fails())
+            return $this->validationError($validator->errors());
+       $import =   \App\Services\Product::productUpdate($request->all());
+        if ($import)
+            return $this->success();
+        return $this->error('Ma\'lumot saqlanmadi!');
     }
     public function measurement(){
         $unit = Unit::all();

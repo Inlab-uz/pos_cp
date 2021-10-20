@@ -68,4 +68,7 @@ class ManagerController extends MobileResponseController
         $unit = Unit::all();
         return $this->success($unit);
     }
+    public function importUpdate(Request $request){
+
+    }
 }

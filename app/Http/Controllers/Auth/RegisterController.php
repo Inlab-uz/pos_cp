@@ -100,6 +100,39 @@ class RegisterController extends Controller
                     ["name" => 'api-user.view', "title" => 'ApiUser View', "guard_name" => 'web'],
                     ["name" => 'api-user.edit', "title" => 'ApiUser Edit', "guard_name" => 'web'],
                     ["name" => 'api-user-passport.view', "title" => 'ApiUser Password view', "guard_name" => 'web'],
+
+                    ["name" => 'branch.show', "title" => 'branchlarni ko\'rish', "guard_name" => 'web'],
+                    ["name" => 'branch.edit', "title" => 'branchlarni o\'zgartirish', "guard_name" => 'web'],
+                    ["name" => 'branch.add', "title" => 'Yangi branchlarni qo\'shish', "guard_name" => 'web'],
+                    ["name" => 'branch.delete', "title" => 'branchlarni o\'chirish', "guard_name" => 'web'],
+
+                    ["name" => 'category.show', "title" => 'categorylarni ko\'rish', "guard_name" => 'web'],
+                    ["name" => 'category.edit', "title" => 'categorylarni o\'zgartirish', "guard_name" => 'web'],
+                    ["name" => 'category.add', "title" => 'Yangi categorylarni qo\'shish', "guard_name" => 'web'],
+                    ["name" => 'category.delete', "title" => 'categorylarni o\'chirish', "guard_name" => 'web'],
+
+                    ["name" => 'company.show', "title" => 'companylarni ko\'rish', "guard_name" => 'web'],
+                    ["name" => 'company.edit', "title" => 'companylarni o\'zgartirish', "guard_name" => 'web'],
+                    ["name" => 'company.add', "title" => 'Yangi companylarni qo\'shish', "guard_name" => 'web'],
+                    ["name" => 'company.delete', "title" => 'companylarni o\'chirish', "guard_name" => 'web'],
+
+                    ["name" => 'import.show', "title" => 'importlarni ko\'rish', "guard_name" => 'web'],
+                    ["name" => 'import.edit', "title" => 'importlarni o\'zgartirish', "guard_name" => 'web'],
+                    ["name" => 'import.add', "title" => 'Yangi importlarni qo\'shish', "guard_name" => 'web'],
+                    ["name" => 'import.delete', "title" => 'importlarni o\'chirish', "guard_name" => 'web'],
+
+
+                    ["name" => 'product.show', "title" => 'productlarni ko\'rish', "guard_name" => 'web'],
+                    ["name" => 'product.edit', "title" => 'productlarni o\'zgartirish', "guard_name" => 'web'],
+                    ["name" => 'product.add', "title" => 'Yangi productlarni qo\'shish', "guard_name" => 'web'],
+                    ["name" => 'product.delete', "title" => 'productlarni o\'chirish', "guard_name" => 'web'],
+
+                    ["name" => 'unit.show', "title" => 'unitlarni ko\'rish', "guard_name" => 'web'],
+                    ["name" => 'unit.edit', "title" => 'unitlarni o\'zgartirish', "guard_name" => 'web'],
+                    ["name" => 'unit.add', "title" => 'Yangi unitlarni qo\'shish', "guard_name" => 'web'],
+                    ["name" => 'unit.delete', "title" => 'unitlarni o\'chirish', "guard_name" => 'web'],
+
+
                 ]);
             }
 

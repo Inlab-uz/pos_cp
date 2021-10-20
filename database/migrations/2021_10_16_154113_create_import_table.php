@@ -17,7 +17,7 @@ class CreateImportTable extends Migration
             $table->id();
             $table->integer('category_id')->nullable();
             $table->integer('product_id')->nullable();
-            $table->integer('discount_id')->nullable();
+            $table->integer('discount')->nullable();
             $table->string('measure')->nullable();
             $table->double('quantity',6,2)->nullable();
             $table->double('part',6,2)->nullable();

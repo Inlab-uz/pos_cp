@@ -12,6 +12,7 @@ use App\Services\Barcode\GlobalService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class ManagerController extends MobileResponseController
 {
@@ -33,7 +34,15 @@ class ManagerController extends MobileResponseController
         return $this->error('product not found!');
     }
     public function addProduct(Request $request){
-        \App\Services\Product::productCreate($request->all());
+        $validator = Validator::make($request->all(),[
+           'barcode_number' =>  'required|unique:products,barcode_number'
+        ]);
+        if ($validator->fails())
+            return $this->validationError($validator->errors());
+        $product = \App\Services\Product::productCreate($request->all());
+        if ($product)
+            return $this->success();
+        return $this->error('Ma\'lumot saqlanmadi!');
     }
     public function updateProduct(Request $request){
 

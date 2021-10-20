@@ -13,31 +13,33 @@ class Product
 {
     public static function productCreate($request = [])
     {
-        ProductLocal::create([
-            'barcode_number' => $request['barcode_number'],
-            'title' => $request['title'],
-
-            'barcode_formats' => $request['barcode_formats'],
-            'brand' => $request['brand'],
-            'model' => $request['model'],
-            'manufacturer' => $request['manufacturer'],
-            'category' => $request['category'],
-            'description' => $request['description'],
-            'images' => $request['images'],
-            'ingredients' => $request['ingredients'],
-            'age_group' => $request['age_group'],
-            'nutrition_facts' => $request['nutrition_facts'],
-            'energy_efficiency_class' => $request['energy_efficiency_class'],
-            'color' => $request['color'],
-            'gender' => $request['gender'],
-            'format' => $request['format'],
-            'multipack' => $request['multipack'],
-            'size' => $request['size'],
-            'length' => $request['length'],
-            'width' => $request['width'],
-            'height' => $request['height'],
-            'weight' => $request['weight'],
-        ]);
+        $p = ProductLocal::where('barcode_number', $request['barcode_number'])->first();
+        if ($p){
+            ProductLocal::create([
+                'barcode_number' => $request['barcode_number'],
+                'title' => $request['title'],
+                'barcode_formats' => $request['barcode_formats'],
+                'brand' => $request['brand'],
+                'model' => $request['model'],
+                'manufacturer' => $request['manufacturer'],
+                'category' => $request['category'],
+                'description' => $request['description'],
+                'images' => $request['images'],
+                'ingredients' => $request['ingredients'],
+                'age_group' => $request['age_group'],
+                'nutrition_facts' => $request['nutrition_facts'],
+                'energy_efficiency_class' => $request['energy_efficiency_class'],
+                'color' => $request['color'],
+                'gender' => $request['gender'],
+                'format' => $request['format'],
+                'multipack' => $request['multipack'],
+                'size' => $request['size'],
+                'length' => $request['length'],
+                'width' => $request['width'],
+                'height' => $request['height'],
+                'weight' => $request['weight'],
+            ]);
+        }
         $product = \App\Models\Product::updateOrCreate(
             [
                 'barcode_number' => $request['barcode_number'],

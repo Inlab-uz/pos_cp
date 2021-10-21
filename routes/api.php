@@ -43,6 +43,11 @@ Route::group(['prefix' => 'mobile', 'middleware' => 'auth:sanctum'], function ()
     Route::post('/get-product-by-category', [ManagerController::class, 'getProductByCategory']);
     Route::post('/get-product-by-barcode', [ManagerController::class, 'getProductByBarCode']);
     Route::get('/measurement', [ManagerController::class, 'measurement']);
+    Route::post('/import-update', [ManagerController::class, 'importUpdate']);
+    Route::get('/import-all', [ManagerController::class, 'getAllImport']);
+    Route::post('/import-show', [ManagerController::class, 'showImport']);
+    Route::post('/category-create', [ManagerController::class, 'categoryCreate']);
+    Route::post('/category-update', [ManagerController::class, 'categoryUpdate']);
 });
 Route::post('/add-product', [ManagerController::class, 'addProduct']);
 Route::post('/update-product', [ManagerController::class, 'updateProduct']);

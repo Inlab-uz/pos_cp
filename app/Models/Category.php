@@ -31,4 +31,12 @@ class Category extends Model
     public function child(){
         return self::where('parent_id', $this->id)->get();
     }
+    public function imports()
+    {
+        return $this->hasMany(Import::class);
+    }
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

@@ -44,11 +44,11 @@ class Import extends Model
     ];
 
     public function category(){
-        return $this->belongsTo();
+        return $this->belongsTo(Category::class);
     }
 
     public function product(){
-        return $this->belongsTo();
+        return $this->belongsTo(Product::class);
     }
 
     public function discount(){

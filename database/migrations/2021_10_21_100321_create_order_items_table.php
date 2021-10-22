@@ -17,10 +17,11 @@ class CreateOrderItemsTable extends Migration
             $table->id();
             $table->bigInteger('order_id')->index()->nullable();
             $table->bigInteger('product_id')->index()->nullable();
+            $table->bigInteger('count')->nullable();
             $table->double('price', 20, 2)->nullable();
             $table->double('total_price', 20, 2)->nullable();
             $table->integer('measure_id')->nullable();
-            $table->float('discount', 2,2)->nullable();
+            $table->double('discount', 5,2)->nullable();
             $table->timestamps();
         });
     }

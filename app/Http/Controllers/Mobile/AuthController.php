@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Mobile;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cashier;
+use App\Models\Meneger;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -10,8 +12,8 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends MobileResponseController
 {
     public function register(Request $request){
-        $user = User::where('email', $request->email)->first();
-        if ($user instanceof User){
+        $user = Meneger::where('email', $request->email)->first();
+        if ($user instanceof Meneger){
             if(  Hash::check( $request->password, $user->password ) )
             {
                 $token = $user->createToken('mobile');
@@ -19,6 +21,19 @@ class AuthController extends MobileResponseController
                     'token' => $token->plainTextToken,
                     'manager' => true,
                     'cashier' => false
+                ];
+                return $this->success($data);
+            }
+        }
+        $user = Cashier::where('email', $request->email)->first();
+        if($user instanceof Cashier){
+            if(  Hash::check( $request->password, $user->password ) )
+            {
+                $token = $user->createToken('mobile');
+                $data = [
+                    'token' => $token->plainTextToken,
+                    'manager' => false,
+                    'cashier' => true
                 ];
                 return $this->success($data);
             }

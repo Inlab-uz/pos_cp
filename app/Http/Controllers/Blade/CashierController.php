@@ -72,16 +72,18 @@ class CashierController extends Controller
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
         ]);
 
-        $meneger = Cashier::find($id);
-        $meneger->name = $request->name;
-        $meneger->email = $request->email;
-        $meneger->password = $request->password;
-        $meneger->branch_id = $request->branch_id;
-        $meneger->manager_id = self::manager_id();
-        $meneger->company_id = self::company_id();
-        $meneger->update();
+        $cashier = Cashier::find($id);
+        $cashier->name = $request->name;
+        $cashier->email = $request->email;
+        $cashier->branch_id = $request->branch_id;
+        $cashier->manager_id = self::manager_id();
+        $cashier->company_id = self::company_id();
+        $cashier->update();
+        if ($request->has('password')){
+            $cashier->password = Hash::make($request->password);
+        }
         success_message('Maneger success updated!!!');
-        return redirect()->route('menegerIndex');
+        return redirect()->route('cashierIndex');
     }
 
     public function destroy($id)

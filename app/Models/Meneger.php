@@ -12,8 +12,5 @@ class Meneger extends Model
     protected $guarded = [];
     protected $table = 'menegers';
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+
 }

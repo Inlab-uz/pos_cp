@@ -112,7 +112,11 @@ class ManagerController extends MobileResponseController
 
     public function categoryCreate(Request $request)
     {
-        CategoryServices::categoryCreate($request->all());
+
+       $category =  CategoryServices::categoryCreate($request->all());
+        if ($category)
+            return $this->success($category);
+        return $this->error('Ma\'lumot yoq!');
     }
 
     public function categoryUpdate(Request $request)

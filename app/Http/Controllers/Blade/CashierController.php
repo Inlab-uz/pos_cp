@@ -23,6 +23,7 @@ class CashierController extends Controller
 
     public function create()
     {
+        dd(auth()->user());
         $branches = Branch::all();
         return view('pages.cashier.add', [
             'branches' => $branches

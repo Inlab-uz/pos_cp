@@ -13,9 +13,11 @@ class Product
 {
     public static function productCreate($request = [])
     {
+
         $p = ProductLocal::where('barcode_number', $request['barcode_number'])->first();
         if ($p){
             ProductLocal::create([
+
                 'barcode_number' => $request['barcode_number'],
                 'title' => $request['title'],
                 'barcode_formats' => $request['barcode_formats'],
@@ -43,7 +45,7 @@ class Product
         $product = \App\Models\Product::updateOrCreate(
             [
                 'barcode_number' => $request['barcode_number'],
-                'category_id' => $request['category_id']
+                'category_id' => self::categoryId()
             ],
             [
                 'title' => $request['title'],
@@ -71,9 +73,9 @@ class Product
             ]);
         if ($product instanceof \App\Models\Product) {
             $import = new Import();
-            $import->category_id = $request['category_id'];
+            $import->category_id = self::categoryId();
             $import->product_id = $product['id'];
-            $import->discount_id = $request['discount'];
+            $import->discount = $request['discount'];
             $import->measure = $request['measure'];
             $import->quantity = $request['quantity'];
             $import->part = $request['quantity'];
@@ -93,7 +95,7 @@ class Product
     {
         $product = \App\Models\Product::where('barcode_number', $request['barcode_number'])->first();
 
-        $product->category_id = $request['category_id'];
+        $product->category_id = self::categoryId();
         $product->title = $request['title'];
         $product->status = '1';
         $product->barcode_formats = $request['barcode_formats'];
@@ -122,8 +124,8 @@ class Product
         if ($product instanceof \App\Models\Product) {
             $import = Import::where('product_id', $product['id'])->first();
 
-            $import->category_id = $request['category_id'];
-            $import->discount_id = $request['discount_id'];
+            $import->category_id = self::categoryId();
+            $import->discount = $request['discount'];
             $import->measure = $request['measure'];
             $import->quantity = $request['quantity'];
             $import->part = $request['quantity'];
@@ -137,7 +139,13 @@ class Product
         }
         return null;
 
-
+    }
+    public static function categoryId(){
+        $categories = auth()->user()->categories;
+        foreach ($categories as $category){
+            $category_id = $category['id'];
+            return $category_id;
+        }
     }
 
 }

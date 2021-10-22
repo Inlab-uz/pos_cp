@@ -47,7 +47,8 @@ Route::group(['prefix' => 'mobile', 'middleware' => 'auth:sanctum'], function ()
     Route::get('/import-all', [ManagerController::class, 'getAllImport']);
     Route::post('/import-show', [ManagerController::class, 'showImport']);
     Route::post('/category-create', [ManagerController::class, 'categoryCreate']);
-    Route::post('/category-update', [ManagerController::class, 'categoryUpdate']);
+    Route::get('/pay_type', [ManagerController::class, 'payType']);
+
 });
 Route::post('/add-product', [ManagerController::class, 'addProduct']);
 Route::post('/update-product', [ManagerController::class, 'updateProduct']);

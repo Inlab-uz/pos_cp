@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Unit;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -46,7 +47,7 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -61,7 +62,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \App\User
      */
     protected function create(array $data)
@@ -74,13 +75,18 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        Unit::insert([
+            ["name" => "kg", "status" => 1],
+            ["name" => "litr", "status" => 1],
+            ["name" => "karobka", "status" => 1],
+            ["name" => "dona", "status" => 1],
+            ["name" => "metr", "status" => 1],
+        ]);
 
-        if ($cnt === 0)
-        {
+        if ($cnt === 0) {
             $perms_cnt = Permission::count();
 
-            if ($perms_cnt === 0)
-            {
+            if ($perms_cnt === 0) {
                 Permission::insert([
                     ["name" => 'permission.show', "title" => 'Ruxsatlarni ko\'rish', "guard_name" => 'web'],
                     ["name" => 'permission.edit', "title" => 'Ruxsatlarni o\'zgartirish', "guard_name" => 'web'],
@@ -132,14 +138,21 @@ class RegisterController extends Controller
                     ["name" => 'unit.add', "title" => 'Yangi unitlarni qo\'shish', "guard_name" => 'web'],
                     ["name" => 'unit.delete', "title" => 'unitlarni o\'chirish', "guard_name" => 'web'],
 
+                    ["name" => 'manager.show', "title" => 'managerlarni ko\'rish', "guard_name" => 'web'],
+                    ["name" => 'manager.edit', "title" => 'managerlarni o\'zgartirish', "guard_name" => 'web'],
+                    ["name" => 'manager.add', "title" => 'Yangi managerlarni qo\'shish', "guard_name" => 'web'],
+                    ["name" => 'manager.delete', "title" => 'managerlarni o\'chirish', "guard_name" => 'web'],
 
+                    ["name" => 'cashier.show', "title" => 'cashierlarni ko\'rish', "guard_name" => 'web'],
+                    ["name" => 'cashier.edit', "title" => 'cashierlarni o\'zgartirish', "guard_name" => 'web'],
+                    ["name" => 'cashier.add', "title" => 'Yangi cashierlarni qo\'shish', "guard_name" => 'web'],
+                    ["name" => 'cashier.delete', "title" => 'cashierlarni o\'chirish', "guard_name" => 'web'],
                 ]);
             }
 
             $role_cnt = Role::count();
 
-            if ($role_cnt === 0)
-            {
+            if ($role_cnt === 0) {
                 Role::create([
                     'name' => 'Super Admin',
                     'title' => 'Super Admin',

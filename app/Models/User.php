@@ -76,6 +76,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Company::class);
     }
+    public function menegers()
+    {
+        return $this->hasMany(Meneger::class);
+    }
     public function categories()
     {
         return $this->hasMany(Category::class);

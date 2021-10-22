@@ -6,6 +6,7 @@ use App\Http\Resources\Category\CategoryResource;
 use App\Http\Resources\Product\ProductResource;
 use App\Models\Category;
 use App\Models\Import;
+use App\Models\PayType;
 use App\Models\Product;
 use App\Models\ProductLocal;
 use App\Models\Unit;
@@ -79,7 +80,7 @@ class ManagerController extends MobileResponseController
     public function measurement()
     {
         $products = Category::with('products')->first();
-dd($products);
+        dd($products);
         $unit = Unit::all();
 
         return $this->success($unit);
@@ -108,14 +109,24 @@ dd($products);
             return $this->success($import);
         return $this->error('Ma\'lumot yoq!');
     }
-    public function categoryCreate(Request $request){
+
+    public function categoryCreate(Request $request)
+    {
         CategoryServices::categoryCreate($request->all());
     }
-    public function categoryUpdate(Request $request){
-       $category = CategoryServices::categoryUpdate($request->all());
-       if ($category)
-           return $this->success($category);
+
+    public function categoryUpdate(Request $request)
+    {
+        $category = CategoryServices::categoryUpdate($request->all());
+        if ($category)
+            return $this->success($category);
         return $this->error('Ma\'lumot yoq!');
+    }
+
+    public function payType()
+    {
+        $pay_type = PayType::all();
+        return $this->success($pay_type);
     }
 
 

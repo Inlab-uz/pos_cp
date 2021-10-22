@@ -1,7 +1,8 @@
 {{--Left sidebar--}}
 <nav class="mt-2">
 
-    <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
+    <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu"
+        data-accordion="false">
         @canany([
                 'import.view',
                 'import.create',
@@ -34,17 +35,20 @@
           'user.show'
        ])
             <li class="nav-item has-treeview">
-                <a href="#" class="nav-link {{ (Request::is('permission*') || Request::is('role*') || Request::is('user*')) ? 'active':''}}">
+                <a href="#"
+                   class="nav-link {{ (Request::is('permission*') || Request::is('role*') || Request::is('user*')) ? 'active':''}}">
                     <i class="fas fa-users-cog"></i>
                     <p>
                         @lang('cruds.userManagement.title')
                         <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
-                <ul class="nav nav-treeview" style="display: {{ (Request::is('permission*') || Request::is('role*') || Request::is('user*')) ? 'block':'none'}};">
+                <ul class="nav nav-treeview"
+                    style="display: {{ (Request::is('permission*') || Request::is('role*') || Request::is('user*')) ? 'block':'none'}};">
                     @can('permission.show')
                         <li class="nav-item">
-                            <a href="{{ route('permissionIndex') }}" class="nav-link {{ Request::is('permission*') ? "active":'' }}">
+                            <a href="{{ route('permissionIndex') }}"
+                               class="nav-link {{ Request::is('permission*') ? "active":'' }}">
                                 <i class="fas fa-key"></i>
                                 <p> @lang('cruds.permission.title_singular')</p>
                             </a>
@@ -53,7 +57,8 @@
 
                     @can('roles.show')
                         <li class="nav-item">
-                            <a href="{{ route('roleIndex') }}" class="nav-link {{ Request::is('role*') ? "active":'' }}">
+                            <a href="{{ route('roleIndex') }}"
+                               class="nav-link {{ Request::is('role*') ? "active":'' }}">
                                 <i class="fas fa-user-lock"></i>
                                 <p> @lang('cruds.role.fields.roles')</p>
                             </a>
@@ -62,7 +67,8 @@
 
                     @can('user.show')
                         <li class="nav-item">
-                            <a href="{{ route('userIndex') }}" class="nav-link {{ Request::is('user*') ? "active":'' }}">
+                            <a href="{{ route('userIndex') }}"
+                               class="nav-link {{ Request::is('user*') ? "active":'' }}">
                                 <i class="fas fa-user-friends"></i>
                                 <p> @lang('cruds.user.title')</p>
                             </a>
@@ -85,12 +91,12 @@
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item has-treeview">
             <a href="" class="nav-link">
-            <i class="fas fa-palette"></i>
-            <p>
-                @lang('global.theme')
-                <i class="right fas fa-angle-left"></i>
-            </p>
-        </a>
+                <i class="fas fa-palette"></i>
+                <p>
+                    @lang('global.theme')
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
             <ul class="nav nav-treeview" style="display: none">
                 <li class="nav-item">
                     <a href="{{ route('userSetTheme',[auth()->id(),'theme' => 'default']) }}" class="nav-link">
@@ -120,8 +126,24 @@
                 </p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('menegerIndex') }}" class="nav-link {{ Request::is('meneger*') ? "active":'' }}">
+                <i class="fas fa-user-shield" aria-hidden="true"></i>
+                <p>
+                    Menagar
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('cashierIndex') }}" class="nav-link {{ Request::is('cashier*') ? "active":'' }}">
+                <i class="fas fa-user-shield" aria-hidden="true"></i>
+                <p>
+                    Cashier
+                </p>
+            </a>
+        </li>
     </ul>
-{{--    @can('card.main')--}}
+    {{--    @can('card.main')--}}
 
-{{--    @endcan--}}
+    {{--    @endcan--}}
 </nav>

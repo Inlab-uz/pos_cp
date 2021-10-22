@@ -49,7 +49,23 @@ Route::group(['middleware' => 'auth'],function (){
     Route::get('/branch/edit/{id}',[\App\Http\Controllers\Blade\BranchController::class,'edit'])->name('branchEdit');
     Route::post('/branch/update/{id}',[\App\Http\Controllers\Blade\BranchController::class,'update'])->name('branchUpdate');
     Route::get('/branch/view/{id}',[\App\Http\Controllers\Blade\BranchController::class,'view'])->name('branchView');
-
+//    MENEGER
+    Route::get('/meneger/index',[\App\Http\Controllers\Blade\MenagerController::class,'index'])->name('menegerIndex');
+    Route::get('/meneger/create',[\App\Http\Controllers\Blade\MenagerController::class,'create'])->name('menegerCreate');
+    Route::post('/meneger/store',[\App\Http\Controllers\Blade\MenagerController::class,'store'])->name('menegerStore');
+    Route::get('/meneger/edit/{id}',[\App\Http\Controllers\Blade\MenagerController::class,'edit'])->name('menegerEdit');
+    Route::post('/meneger/update/{id}',[\App\Http\Controllers\Blade\MenagerController::class,'update'])->name('menegerUpdate');
+    Route::any('/meneger/delete/{id}',[\App\Http\Controllers\Blade\MenagerController::class,'destroy'])->name('managerDelete');
+//    MENGER END
+//    =======================================
+//    CASHIER
+    Route::get('/cashier/index',[\App\Http\Controllers\Blade\CashierController::class,'index'])->name('cashierIndex');
+    Route::get('/cashier/create',[\App\Http\Controllers\Blade\CashierController::class,'create'])->name('cashierCreate');
+    Route::post('/cashier/store',[\App\Http\Controllers\Blade\CashierController::class,'store'])->name('cashierStore');
+    Route::get('/cashier/edit/{id}',[\App\Http\Controllers\Blade\CashierController::class,'edit'])->name('cashierEdit');
+    Route::post('/cashier/update/{id}',[\App\Http\Controllers\Blade\CashierController::class,'update'])->name('cashierUpdate');
+    Route::any('/cashier/delete/{id}',[\App\Http\Controllers\Blade\CashierController::class,'destroy'])->name('cashierDelete');
+//    CASHIER END
     Route::post('/import/barcode',[\App\Http\Controllers\ImportController::class,'getbarcode'])->name('getBarCode');
     // there should be graphics, diagrams about total conditions
     Route::get('/home', [HomeController::class,'index'])->name('home');

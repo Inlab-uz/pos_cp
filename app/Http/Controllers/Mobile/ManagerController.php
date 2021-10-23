@@ -53,11 +53,11 @@ class ManagerController extends MobileResponseController
 
     public function addProduct(Request $request)
     {
-//        $validator = Validator::make($request->all(),[
-//           'barcode_number' =>  'required|unique:products,barcode_number'
-//        ]);
-//        if ($validator->fails())
-//            return $this->validationError($validator->errors());
+        $validator = Validator::make($request->all(), [
+            'barcode_number' => 'required|unique:products,barcode_number'
+        ]);
+        if ($validator->fails())
+            return $this->validationError($validator->errors());
         $import = \App\Services\Product::productCreate($request->all());
         if ($import)
             return $this->success();
@@ -112,8 +112,14 @@ class ManagerController extends MobileResponseController
 
     public function categoryCreate(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
 
-       $category =  CategoryServices::categoryCreate($request->all());
+        ]);
+        if ($validator->fails())
+            return $this->validationError($validator->errors());
+
+        $category = CategoryServices::categoryCreate($request->all());
         if ($category)
             return $this->success($category);
         return $this->error('Ma\'lumot yoq!');
@@ -131,6 +137,18 @@ class ManagerController extends MobileResponseController
     {
         $pay_type = PayType::all();
         return $this->success($pay_type);
+    }
+//    BASE64 IMG
+    public function upload(Request $request)
+    {
+        if ($request->hasFile('image')) {
+            if ($request->file('image')->isValid()) {
+
+                $image = base64_encode(file_get_contents($request->file('image')->path()));
+                return $this->success($image);
+            }
+        }
+        return $this->error('error');
     }
 
 

@@ -42,6 +42,7 @@ class Product
                 'weight' => $request['weight'],
             ]);
         }
+
         $product = \App\Models\Product::updateOrCreate(
             [
                 'barcode_number' => $request['barcode_number'],

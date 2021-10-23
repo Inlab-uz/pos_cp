@@ -55,6 +55,6 @@ Route::group(['prefix' => 'mobile', 'middleware' => 'auth:sanctum'], function ()
     Route::post('/order', [CashierController::class, 'orderCreate']);
     Route::post('/add-product', [ManagerController::class, 'addProduct']);
     Route::post('/update-product', [ManagerController::class, 'updateProduct']);
-
 });
+Route::post('/upload', [ManagerController::class, 'upload']);
 

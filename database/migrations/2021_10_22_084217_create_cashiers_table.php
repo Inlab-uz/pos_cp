@@ -21,7 +21,6 @@ class CreateCashiersTable extends Migration
             $table->string('password');
             $table->integer('company_id')->index();
             $table->integer('branch_id')->index();
-            $table->integer('manager_id')->index();
             $table->timestamps();
         });
     }

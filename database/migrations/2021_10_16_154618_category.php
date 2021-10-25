@@ -21,7 +21,7 @@ class Category extends Migration
             $table->integer('branch_id');
             $table->string('logo');
             $table->integer('status')->default(0);
-            $table->integer('user_id');
+            $table->integer('manager_id');
             $table->timestamps();
         });
 

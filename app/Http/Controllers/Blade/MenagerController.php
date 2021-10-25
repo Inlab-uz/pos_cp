@@ -17,7 +17,12 @@ class MenagerController extends Controller
 {
     public function index()
     {
-
+        $id = auth()->user()->id;
+        if (auth()->user()->hasRole('Super Admin')){
+            $menegers = Meneger::latest()->paginate(20);
+        }elseif (auth()->user()->hasRole('Administrator')){
+            $branches = Meneger::where('user_id', $id)->paginate(20);
+        }
         $menegers = Meneger::latest()->paginate(20);
         return view('pages.meneger.index', [
             'menegers' => $menegers,
@@ -26,7 +31,13 @@ class MenagerController extends Controller
 
     public function create()
     {
-        $branches = Branch::all();
+        $id = auth()->user()->id;
+        $company = Company::where('user_id', $id)->first();
+        if (auth()->user()->hasRole('Super Admin')){
+            $branches = Branch::latest()->paginate(20);
+        }elseif (auth()->user()->hasRole('Administrator')){
+            $branches = Branch::where('company_id', $company->id)->paginate(20);
+        }
         return view('pages.meneger.add', [
             'branches' => $branches
         ]);
@@ -36,7 +47,7 @@ class MenagerController extends Controller
     {
         $v = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:menegers,email',
             'branch_id' => 'required',
             'password' => 'required|min:8|confirmed',
 
@@ -61,7 +72,12 @@ class MenagerController extends Controller
 
     public function edit($id)
     {
-        $branches = Branch::all();
+        $company = Company::where('user_id', auth()->user()->id)->first();
+        if (auth()->user()->hasRole('Super Admin')){
+            $branches = Branch::latest()->paginate(20);
+        }elseif (auth()->user()->hasRole('Administrator')){
+            $branches = Branch::where('company_id', $company->id)->paginate(20);
+        }
         $meneger = Meneger::find($id);
 
         return view('pages.meneger.edit', compact('meneger', 'branches'));

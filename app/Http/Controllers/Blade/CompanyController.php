@@ -13,10 +13,16 @@ use Illuminate\Support\Str;
 class CompanyController extends Controller
 {
     public function index(){
-        $companies = Company::latest()->paginate(20);
-        return view('pages.company.index',[
-            'companies'=>$companies,
-        ]);
+        $has = false;
+        $id = auth()->user()->id;
+        if (auth()->user()->hasRole('Super Admin')){
+            $companies = Company::latest()->paginate(20);
+        }elseif (auth()->user()->hasRole('Administrator')){
+            $companies = Company::where('user_id', $id)->paginate(5);
+            $has = true;
+            $count = count($companies);
+        }
+        return view('pages.company.index', compact('companies', 'has', 'count'));
     }
 
     public function create(){

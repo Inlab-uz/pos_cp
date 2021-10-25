@@ -22,7 +22,7 @@ class ManagerController extends MobileResponseController
 {
     public function getCategory()
     {
-        $category = Category::where('user_id', auth()->user()->id)->get();
+        $category = Category::where('meneger_id', auth()->user()->id)->get();
         return $this->success(CategoryResource::collection($category));
     }
 
@@ -34,7 +34,7 @@ class ManagerController extends MobileResponseController
 
     public function getProductByBarCode(Request $request)
     {
-        $categories = Category::where('user_id', auth()->user()->id)->get();
+        $categories = Category::where('meneger_id', auth()->user()->id)->get();
         foreach ($categories as $category) {
             $product = Product::where('barcode_number', $request->barcode)->where('category_id', $category->id)->first();
         }
@@ -80,7 +80,7 @@ class ManagerController extends MobileResponseController
     public function measurement()
     {
         $products = Category::with('products')->first();
-        dd($products);
+//        dd($products);
         $unit = Unit::all();
 
         return $this->success($unit);

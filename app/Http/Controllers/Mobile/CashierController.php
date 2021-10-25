@@ -15,30 +15,35 @@ class CashierController extends MobileResponseController
 {
     public function search(Request $request)
     {
-        $cashier = Cashier::find(auth()->user()->id);
-        $categories = Category::where('branch_id', $cashier->branch_id)->get();
-        if ($categories) {
-            $product = [];
-            foreach ($categories as $category) {
-                $product = Product::where(['barcode_number' => $request->barcode], ['category_id', $category->id])->first();
-            }
-            if ($product) {
-                $import = Import::where('product_id', $product->id)->first();
-                $sum = ($import->sale_price) - ($import->sale_price * $import->discount)/100;
-                $data = [
-                  'id' => $product->id,
-                  'name' => $product->title,
-                  'price' => $sum,
-                ];
-                return $this->success($data);
+        $cashier = $request->user();
+
+        if ($cashier instanceof Cashier){
+            $categories = Category::where('branch_id', $cashier->branch_id)->get();
+            if ($categories) {
+                $product = [];
+                foreach ($categories as $category) {
+                    $product = Product::where(['barcode_number' => $request->barcode], ['category_id', $category->id])->first();
+                }
+                if ($product) {
+                    $import = Import::where('product_id', $product->id)->first();
+                    $sum = (int)($import->sale_price) - (int)(($import->sale_price * $import->discount)/100);
+                    $data = [
+                        'id' => $product->id,
+                        'name' => $product->title,
+                        'price' => $sum,
+                    ];
+                    return $this->success($data);
+                }
+                return $this->error('Mahsulot topilmadi!');
             }
             return $this->error('Mahsulot topilmadi!');
         }
-        return $this->error('Mahsulot topilmadi!');
+        return $this->error('Siz Kassir emassiz!');
     }
 
     public function orderCreate(Request $request)
     {
+//        dd($request->all());
         $orders = $request->data;
         $export = (new Order())->add($request->all());
         foreach ($orders as $order){

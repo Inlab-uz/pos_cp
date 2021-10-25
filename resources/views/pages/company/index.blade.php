@@ -28,9 +28,18 @@
                                     <h3 class="card-title">Company</h3>
                                 </div>
                                 <div class="col-6">
-                                    <a href="{{ route('companyCreate') }}" class="btn btn-xs btn-flat btn-success" style="float: right">
-                                        Add New
-                                    </a>
+                                    @if($has == false)
+                                        <a href="{{ route('companyCreate') }}" class="btn btn-xs btn-flat btn-success" style="float: right">
+                                            Add New
+                                        </a>
+                                    @elseif($has == true)
+                                        @if($count == 0 )
+                                            <a href="{{ route('companyCreate') }}" class="btn btn-xs btn-flat btn-success" style="float: right">
+                                                Add New
+                                            </a>
+                                        @endif
+                                    @endif
+
                                 </div>
                             </div>
                         </div>

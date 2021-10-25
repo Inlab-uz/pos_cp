@@ -15,7 +15,7 @@ class Product
     {
 
         $p = ProductLocal::where('barcode_number', $request['barcode_number'])->first();
-        if ($p){
+        if (!$p){
             ProductLocal::create([
 
                 'barcode_number' => $request['barcode_number'],
@@ -46,7 +46,7 @@ class Product
         $product = \App\Models\Product::updateOrCreate(
             [
                 'barcode_number' => $request['barcode_number'],
-                'category_id' => self::categoryId()
+                'category_id' => $request['category_id']
             ],
             [
                 'title' => $request['title'],
@@ -74,7 +74,7 @@ class Product
             ]);
         if ($product instanceof \App\Models\Product) {
             $import = new Import();
-            $import->category_id = self::categoryId();
+            $import->category_id = $product['category_id'];
             $import->product_id = $product['id'];
             $import->discount = $request['discount'];
             $import->measure = $request['measure'];
@@ -92,11 +92,10 @@ class Product
     }
 
     //* PRODUCT UPDATE */
-    public static function productUpdate($request = [])
+    public static function productUpdate($request)
     {
         $product = \App\Models\Product::where('barcode_number', $request['barcode_number'])->first();
-
-        $product->category_id = self::categoryId();
+        $product->category_id = $request['category_id'];
         $product->title = $request['title'];
         $product->status = '1';
         $product->barcode_formats = $request['barcode_formats'];
@@ -125,7 +124,7 @@ class Product
         if ($product instanceof \App\Models\Product) {
             $import = Import::where('product_id', $product['id'])->first();
 
-            $import->category_id = self::categoryId();
+            $import->category_id = $product['category_id'];
             $import->discount = $request['discount'];
             $import->measure = $request['measure'];
             $import->quantity = $request['quantity'];

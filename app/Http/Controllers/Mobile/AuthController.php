@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends MobileResponseController
 {
     public function register(Request $request){
-        $user = User::where('email', $request->email)->first();
-        if ($user instanceof User){
+        $user = Meneger::where('email', $request->email)->first();
+        if ($user instanceof Meneger){
             if(  Hash::check( $request->password, $user->password ) )
             {
                 $token = $user->createToken('mobile');

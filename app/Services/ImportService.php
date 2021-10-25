@@ -13,10 +13,7 @@ class ImportService
     public static function importUpdate($request=[]){
 
         $import = Import::where('id', $request['id'])->first();
-        $import->product_id = self::product_id();
-        $import->category_id = self::categoryId();
         $import->discount = $request['discount'];
-        $import->measure = $request['measure'];
         $import->quantity = $request['quantity'];
         $import->part = $request['part'];
         $import->sale_price = $request['sale_price'];

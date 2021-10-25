@@ -17,7 +17,7 @@ class Category extends Model
         'branch_id',
         'logo',
         'status',
-        'user_id',
+        'meneger_id',
     ];
 
     public function parent(){

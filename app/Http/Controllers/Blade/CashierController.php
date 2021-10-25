@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Blade;
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
 use App\Models\Cashier;
+use App\Models\Company;
 use App\Models\Meneger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -14,7 +15,12 @@ class CashierController extends Controller
 {
     public function index()
     {
-
+        $company = Company::where('user_id', auth()->user()->id)->first();
+        if (auth()->user()->hasRole('Super Admin')){
+            $branches = Branch::latest()->paginate(20);
+        }elseif (auth()->user()->hasRole('Administrator')){
+            $branches = Branch::where('company_id', $company->id)->paginate(20);
+        }
         $cashiers = Cashier::latest()->paginate(20);
         return view('pages.cashier.index', [
             'cashiers' => $cashiers,
@@ -23,8 +29,12 @@ class CashierController extends Controller
 
     public function create()
     {
-        dd(auth()->user());
-        $branches = Branch::all();
+        $company = Company::where('user_id', auth()->user()->id)->first();
+        if (auth()->user()->hasRole('Super Admin')){
+            $branches = Branch::latest()->paginate(20);
+        }elseif (auth()->user()->hasRole('Administrator')){
+            $branches = Branch::where('company_id', $company->id)->paginate(20);
+        }
         return view('pages.cashier.add', [
             'branches' => $branches
         ]);
@@ -50,7 +60,6 @@ class CashierController extends Controller
             'branch_id' => $request->branch_id,
             'password' => Hash::make($request->password),
             'company_id' => self::company_id(),
-            'manager_id' => self::manager_id(),
 
         ]);
         success_message('Cashier Created success!!!');
@@ -77,7 +86,6 @@ class CashierController extends Controller
         $cashier->name = $request->name;
         $cashier->email = $request->email;
         $cashier->branch_id = $request->branch_id;
-        $cashier->manager_id = self::manager_id();
         $cashier->company_id = self::company_id();
         $cashier->update();
         if ($request->has('password')){

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Mobile\AuthController;
 use App\Http\Controllers\Mobile\CashierController;
 use App\Http\Controllers\Mobile\ManagerController;
+use App\Http\Controllers\PDFController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiAuthController;
@@ -56,5 +57,6 @@ Route::group(['prefix' => 'mobile', 'middleware' => 'auth:sanctum'], function ()
     Route::post('/add-product', [ManagerController::class, 'addProduct']);
     Route::post('/update-product', [ManagerController::class, 'updateProduct']);
 });
-Route::post('/upload', [ManagerController::class, 'upload']);
-
+Route::post('/upload', [ManagerController::class, 'uploadBase64Img']);
+Route::post('/decode', [ManagerController::class, 'decodeBase64Img']);
+Route::get('generate-pdf', [PDFController::class, 'generatePDF']);

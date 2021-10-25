@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PDFController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Blade\UserController;
 use App\Http\Controllers\Blade\RoleController;
@@ -20,7 +21,7 @@ use App\Http\Controllers\Blade\CompanyController;
 
 // Default laravel auth routes
 Auth::routes();
-
+Route::get('generate-pdf', [PDFController::class, 'generatePDF']);
 
 // Welcome page
 Route::get('/', function (){

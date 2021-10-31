@@ -75,17 +75,17 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-        Unit::insert([
-            ["name" => "kg", "status" => 1],
-            ["name" => "litr", "status" => 1],
-            ["name" => "karobka", "status" => 1],
-            ["name" => "dona", "status" => 1],
-            ["name" => "metr", "status" => 1],
-        ]);
+
 
         if ($cnt === 0) {
             $perms_cnt = Permission::count();
-
+            Unit::insert([
+                ["name" => "kg", "status" => 1],
+                ["name" => "litr", "status" => 1],
+                ["name" => "karobka", "status" => 1],
+                ["name" => "dona", "status" => 1],
+                ["name" => "metr", "status" => 1],
+            ]);
             if ($perms_cnt === 0) {
                 Permission::insert([
                     ["name" => 'permission.show', "title" => 'Ruxsatlarni ko\'rish', "guard_name" => 'web'],

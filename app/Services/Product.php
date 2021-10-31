@@ -4,7 +4,10 @@
 namespace App\Services;
 
 
+use App\Models\Branch;
+use App\Models\Company;
 use App\Models\Import;
+use App\Models\Meneger;
 use App\Models\ProductLocal;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
@@ -13,7 +16,6 @@ class Product
 {
     public static function productCreate($request = [])
     {
-
         $p = ProductLocal::where('barcode_number', $request['barcode_number'])->first();
         if (!$p){
             ProductLocal::create([
@@ -75,6 +77,8 @@ class Product
         if ($product instanceof \App\Models\Product) {
             $import = new Import();
             $import->category_id = $product['category_id'];
+            $import->company_id = self::company();
+            $import->branch_id = self::branch();
             $import->product_id = $product['id'];
             $import->discount = $request['discount'];
             $import->measure = $request['measure'];
@@ -127,8 +131,8 @@ class Product
             $import->category_id = $product['category_id'];
             $import->discount = $request['discount'];
             $import->measure = $request['measure'];
-            $import->quantity = $request['quantity'];
-            $import->part = $request['quantity'];
+            $import->quantity = $request['part'];
+            $import->part = $request['part'];
             $import->price = $request['price'];
             $import->sale_price = $request['sale_price'];
             $import->nds = $request['nds'];
@@ -140,12 +144,20 @@ class Product
         return null;
 
     }
-    public static function categoryId(){
-        $categories = auth()->user()->categories;
-        foreach ($categories as $category){
-            $category_id = $category['id'];
-            return $category_id;
-        }
+    public static function company(){
+        $manager = Meneger::find(auth()->user()->id);
+        return $manager->company_id;
     }
+    public static function branch(){
+        $manager = Meneger::find(auth()->user()->id);
+        return $manager->branch_id;
+    }
+//    public static function categoryId(){
+//        $categories = auth()->user()->categories;
+//        foreach ($categories as $category){
+//            $category_id = $category['id'];
+//            return $category_id;
+//        }
+//    }
 
 }

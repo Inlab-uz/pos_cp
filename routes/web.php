@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Blade\CategoryController;
 use App\Http\Controllers\PDFController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Blade\UserController;
@@ -106,13 +107,13 @@ Route::group(['middleware' => 'auth'],function (){
     Route::delete('/api-user/delete/{id}',[ApiUserController::class,'destroy'])->name('api-userDestroy');
     Route::delete('/api-user-token/delete/{id}',[ApiUserController::class,'destroyToken'])->name('api-tokenDestroy');
 
-    Route::get('/category', 'Blade\CategoryController@index');
-    Route::get('/category/add', 'Blade\CategoryController@add');
-    Route::post('/category/store', 'Blade\CategoryController@store');
-    Route::get('/category/edit/{id}', 'Blade\CategoryController@edit');
-    Route::post('/category/update/{id}', 'Blade\CategoryController@update');
-    Route::get('/category/img/{resource}', 'Blade\CategoryController@img');
-    Route::get('/category/view/{id}', 'Blade\CategoryController@view');
+    Route::get('/category', [CategoryController::class, 'index']);
+    Route::get('/category/add', [CategoryController::class, 'add']);
+    Route::post('/category/store', [CategoryController::class, 'store']);
+    Route::get('/category/edit/{id}', [CategoryController::class, 'edit']);
+    Route::post('/category/update/{id}', [CategoryController::class, 'update']);
+    Route::get('/category/img/{resource}', [CategoryController::class, 'img']);
+    Route::get('/category/view/{id}', [CategoryController::class, 'view']);
 
 });
 
@@ -130,6 +131,10 @@ Route::get('/language/{lang}',function ($lang){
 
 Route::get('/generate-barcode', [\App\Http\Controllers\HomeController::class, 'barcodeTest'])->name('generate.barcode');
 
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('optimize');
+    dd(1);
+});
 /*
 |--------------------------------------------------------------------------
 | This is the end of Blade (front-end) Routes

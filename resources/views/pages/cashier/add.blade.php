@@ -12,7 +12,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-6">
-                                    <h3 class="card-title">Cashier Add</h3>
+                                    <h3 class="card-title">@lang('cruds.cashier.fields.add')</h3>
                                 </div>
                                 <div class="col-6">
                                 </div>
@@ -75,7 +75,7 @@
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">@lang('cruds.cashier.fields.add')</button>
                             </div>
                         </form>
                         <!-- /.card-body -->

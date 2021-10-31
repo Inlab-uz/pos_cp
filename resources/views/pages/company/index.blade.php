@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Company</h1>
+                    <h1>@lang('cruds.company.title')</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -25,17 +25,17 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-6">
-                                    <h3 class="card-title">Company</h3>
+
                                 </div>
                                 <div class="col-6">
                                     @if($has == false)
                                         <a href="{{ route('companyCreate') }}" class="btn btn-xs btn-flat btn-success" style="float: right">
-                                            Add New
+                                            @lang('cruds.company.fields.add')
                                         </a>
                                     @elseif($has == true)
                                         @if($count == 0 )
                                             <a href="{{ route('companyCreate') }}" class="btn btn-xs btn-flat btn-success" style="float: right">
-                                                Add New
+                                                @lang('cruds.company.fields.add')
                                             </a>
                                         @endif
                                     @endif
@@ -49,11 +49,11 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>User</th>
-                                    <th>Name</th>
-                                    <th>Logo</th>
-                                    <th>Description</th>
-                                    <th>User</th>
+                                    <th>@lang('cruds.user.title_singular')</th>
+                                    <th>@lang('cruds.company.title_singular')</th>
+                                    <th>@lang('cruds.company.fields.logo')</th>
+                                    <th>@lang('cruds.company.fields.description')</th>
+                                    <th>@lang('cruds.company.fields.manage')</th>
                                     <th></th>
                                 </tr>
                                 </thead>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Blade;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -12,9 +13,12 @@ use Illuminate\Support\Str;
 class CategoryController extends Controller
 {
     public function index(Request $request){
-
-        $categories = Category::paginate(20);
-
+        $company = Company::where('user_id', auth()->user()->id)->first();
+        if (auth()->user()->hasRole('Super Admin')){
+            $categories = Category::latest()->paginate(20);
+        }elseif (auth()->user()->hasRole('Administrator')){
+            $categories = Category::where('company_id', $company->id)->paginate(20);
+        }
         return view('pages.category.index', compact(
             'categories'
         ));

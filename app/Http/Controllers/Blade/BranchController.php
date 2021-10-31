@@ -14,10 +14,13 @@ class BranchController extends Controller
     public function index(){
         $id = auth()->user()->id;
         $company = Company::where('user_id', $id)->first();
-        if (auth()->user()->hasRole('Super Admin')){
-            $branches = Branch::latest()->paginate(20);
-        }elseif (auth()->user()->hasRole('Administrator')){
-            $branches = Branch::where('company_id', $company->id)->paginate(20);
+        $branches = Branch::where('company_id', 0)->paginate(20);
+        if ($company){
+            if (auth()->user()->hasRole('Super Admin')){
+                $branches = Branch::latest()->paginate(20);
+            }elseif (auth()->user()->hasRole('Administrator')){
+                $branches = Branch::where('company_id', $company->id)->paginate(20);
+            }
         }
         return view('pages.branch.index',[
             'branches'=>$branches,
@@ -67,7 +70,12 @@ class BranchController extends Controller
 
     public function edit($id){
         $branch = Branch::where('id', $id)->firstOrFail();
-        $companies = Company::all();
+        $id = auth()->user()->id;
+        if (auth()->user()->hasRole('Super Admin')){
+            $companies = Company::latest()->paginate(20);
+        }elseif (auth()->user()->hasRole('Administrator')){
+            $companies = Company::where('user_id', $id)->paginate(5);
+        }
         return view('pages.branch.edit', [
             'branch'=>$branch,
             'companies'=>$companies,

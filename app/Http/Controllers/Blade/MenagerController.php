@@ -21,9 +21,8 @@ class MenagerController extends Controller
         if (auth()->user()->hasRole('Super Admin')){
             $menegers = Meneger::latest()->paginate(20);
         }elseif (auth()->user()->hasRole('Administrator')){
-            $branches = Meneger::where('user_id', $id)->paginate(20);
+            $menegers = Meneger::where('user_id', $id)->paginate(20);
         }
-        $menegers = Meneger::latest()->paginate(20);
         return view('pages.meneger.index', [
             'menegers' => $menegers,
         ]);
@@ -49,7 +48,7 @@ class MenagerController extends Controller
             'name' => 'required',
             'email' => 'required|unique:menegers,email',
             'branch_id' => 'required',
-            'password' => 'required|min:8|confirmed',
+            'password' => 'required|min:4|confirmed',
 
         ]);
 
@@ -64,7 +63,7 @@ class MenagerController extends Controller
             'branch_id' => $request->branch_id,
             'password' => Hash::make($request->password),
             'user_id' => auth()->user()->id,
-            'company_id' => self::companyid(),
+            'company_id' => self::company_id($request->branch_id)
 
         ]);
         return redirect()->route('menegerIndex')->with("success", "Saved!");
@@ -91,18 +90,20 @@ class MenagerController extends Controller
         $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:menegers,email,' . $id],
-            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+            'password' => ['nullable', 'string', 'min:4', 'confirmed'],
         ]);
 
 
         $meneger = Meneger::find($id);
         $meneger->name = $request->name;
         $meneger->email = $request->email;
-        $meneger->password = $request->password;
         $meneger->branch_id = $request->branch_id;
-        $meneger->user_id = auth()->user()->id;
-        $meneger->company_id = self::companyid();
+        $meneger->company_id = self::company_id($request->branch_id);
         $meneger->update();
+        if ($request->has('password')){
+            $meneger->password = Hash::make($request->password);
+            $meneger->update();
+        }
         success_message('Maneger success updated!!!');
         return redirect()->route('menegerIndex');
     }
@@ -115,11 +116,9 @@ class MenagerController extends Controller
         return back();
     }
 //    STATIC FUNCTIONS ==================================================
-    public static function companyid(){
-        $companies = auth()->user()->companies;
-        foreach ($companies as $company) {
-            $company_id = $company['id'];
-            return $company_id;
-        }
+    public static function company_id($id)
+    {
+        $branch = Branch::find($id);
+        return $branch->company_id;
     }
 }

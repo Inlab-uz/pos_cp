@@ -16,12 +16,15 @@ class CashierController extends Controller
     public function index()
     {
         $company = Company::where('user_id', auth()->user()->id)->first();
-        if (auth()->user()->hasRole('Super Admin')){
-            $branches = Branch::latest()->paginate(20);
-        }elseif (auth()->user()->hasRole('Administrator')){
-            $branches = Branch::where('company_id', $company->id)->paginate(20);
+        $cashiers = Cashier::where('company_id', 0)->paginate(20);
+        if ($company){
+
+            if (auth()->user()->hasRole('Super Admin')){
+                $cashiers = Cashier::latest()->paginate(20);
+            }elseif (auth()->user()->hasRole('Administrator')){
+                $cashiers = Cashier::where('company_id', $company->id)->paginate(20);
+            }
         }
-        $cashiers = Cashier::latest()->paginate(20);
         return view('pages.cashier.index', [
             'cashiers' => $cashiers,
         ]);
@@ -46,7 +49,7 @@ class CashierController extends Controller
             'name' => 'required',
             'email' => 'required',
             'branch_id' => 'required',
-            'password' => 'required|min:8|confirmed',
+            'password' => 'required|min:4|confirmed',
 
         ]);
 
@@ -59,7 +62,7 @@ class CashierController extends Controller
             'email' => $request->email,
             'branch_id' => $request->branch_id,
             'password' => Hash::make($request->password),
-            'company_id' => self::company_id(),
+            'company_id' => self::company_id($request->branch_id),
 
         ]);
         success_message('Cashier Created success!!!');
@@ -79,17 +82,18 @@ class CashierController extends Controller
         $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:cashiers,email,' . $id],
-            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+            'password' => ['nullable', 'string', 'min:4', 'confirmed'],
         ]);
 
         $cashier = Cashier::find($id);
         $cashier->name = $request->name;
         $cashier->email = $request->email;
         $cashier->branch_id = $request->branch_id;
-        $cashier->company_id = self::company_id();
+        $cashier->company_id = self::company_id($request->branch_id);
         $cashier->update();
         if ($request->has('password')){
             $cashier->password = Hash::make($request->password);
+            $cashier->update();
         }
         success_message('Maneger success updated!!!');
         return redirect()->route('cashierIndex');
@@ -113,12 +117,9 @@ class CashierController extends Controller
         }
     }
 
-    public static function company_id()
+    public static function company_id($id)
     {
-        $companies = auth()->user()->companies;
-        foreach ($companies as $company) {
-            $company_id = $company['id'];
-            return $company_id;
-        }
+        $branch = Branch::find($id);
+            return $branch->company_id;
     }
 }

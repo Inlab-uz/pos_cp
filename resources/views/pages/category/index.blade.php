@@ -39,6 +39,7 @@
                                 @php
                                 $index = 1
                                 @endphp
+{{--                                @dd($categories)--}}
                                 @foreach($categories as $c)
                                     <tr style=" align-items: center">
                                         <td style="vertical-align: middle;">{{$index++}}</td>
@@ -49,7 +50,7 @@
                                             <img src="/category/img/{{$c->id}}" alt="" style="max-width: 100px">
                                         </td>
                                         <td style="vertical-align: middle;">
-                                            {{$c->user->name}}
+                                            {{$c->user->name??""}}
                                         </td>
                                         <td width="100px" style="vertical-align: middle;">
                                             <div class="btn-group">

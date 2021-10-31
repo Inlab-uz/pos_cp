@@ -44,6 +44,7 @@ Route::group(['prefix' => 'mobile', 'middleware' => 'auth:sanctum'], function ()
     Route::get('/get-category', [ManagerController::class, 'getCategory']);
     Route::post('/get-product-by-category', [ManagerController::class, 'getProductByCategory']);
     Route::post('/get-product-by-barcode', [ManagerController::class, 'getProductByBarCode']);
+    Route::post('/get-product-by-id', [ManagerController::class, 'getProductById']);
     Route::get('/measurement', [ManagerController::class, 'measurement']);
     Route::post('/import-update', [ManagerController::class, 'importUpdate']);
     Route::get('/import-all', [ManagerController::class, 'getAllImport']);

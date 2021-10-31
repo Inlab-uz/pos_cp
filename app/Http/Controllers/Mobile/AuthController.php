@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends MobileResponseController
 {
-    public function register(Request $request){
+    public function register(Request $request)
+    {
         $user = Meneger::where('email', $request->email)->first();
-        if ($user instanceof Meneger){
-            if(  Hash::check( $request->password, $user->password ) )
-            {
+        if ($user instanceof Meneger) {
+            if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('mobile');
                 $data = [
                     'token' => $token->plainTextToken,
@@ -26,9 +26,8 @@ class AuthController extends MobileResponseController
             }
         }
         $user = Cashier::where('email', $request->email)->first();
-        if($user instanceof Cashier){
-            if(  Hash::check( $request->password, $user->password ) )
-            {
+        if ($user instanceof Cashier) {
+            if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('mobile');
                 $data = [
                     'token' => $token->plainTextToken,
@@ -40,17 +39,32 @@ class AuthController extends MobileResponseController
         }
         return $this->error('Login yoki Parol Xato!');
     }
-    public function login(Request $request){
+
+    public function login(Request $request)
+    {
         $user = auth()->user();
-        if(  Hash::check( $request->password, $user['password'] ) )
-        {
-            $token = $user->createToken('mobile');
-            $data = [
-                'manager' => true,
-                'cashier' => false
-            ];
-            return $this->success($data);
+        if ($user instanceof Meneger) {
+            if (Hash::check($request->password, $user['password'])) {
+                $token = $user->createToken('mobile');
+                $data = [
+                    'manager' => true,
+                    'cashier' => false
+                ];
+                return $this->success($data);
+            }
+            return $this->error('Parol Xato!');
         }
-        return $this->error('Parol Xato!');
+        if ($user instanceof Cashier) {
+            if (Hash::check($request->password, $user['password'])) {
+                $token = $user->createToken('mobile');
+                $data = [
+                    'manager' => false,
+                    'cashier' => true
+                ];
+                return $this->success($data);
+            }
+            return $this->error('Parol Xato!');
+        }
+        return $this->error('U');
     }
 }

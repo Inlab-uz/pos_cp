@@ -12,11 +12,11 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-6">
-                                    <h3 class="card-title">Branch</h3>
+                                    <h3 class="card-title">@lang('cruds.branch.title')</h3>
                                 </div>
                                 <div class="col-6">
                                     <a href="{{ route('branchCreate') }}" class="btn btn-xs btn-flat btn-success" style="float: right">
-                                        Add New
+                                        @lang('cruds.branch.fields.add')
                                     </a>
                                 </div>
                             </div>
@@ -27,11 +27,11 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Company</th>
-                                    <th>Name</th>
-                                    <th>Address</th>
-                                    <th>Phone</th>
-                                    <th></th>
+                                    <th>  @lang('cruds.branch.fields.company')</th>
+                                    <th>  @lang('cruds.branch.fields.name')</th>
+                                    <th>  @lang('cruds.branch.fields.address')</th>
+                                    <th>  @lang('cruds.branch.fields.phone')</th>
+                                    <th>  @lang('cruds.company.fields.manage')</th>
                                 </tr>
                                 </thead>
                                 <tbody>

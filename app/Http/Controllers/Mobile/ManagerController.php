@@ -31,6 +31,14 @@ class ManagerController extends MobileResponseController
         $products = Product::where('category_id', $request->category_id)->get();
         return $this->success(ProductResource::collection($products));
     }
+    public function getProductById(Request $request)
+    {
+        $products = Product::find($request->product_id);
+        $import = Import::where('product_id', $products->id)->first();
+        $data['product'] = $products;
+        $data['import'] = $import;
+        return $this->success($data);
+    }
 
     public function getProductByBarCode(Request $request)
     {
@@ -45,9 +53,11 @@ class ManagerController extends MobileResponseController
         if ($product) {
             return $this->success($product);
         }
-        $product = (new GlobalService())->search($request->barcode);
-        if (isset($product->original['products']))
-            return $this->success($product->original['products'][0]);
+//        $product = (new GlobalService())->search($request->barcode);
+//        dd(count($product->original['products']));
+
+//        if (count($product->original['products']) != 0)
+//            return $this->success($product->original['products'][0]);
         return $this->error('product not found!');
     }
 
@@ -114,7 +124,6 @@ class ManagerController extends MobileResponseController
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-
         ]);
         if ($validator->fails())
             return $this->validationError($validator->errors());

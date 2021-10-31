@@ -12,7 +12,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-6">
-                                    <h3 class="card-title">Company Add</h3>
+                                    <h3 class="card-title">@lang('cruds.company.fields.add')</h3>
                                 </div>
                                 <div class="col-6">
                                 </div>
@@ -25,19 +25,19 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label for="categoryName">Name</label>
-                                            <input type="text" class="form-control" id="companyName" name="Company[name]" placeholder="Name of company">
+                                            <label for="categoryName">@lang('cruds.company.fields.name')</label>
+                                            <input type="text" class="form-control" id="companyName" name="Company[name]" placeholder="@lang('cruds.company.fields.name_input')">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label for="exampleInputFile">File input</label>
+                                            <label for="exampleInputFile">@lang('cruds.company.fields.logo')</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
                                                     <input name="Company[logo]" type="file" class="custom-file-input" id="categoryLogo">
-                                                    <label class="custom-file-label" for="companyLogo">Choose file</label>
+                                                    <label class="custom-file-label" for="companyLogo">@lang('cruds.company.fields.logo_choose')</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -47,8 +47,8 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label for="categoryName">Description</label>
-                                            <textarea name="Company[description]" class="form-control" rows="4"></textarea>
+                                            <label for="categoryName">@lang('cruds.company.fields.description')</label>
+                                            <textarea name="Company[description]" placeholder="@lang('cruds.company.fields.description_placeholder')" class="form-control" rows="4"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -56,7 +56,7 @@
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">@lang('cruds.company.fields.create')</button>
                             </div>
                         </form>
                         <!-- /.card-body -->

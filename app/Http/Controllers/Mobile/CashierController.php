@@ -31,8 +31,9 @@ class CashierController extends MobileResponseController
                         'id' => $product->id,
                         'name' => $product->title,
                         'price' => $sum,
+                        'measure' => $product->measure,
                     ];
-                    return $this->success($data);
+                    return $this->success([$data]);
                 }
                 return $this->error('Mahsulot topilmadi!');
             }
@@ -49,7 +50,7 @@ class CashierController extends MobileResponseController
         foreach ($orders as $order){
             $import = Import::where('product_id', $order['product_id'])->first();
             if ($import['measure'] == 1){
-                $summ = ($order['product_count'])*($import->sale_price);
+                                                                                                                                   $summ = ($order['product_count'])*($import->sale_price);
                 $orderItem = (new OrderItem())->add($export->id, $import, $order);
                 $import->part = ($import->quantity) - ($order['product_count']);
                 $import->update();
@@ -64,7 +65,9 @@ class CashierController extends MobileResponseController
                 $import->part = ($import->quantity) - ($order['product_count']);
                 $import->update();
             }elseif ($import['measure'] == 4){
+
                  $summ = ($order['product_count'])*($import->sale_price);
+
                 $orderItem = (new OrderItem())->add($export->id, $import, $order);
                 $import->part = ($import->quantity) - ($order['product_count']);
                 $import->update();
@@ -76,6 +79,7 @@ class CashierController extends MobileResponseController
             }
         }
         $ex = OrderItem::where('order_id', $export->id)->get();
+        dd($ex);
         $summ = 0;
 //        dd($ex);
         foreach ($ex as $e){

@@ -10,6 +10,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Import;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -18,7 +19,12 @@ use Illuminate\Support\Facades\Validator;
 class ImportController extends Controller
 {
     public function index(){
-        $imports = Import::latest()->paginate(40);
+        $company = Company::where('user_id', auth()->user()->id)->first();
+        if (auth()->user()->hasRole('Super Admin')){
+            $imports = Import::latest()->paginate(20);
+        }elseif (auth()->user()->hasRole('Administrator')){
+            $imports = Import::where('company_id', $company->id)->paginate(20);
+        }
         return view('pages.import.index',[
             'imports'=>$imports,
         ]);
@@ -38,7 +44,7 @@ class ImportController extends Controller
         $import = new Import();
         $import->category_id=1;
         $import->product_id=$request->product_id;
-        $import->discount_id=1;
+        $import->discount=$request->discount;
         $import->measure=$request->measure;
         $import->quantity=$request->quantity;
         $import->part=$request->quantity;

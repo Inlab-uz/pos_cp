@@ -15,12 +15,14 @@ class CompanyController extends Controller
     public function index(){
         $has = false;
         $id = auth()->user()->id;
+        $count = 0;
         if (auth()->user()->hasRole('Super Admin')){
             $companies = Company::latest()->paginate(20);
         }elseif (auth()->user()->hasRole('Administrator')){
             $companies = Company::where('user_id', $id)->paginate(5);
             $has = true;
             $count = count($companies);
+
         }
         return view('pages.company.index', compact('companies', 'has', 'count'));
     }

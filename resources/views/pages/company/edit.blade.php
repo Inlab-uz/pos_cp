@@ -12,7 +12,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-6">
-                                    <h3 class="card-title">Company edit</h3>
+                                    <h3 class="card-title">@lang('cruds.company.fields.edit')</h3>
                                 </div>
                                 <div class="col-6">
 
@@ -26,7 +26,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label for="categoryName">Name</label>
+                                            <label for="categoryName">@lang('cruds.company.fields.name')</label>
                                             <input type="text" class="form-control" id="categoryName" name="Company[name]" placeholder="Name of company" value="{{$company->name}}">
                                         </div>
                                     </div>
@@ -35,11 +35,11 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label for="exampleInputFile">File input</label>
+                                            <label for="exampleInputFile">@lang('cruds.company.fields.logo')</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
                                                     <input type="file" class="custom-file-input" id="categoryLogo" name="Company[logo]">
-                                                    <label class="custom-file-label" for="companyLogo">Choose file</label>
+                                                    <label class="custom-file-label" for="companyLogo">@lang('cruds.company.fields.logo_choose')</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -49,7 +49,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label for="exampleInputFile">Description</label>
+                                            <label for="exampleInputFile">@lang('cruds.company.fields.description')</label>
                                             <div class="input-group">
                                                  <textarea name="Company[description]" class="form-control" rows="3">{{ $company->description }}</textarea>
                                             </div>
@@ -60,7 +60,7 @@
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">@lang('cruds.company.fields.edit')</button>
                             </div>
                         </form>
                         <!-- /.card-body -->

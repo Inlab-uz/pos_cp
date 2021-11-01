@@ -64,55 +64,55 @@
         @endcan
 
         @can('company.show')
-        <li class="nav-item">
-            <a href="{{ route('companyIndex') }}" class="nav-link {{ Request::is('company*') ? "active":'' }}">
-                <i class="fas fa-building"></i>
-                <p>@lang('cruds.company.title')</p>
-            </a>
-        </li>
+            <li class="nav-item">
+                <a href="{{ route('companyIndex') }}" class="nav-link {{ Request::is('company*') ? "active":'' }}">
+                    <i class="fas fa-building"></i>
+                    <p>@lang('cruds.company.title')</p>
+                </a>
+            </li>
         @endcan
         @can('branch.show')
-        <li class="nav-item">
-            <a href="{{ route('branchIndex') }}" class="nav-link {{ Request::is('branch*') ? "active":'' }}">
-                <i class="fas fa-code-branch"></i>
-                <p>@lang('cruds.branch.title')</p>
-            </a>
-        </li>
+            <li class="nav-item">
+                <a href="{{ route('branchIndex') }}" class="nav-link {{ Request::is('branch*') ? "active":'' }}">
+                    <i class="fas fa-code-branch"></i>
+                    <p>@lang('cruds.branch.title')</p>
+                </a>
+            </li>
         @endcan
     </ul>
 
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
         @can('manager.show')
-        <li class="nav-item">
-            <a href="{{ route('menegerIndex') }}" class="nav-link {{ Request::is('meneger*') ? "active":'' }}">
-                <i class="fas fa-user-shield" aria-hidden="true"></i>
-                <p>
-                    @lang('cruds.manager.title')
-                </p>
-            </a>
-        </li>
+            <li class="nav-item">
+                <a href="{{ route('menegerIndex') }}" class="nav-link {{ Request::is('meneger*') ? "active":'' }}">
+                    <i class="fas fa-user-shield" aria-hidden="true"></i>
+                    <p>
+                        @lang('cruds.manager.title')
+                    </p>
+                </a>
+            </li>
         @endcan
         @can('cashier.show')
-        <li class="nav-item">
-            <a href="{{ route('cashierIndex') }}" class="nav-link {{ Request::is('cashier*') ? "active":'' }}">
-                <i class="fas fa-cash-register" aria-hidden="true"></i>
-                <p>
-                    @lang('cruds.cashier.title')
-                </p>
-            </a>
-        </li>
+            <li class="nav-item">
+                <a href="{{ route('cashierIndex') }}" class="nav-link {{ Request::is('cashier*') ? "active":'' }}">
+                    <i class="fas fa-cash-register" aria-hidden="true"></i>
+                    <p>
+                        @lang('cruds.cashier.title')
+                    </p>
+                </a>
+            </li>
         @endcan
-{{--        @can('category.show')--}}
-{{--        <li class="nav-item">--}}
-{{--            <a href="/category" class="nav-link {{ Request::is('category*') ? "active":'' }}">--}}
-{{--                <i class="fa fa-list-alt" aria-hidden="true"></i>--}}
-{{--                <p>--}}
-{{--                    @lang('cruds.category.title')--}}
-{{--                </p>--}}
-{{--            </a>--}}
-{{--        </li>--}}
-{{--        @endcan--}}
+        {{--        @can('category.show')--}}
+        {{--        <li class="nav-item">--}}
+        {{--            <a href="/category" class="nav-link {{ Request::is('category*') ? "active":'' }}">--}}
+        {{--                <i class="fa fa-list-alt" aria-hidden="true"></i>--}}
+        {{--                <p>--}}
+        {{--                    @lang('cruds.category.title')--}}
+        {{--                </p>--}}
+        {{--            </a>--}}
+        {{--        </li>--}}
+        {{--        @endcan--}}
         @can('import.show')
             <li class="nav-item">
                 <a href="{{ route('importIndex') }}" class="nav-link {{ Request::is('import*') ? "active":'' }}">
@@ -123,12 +123,19 @@
         @endcan
 
 
-            <li class="nav-item has-treeview">
-                <a href="{{ route('products.index') }}" class="nav-link ">
-                    <i class="nav-icon fas fa-th-large"></i>
-                    <p>Products</p>
-                </a>
-            </li>
+        <li class="nav-item has-treeview">
+            <a href="{{ route('products.index') }}" class="nav-link ">
+                <i class="nav-icon fas fa-th-large"></i>
+                <p>Products</p>
+            </a>
+        </li>
+
+        <li class="nav-item has-treeview">
+            <a href="{{ route('cart.index') }}" class="nav-link ">
+                <i class="nav-icon fas fa-cart-plus"></i>
+                <p>Open POS</p>
+            </a>
+        </li>
 
         <li class="nav-item has-treeview">
             <a href="" class="nav-link">

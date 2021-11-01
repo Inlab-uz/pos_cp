@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Blade\CategoryController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -117,6 +118,12 @@ Route::group(['middleware' => 'auth'],function (){
     Route::get('/category/view/{id}', [CategoryController::class, 'view']);
 
     Route::resource('products', ProductController::class);
+
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
+    Route::post('/cart/change-qty', [CartController::class, 'changeQty']);
+    Route::delete('/cart/delete', [CartController::class, 'delete']);
+    Route::delete('/cart/empty', [CartController::class, 'empty']);
 
 });
 

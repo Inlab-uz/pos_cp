@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,24 @@ class CartController extends Controller
                 $request->user()->cart()->get()
             );
         }
-        return view('pages.cart.index');
+        $company = auth()->user()->companies->first();
+        $categories = Category::where("company_id", $company->id)->get();
+        $products = [];
+
+
+        foreach ($categories as $category){
+            $products = Product::where("category_id", $category->id)
+                ->where('status',1)
+                ->with('import')
+                ->get()
+                ->whereNotNull('import')
+                ->toArray();
+            $products = array_merge($products, $products);
+        }
+
+
+
+        return view('pages.cart.index', compact('products'));
     }
 
     public function store(Request $request)

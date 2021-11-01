@@ -17,7 +17,7 @@ class CashierController extends MobileResponseController
     {
         $cashier = $request->user();
 
-        if ($cashier instanceof Cashier){
+        if ($cashier instanceof Cashier) {
             $categories = Category::where('branch_id', $cashier->branch_id)->get();
             if ($categories) {
                 $product = [];
@@ -26,7 +26,7 @@ class CashierController extends MobileResponseController
                 }
                 if ($product) {
                     $import = Import::where('product_id', $product->id)->first();
-                    $sum = (int)($import->sale_price) - (int)(($import->sale_price * $import->discount)/100);
+                    $sum = (int)($import->sale_price) - (int)(($import->sale_price * $import->discount) / 100);
                     $data = [
                         'id' => $product->id,
                         'name' => $product->title,
@@ -47,32 +47,32 @@ class CashierController extends MobileResponseController
 //        dd($request->all());
         $orders = $request->data;
         $export = (new Order())->add($request->all());
-        foreach ($orders as $order){
+        foreach ($orders as $order) {
             $import = Import::where('product_id', $order['product_id'])->first();
-            if ($import['measure'] == 1){
-                                                                                                                                   $summ = ($order['product_count'])*($import->sale_price);
+            if ($import['measure'] == 1) {
+                $summ = ($order['product_count']) * ($import->sale_price);
                 $orderItem = (new OrderItem())->add($export->id, $import, $order);
                 $import->part = ($import->quantity) - ($order['product_count']);
                 $import->update();
-            }elseif ($import['measure'] == 2){
-                 $summ = ($order['product_count'])*($import->sale_price);
+            } elseif ($import['measure'] == 2) {
+                $summ = ($order['product_count']) * ($import->sale_price);
                 $orderItem = (new OrderItem())->add($export->id, $import, $order);
                 $import->part = ($import->quantity) - ($order['product_count']);
                 $import->update();
-            }elseif ($import['measure'] == 3){
-                 $summ = ($order['product_count'])*($import->sale_price);
+            } elseif ($import['measure'] == 3) {
+                $summ = ($order['product_count']) * ($import->sale_price);
                 $orderItem = (new OrderItem())->add($export->id, $import, $order);
                 $import->part = ($import->quantity) - ($order['product_count']);
                 $import->update();
-            }elseif ($import['measure'] == 4){
+            } elseif ($import['measure'] == 4) {
 
-                 $summ = ($order['product_count'])*($import->sale_price);
+                $summ = ($order['product_count']) * ($import->sale_price);
 
                 $orderItem = (new OrderItem())->add($export->id, $import, $order);
                 $import->part = ($import->quantity) - ($order['product_count']);
                 $import->update();
-            }elseif ($import['measure'] == 5){
-                $summ = ($order['product_count'])*($import->sale_price);
+            } elseif ($import['measure'] == 5) {
+                $summ = ($order['product_count']) * ($import->sale_price);
                 $orderItem = (new OrderItem())->add($export->id, $import, $order);
                 $import->part = ($import->quantity) - ($order['product_count']);
                 $import->update();
@@ -82,7 +82,7 @@ class CashierController extends MobileResponseController
         dd($ex);
         $summ = 0;
 //        dd($ex);
-        foreach ($ex as $e){
+        foreach ($ex as $e) {
             $summ += $e->total_price;
         }
         $export->total_price = $summ;

@@ -10,9 +10,15 @@ class Product extends Model
     use HasFactory;
     protected $guarded = [];
 
+
     public function imports()
     {
-        return $this->hasMany(Import::class);
+        return $this->hasOne(Import::class);
+    }
+
+    public function import()
+    {
+        return $this->hasOne(Import::class)->where('part','>',0)->orderBy('sale_price');
     }
     public function category()
     {

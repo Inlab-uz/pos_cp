@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Blade\CategoryController;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Blade\UserController;
 use App\Http\Controllers\Blade\RoleController;
@@ -114,6 +115,8 @@ Route::group(['middleware' => 'auth'],function (){
     Route::post('/category/update/{id}', [CategoryController::class, 'update']);
     Route::get('/category/img/{resource}', [CategoryController::class, 'img']);
     Route::get('/category/view/{id}', [CategoryController::class, 'view']);
+
+    Route::resource('products', ProductController::class);
 
 });
 

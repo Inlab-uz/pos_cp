@@ -42,7 +42,7 @@ class CompanyController extends Controller
             return redirect()->back();
         }else{
             $name = Str::random(40);
-            $file_name = "/" . $name . "." . $request->file('Company.logo')->extension();
+            $file_name = "" . $name . "." . $request->file('Company.logo')->extension();
             $request->file('Company.logo')->move(storage_path('company') , $file_name);
         }
         Company::create([
@@ -87,7 +87,7 @@ class CompanyController extends Controller
         if($request->file('Category.logo')){
             $name = Str::random(40);
 
-            $file_name = "/" . $name . "." . $request->file('Category.logo')->extension();
+            $file_name = "" . $name . "." . $request->file('Category.logo')->extension();
             $request->file('Category.logo')->move(storage_path('category') , $file_name);
         }
 

@@ -39,10 +39,10 @@ class LogWriter
         return self::log($message,date('M-d'),"API/$name/".date('Y-m'));
     }
 
-    public static function exceptions($message)
-    {
-        return self::log($message,date('M-d'),'Exceptions/'.date('Y-m'));
-    }
+        public static function exceptions($message)
+        {
+            return self::log($message,date('M-d'),'Exceptions/'.date('Y-m'));
+        }
 
     public static function user_activity($message,$file = 'UserActivity' )
     {

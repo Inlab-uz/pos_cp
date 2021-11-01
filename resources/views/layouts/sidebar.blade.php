@@ -103,16 +103,16 @@
                 </a>
             </li>
         @endcan
-        {{--        @can('category.show')--}}
-        {{--        <li class="nav-item">--}}
-        {{--            <a href="/category" class="nav-link {{ Request::is('category*') ? "active":'' }}">--}}
-        {{--                <i class="fa fa-list-alt" aria-hidden="true"></i>--}}
-        {{--                <p>--}}
-        {{--                    @lang('cruds.category.title')--}}
-        {{--                </p>--}}
-        {{--            </a>--}}
-        {{--        </li>--}}
-        {{--        @endcan--}}
+                @can('category.show')
+                <li class="nav-item">
+                    <a href="/category" class="nav-link {{ Request::is('category*') ? "active":'' }}">
+                        <i class="fa fa-list-alt" aria-hidden="true"></i>
+                        <p>
+                            @lang('cruds.category.title')
+                        </p>
+                    </a>
+                </li>
+                @endcan
         @can('import.show')
             <li class="nav-item">
                 <a href="{{ route('importIndex') }}" class="nav-link {{ Request::is('import*') ? "active":'' }}">

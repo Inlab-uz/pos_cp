@@ -27,7 +27,8 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="categoryName">Name</label>
-                                            <input type="text" class="form-control" id="categoryName" name="Category[name]" placeholder="Name of category">
+                                            <input type="text" class="form-control" id="categoryName"
+                                                   name="Category[name]" placeholder="Name of category">
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -42,11 +43,25 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="categoryBranch">@lang('cruds.branch.title')</label>
+                                            <select class="form-control" name="Category[branch_id]" id="categoryBranch">
+                                                @foreach($branches as $b)
+                                                    <option value="{{$b->id}}">{{$b->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label for="exampleInputFile">File input</label>
                                     <div class="input-group">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="categoryLogo" name="Category[logo]">
+                                            <input type="file" class="custom-file-input" id="categoryLogo"
+                                                   name="Category[logo]">
                                             <label class="custom-file-label" for="categoryLogo">Choose file</label>
                                         </div>
                                     </div>

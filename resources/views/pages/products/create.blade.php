@@ -11,6 +11,20 @@
         <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="category_id">@lang('cruds.category.title')</label>
+                        <select class="form-control" name="category_id" id="category_id">
+
+                            @foreach($categories as $c)
+                                <option value="{{$c->id}}">{{$c->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label for="title">Name</label>
                 <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="title"

@@ -11,7 +11,7 @@ use DateTimeInterface;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasRoles,HasFactory, HasApiTokens;
+    use Notifiable, HasRoles, HasFactory, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email','password','theme'
+        'name', 'email', 'password', 'theme'
     ];
 
     /**
@@ -46,7 +46,7 @@ class User extends Authenticatable
         $this->save();
     }
 
-    public function theme():array
+    public function theme(): array
     {
         $classes = [
             'default' => [
@@ -77,15 +77,26 @@ class User extends Authenticatable
         return $this->hasMany(Company::class);
     }
 
+
     public function categories()
     {
         return $this->hasMany(Category::class);
     }
 
+    public function managers()
+    {
+        return $this->hasMany(Meneger::class);
+    }
+
+    public function cashiers()
+    {
+        return $this->hasMany(Cashier::class);
+    }
+
     /**
      * Prepare a date for array / JSON serialization.
      *
-     * @param  \DateTimeInterface  $date
+     * @param \DateTimeInterface $date
      * @return string
      */
     protected function serializeDate(DateTimeInterface $date)

@@ -6,6 +6,7 @@ use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\Product\ProductResource;
 
+use App\Models\Category;
 use App\Models\Import;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -31,7 +32,11 @@ class ProductController extends Controller
     public function create()
     {
 
-        return view('pages.products.create');
+        $company = auth()->user()->companies->first();
+
+        $categories = Category::where('company_id', $company->id)->get();
+
+        return view('pages.products.create', compact('categories'));
     }
 
 
@@ -44,26 +49,14 @@ class ProductController extends Controller
             $image_path = $request->file('image')->store('products', 'public');
         }
 
+        $category = $request->category;
 
-        /*     $import = Import::create(
-                 [
-                     'price' => $request->price,
-                     'quantity' => $request->quantity,
-                 ]
-             );*/
+        $import = \App\Services\Product::productCreate($request->all());
 
-
-        $product = Product::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'images' => $image_path,
-            'barcode_number' => $request->barcode_number,
-            'status' => $request->status
-        ]);
-
-        if (!$product) {
+        if (!$import) {
             return redirect()->back()->with('error', 'Sorry, there a problem while creating product.');
         }
+        success_message('Success, you product have been created.');
         return redirect()->route('products.index')->with('success', 'Success, you product have been created.');
     }
 

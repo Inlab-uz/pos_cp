@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -10,6 +11,8 @@ class CartController extends Controller
 {
     public function index(Request $request)
     {
+
+
         if ($request->wantsJson()) {
             return response(
                 $request->user()->cart()->get()
@@ -29,8 +32,12 @@ class CartController extends Controller
                 ->toArray();
             $products = array_merge($products, $products);
         }
-
-
+   /*     $_products = [];
+        foreach ($products as $product){
+            if ($product['import'] != null){
+                $_products[] = $product;
+            }
+        }*/
 
         return view('pages.cart.index', compact('products'));
     }
@@ -63,7 +70,6 @@ class CartController extends Controller
         ]);
 
         $cart = $request->user()->cart()->where('id', $request->product_id)->first();
-
         if ($cart) {
             $cart->pivot->quantity = $request->quantity;
             $cart->pivot->save();
@@ -74,11 +80,12 @@ class CartController extends Controller
         ]);
     }
 
-    public function delete(Request $request)
+    public function delete(Request $request, $id)
     {
         $request->validate([
             'product_id' => 'required|integer|exists:products,id'
         ]);
+
         $request->user()->cart()->detach($request->product_id);
 
         return response('', 204);

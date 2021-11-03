@@ -42,7 +42,7 @@
 
                 <div class="row">
                     <div class="col">Total:</div>
-                    <div class="col text-right">
+                    <div class="col total">
 
                     </div>
                 </div>
@@ -122,17 +122,30 @@
 
     function productClickAdd(barcode) {
         let card = document.getElementById(barcode);
+        let product = document.getElementById('i' + barcode);
+        if (product) {
+            product.querySelector('.w-25').value = +product.querySelector('.w-25').value + 1;
+            let price = product.querySelector('.text-right');
+            price.innerHTML = +price.innerHTML + Number(card.querySelector('#price').innerHTML);
+        } else {
+            $('#cart_items').append('<tr id="i' + barcode + '"> <td>' + $(card).find('.card-title').text() +
+                '</td> <td> <label class="d-flex align-items-center"> ' +
+                '<input type="number"  class="form-control form-control-sm w-25 qty" value="1" onchange="update(' + barcode + ')" /> ' +
+                '<a href="#" onclick="remove(' + barcode + ')" type="button" class="btn-sm btn-danger btn-delete ml-2" data-url=""><i class="fas fa-trash"></i></a> </label> </td>' +
+                '<td class="text-right">' + '' +
+                +$(card).find('#price').text() +
+                '</td> </tr>');
+        }
+        calculateTotal()
+    }
 
-
-        $('#cart_items').append('<tr id="i' + barcode + '"> <td>' + $(card).find('.card-title').text() +
-            '</td> <td> <label class="d-flex align-items-center"> ' +
-            '<input type="number"  class="form-control form-control-sm w-25 qty"value="1"/> ' +
-            '<a href="#" onclick="remove(' + barcode + ')" type="button" class="btn-sm btn-danger btn-delete ml-2" data-url=""><i class="fas fa-trash"></i></a> </label> </td>' +
-            '<td class="text-right">' + '' +
-            +$(card).find('#price').text() +
-            '</td> </tr>');
-
-            calculateTotal()
+    function update(barcode) {
+        let card = document.getElementById(barcode);
+        let product = document.getElementById('i' + barcode);
+        let quantity = product.querySelector('.w-25').value;
+        let price = product.querySelector('.text-right');
+        price.innerHTML = +quantity * Number(card.querySelector('#price').innerHTML);
+        calculateTotal();
     }
 
     function scanBarcode() {
@@ -142,10 +155,10 @@
             $(this).filter(function () {
                 // console.log(card_id === input)
                 if (card_id === barcode) {
-                    console.log(this)
-                    $('#cart_items').append('<tr id="i' + barcode + '"> <td>' + $(this).find('.card-title').text() +
+                    console.log(this);
+                    $('#cart_items').append('<tr  id="i' + barcode + '"> <td>' + $(this).find('.card-title').text() +
                         '</td> <td> <label class="d-flex align-items-center"> ' +
-                        '<input type="number"  class="form-control form-control-sm w-25 qty"value="1"/> ' +
+                        '<input type="number"  class="form-control form-control-sm w-25 qty" value="1"/> ' +
                         '<a href="#" onclick="remove(' + barcode + ')" type="button" class="btn-sm btn-danger btn-delete ml-2" data-url=""><i class="fas fa-trash"></i></a> </label> </td>' +
                         '<td id = "item_price" class="text-right">' + '' +
                         +$(this).find('#price').text() +
@@ -160,19 +173,23 @@
     function remove(barcode) {
         console.log(barcode)
         let item = document.getElementById('i' + barcode);
-        item.remove()
+        item.remove();
+        calculateTotal();
     }
 
-    function calculateTotal(
-    ){
-        var input, filter, cards, cardContainer, title, i;
-        input = document.getElementById("myFilter");
-        filter = input.value.toUpperCase();
-        cardContainer = document.getElementById("item_price");
-        cards = cardContainer.getElementsByClassName("cart_items");
-        for (i = 0; i < cards.length; i++) {
-           console.log(cards)
+    function calculateTotal() {
+        // var input, filter, cards, cardContainer, title, i;
+        // input = document.getElementById("myFilter");
+        // filter = input.value.toUpperCase();
+        let cardsContainer = document.getElementById("cart_items");
+        let cards = cardsContainer.querySelectorAll(".text-right");
+        let total = 0;
+
+        for (let i = 0; i < cards.length; i++) {
+            let price = cards[i].innerHTML;
+            total += Number(price);
         }
+        document.querySelector('.total').innerHTML = total;
     }
 
 

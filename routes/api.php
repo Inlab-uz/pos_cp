@@ -60,4 +60,4 @@ Route::group(['prefix' => 'mobile', 'middleware' => 'auth:sanctum'], function ()
 });
 Route::post('/upload', [ManagerController::class, 'uploadBase64Img']);
 Route::post('/decode', [ManagerController::class, 'decodeBase64Img']);
-Route::get('generate-pdf', [PDFController::class, 'generatePDF']);
+Route::get('generate-pdf', [PDFController::class, 'printCheque']);

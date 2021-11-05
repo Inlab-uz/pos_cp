@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Blade\CategoryController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -118,6 +119,11 @@ Route::group(['middleware' => 'auth'],function (){
     Route::get('/category/view/{id}', [CategoryController::class, 'view']);
 
     Route::resource('products', ProductController::class);
+    Route::resource('orders', OrderController::class);
+
+    Route::post('/order/create', [OrderController::class, 'create'])->name('order.create');
+
+
 
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
@@ -139,6 +145,7 @@ Route::get('/language/{lang}',function ($lang){
     return redirect()->back();
 });
 
+Route::get('/generate-barcode', [\App\Http\Controllers\HomeController::class, 'barcodeTest'])->name('generate.barcode');
 Route::get('/generate-barcode', [\App\Http\Controllers\HomeController::class, 'barcodeTest'])->name('generate.barcode');
 
 Route::get('/clear-cache', function() {

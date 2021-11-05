@@ -32,6 +32,8 @@ class CartController extends Controller
                 ->toArray();
             $products = array_merge($products, $products);
         }
+
+
    /*     $_products = [];
         foreach ($products as $product){
             if ($product['import'] != null){

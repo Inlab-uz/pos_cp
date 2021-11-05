@@ -23,45 +23,62 @@
                         </select>
                     </div>
                 </div>
-                <div class="user-cart">
-                    <div class="card">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>Product Name</th>
-                                <th>Quantity</th>
-                                <th class="text-right">Price</th>
-                            </tr>
-                            </thead>
-                            <tbody id="cart_items">
+                <form action="{{route("order.create")}}" method="POST">
+                    @csrf
+                    <div class="user-cart">
+                        <div class="card">
 
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col">Total:</div>
-                    <div class="col total">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Quantity</th>
+                                    <th class="text-right">Price</th>
+                                </tr>
+                                </thead>
+                                <tbody id="cart_items">
 
+                                {{--<tr id="barcode">
+                                    <td>Name<input type="hidden" name="name[]" value="55"></td>
+                                    <td><input type="hidden" name="count[]" value="55">
+                                        <label class="d-flex align-items-center">
+                                            <input type="number" class="form-control form-control-sm w-25 qty" value="1"/>
+                                             </label>
+                                    </td>
+
+                                    <td class="text-right">1000<input type="hidden" name="price[]" value="1"></td>
+                                </tr>--}}
+
+                                </tbody>
+                            </table>
+
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <button
-                            type="button"
-                            class="btn btn-danger btn-block">
-                            Cancel
-                        </button>
+
+                    <div class="row">
+                        <div class="col">Total:</div>
+                        <div class="col total">
+
+                        </div>
                     </div>
-                    <div class="col">
-                        <button
-                            type="button"
-                            class="btn btn-primary btn-block">
-                            Submit
-                        </button>
+                    <div class="row">
+                        <div class="col">
+                            <button
+                                type="button"
+                                class="btn btn-danger btn-block">
+                                Cancel
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button
+                                type="submit"
+                                class="btn btn-primary btn-block">
+                                Submit
+                            </button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
             <div class="col-md-6 col-lg-7">
                 <div class="mb-2">
@@ -80,6 +97,7 @@
                                 <div class="card" id="{{$product['barcode_number']}}"
                                      onclick="productClickAdd({{$product['barcode_number']}})">
                                     <div class="card-header">
+
 
                                         <h3 class="card-title" id="{{$product['title']}}">{{$product['title']}}</h3>
                                         <div class="card-tools">
@@ -128,9 +146,9 @@
             let price = product.querySelector('.text-right');
             price.innerHTML = +price.innerHTML + Number(card.querySelector('#price').innerHTML);
         } else {
-            $('#cart_items').append('<tr id="i' + barcode + '"> <td>' + $(card).find('.card-title').text() +
+            $('#cart_items').append('<tr id="i' + barcode + '"> <td><input type="hidden" name="barcode[]" value="' + barcode + '">' + $(card).find('.card-title').text() +
                 '</td> <td> <label class="d-flex align-items-center"> ' +
-                '<input type="number"  class="form-control form-control-sm w-25 qty" value="1" onchange="update(' + barcode + ')" /> ' +
+                '<input type="number" name="count[]"  class="form-control form-control-sm w-25 qty" value="1" onchange="update(' + barcode + ')" /> ' +
                 '<a href="#" onclick="remove(' + barcode + ')" type="button" class="btn-sm btn-danger btn-delete ml-2" data-url=""><i class="fas fa-trash"></i></a> </label> </td>' +
                 '<td class="text-right">' + '' +
                 +$(card).find('#price').text() +
@@ -156,9 +174,9 @@
                 // console.log(card_id === input)
                 if (card_id === barcode) {
                     console.log(this);
-                    $('#cart_items').append('<tr  id="i' + barcode + '"> <td>' + $(this).find('.card-title').text() +
+                    $('#cart_items').append('<tr  id="i' + barcode + '"> <td><input type="hidden" name="barcode[]" value="' + barcode + '">' + $(this).find('.card-title').text() +
                         '</td> <td> <label class="d-flex align-items-center"> ' +
-                        '<input type="number"  class="form-control form-control-sm w-25 qty" value="1"/> ' +
+                        '<input type="number"  name="count[]" class="form-control form-control-sm w-25 qty" value="1"/> ' +
                         '<a href="#" onclick="remove(' + barcode + ')" type="button" class="btn-sm btn-danger btn-delete ml-2" data-url=""><i class="fas fa-trash"></i></a> </label> </td>' +
                         '<td id = "item_price" class="text-right">' + '' +
                         +$(this).find('#price').text() +

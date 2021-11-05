@@ -7,8 +7,10 @@ use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\Product\ProductResource;
 
 use App\Models\Category;
+use App\Models\Company;
 use App\Models\Import;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,11 +19,18 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        $products = new Product();
+//        dd(auth()->user()->hasRole('Super Admin'));
+        $id = auth()->user()->id;
+        if (auth()->user()->hasRole('Super Admin')){
+            $products = Product::latest()->paginate(10);
+        }elseif (auth()->user()->hasRole('Administrator')){
+            $company = Company::where('user_id', $id)->first();
+            $category = Category::where('company_id', $company->id)->first();
+            $products = Product::where('category_id', $category->id)->paginate(10);
+        }
         if ($request->search) {
             $products = $products->where('name', 'LIKE', "%{$request->search}%");
         }
-        $products = $products->latest()->paginate(10);
         if (request()->wantsJson()) {
             return ProductResource::collection($products);
         }
@@ -74,19 +83,23 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        return view('pages.products.edit')->with('product', $product);
+        $import = Import::where('product_id', $product->id)->first();
+        return view('pages.products.edit', compact('import', 'product'));
     }
 
 
     public function update(ProductUpdateRequest $request, Product $product)
     {
-        $product->name = $request->name;
+        $import = Import::where('product_id', $product->id)->first();
+        $product->title = $request->name;
         $product->description = $request->description;
-        $product->barcode = $request->barcode;
-        $product->price = $request->price;
-        $product->quantity = $request->quantity;
+        $product->barcode_number = $request->barcode_number;
+        $import->price = $request->price;
+        $import->sale_price = $request->sale_price;
+        $import->quantity = $request->quantity;
         $product->status = $request->status;
-
+        $product->update();
+        $import->update();
         if ($request->hasFile('image')) {
             // Delete old image
             if ($product->image) {
@@ -101,7 +114,7 @@ class ProductController extends Controller
         if (!$product->save()) {
             return redirect()->back()->with('error', 'Sorry, there\'re a problem while updating product.');
         }
-        return redirect()->route('pages.products.index')->with('success', 'Success, your product have been updated.');
+        return redirect()->route('products.index')->with('success', 'Success, your product have been updated.');
     }
 
 

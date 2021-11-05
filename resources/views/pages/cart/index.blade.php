@@ -10,6 +10,8 @@
 
         <div class="row ">
             <div class="col-md-6 col-lg-5">
+            <form action="{{route("order.create")}}" method="POST">
+                    @csrf
                 <div class="row mb-2">
                     <div class="col">
                         <input type="text" class="form-control" autoFocus onkeyup="scanBarcode()" id="barcode"
@@ -17,14 +19,14 @@
 
                     </div>
                     <div class="col">
-                        <select class="form-control">
-                            <option value="">Walking Customer</option>
+                        <select class="form-control" name="pay_type">
+                            <option value="1">Naqd</option>
+                            <option value="2">Plastik</option>
                             </option>
                         </select>
                     </div>
                 </div>
-                <form action="{{route("order.create")}}" method="POST">
-                    @csrf
+
                     <div class="user-cart">
                         <div class="card">
 

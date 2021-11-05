@@ -9,14 +9,10 @@ use Illuminate\Http\Request;
 
 class PDFController extends Controller
 {
-    public function generatePDF()
+    public function generatePDF($data, $total)
     {
-        $data = [
-            'title' => 'Welcome to ItSolutionStuff.com',
-            'date' => date('m/d/Y')
-        ];
 
-        $pdf = PDF::loadView('myPDF', $data);
+        $pdf = PDF::loadView('webPDF', compact('data', 'total'));
 
         return $pdf->download('mobile.pdf');
     }

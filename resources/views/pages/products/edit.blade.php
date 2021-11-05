@@ -15,7 +15,7 @@
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name"
-                    placeholder="Name" value="{{ old('name', $product->name) }}">
+                    placeholder="Name" value="{{ old('name', $product->title) }}">
                 @error('name')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -50,10 +50,10 @@
             </div>
 
             <div class="form-group">
-                <label for="barcode">Barcode</label>
-                <input type="text" name="barcode" class="form-control @error('barcode') is-invalid @enderror"
-                    id="barcode" placeholder="barcode" value="{{ old('barcode', $product->barcode) }}">
-                @error('barcode')
+                <label for="barcode_number">Barcode</label>
+                <input type="text" name="barcode_number" class="form-control @error('barcode_number') is-invalid @enderror"
+                    id="barcode_number" placeholder="barcode_number" value="{{ old('barcode_number', $product->barcode_number) }}">
+                @error('barcode_number')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
@@ -63,7 +63,18 @@
             <div class="form-group">
                 <label for="price">Price</label>
                 <input type="text" name="price" class="form-control @error('price') is-invalid @enderror" id="price"
-                    placeholder="price" value="{{ old('price', $product->price) }}">
+                    placeholder="price" value="{{ old('price', $import->price) }}">
+                @error('price')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="sale_price">Sale Price</label>
+                <input type="text" name="sale_price" class="form-control @error('sale_price') is-invalid @enderror" id="sale_price"
+                    placeholder="sale_price" value="{{ old('sale_price', $import->sale_price) }}">
                 @error('price')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -74,7 +85,7 @@
             <div class="form-group">
                 <label for="quantity">Quantity</label>
                 <input type="text" name="quantity" class="form-control @error('quantity') is-invalid @enderror"
-                    id="quantity" placeholder="Quantity" value="{{ old('quantity', $product->quantity) }}">
+                    id="quantity" placeholder="Quantity" value="{{ old('quantity', $import->quantity) }}">
                 @error('quantity')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>

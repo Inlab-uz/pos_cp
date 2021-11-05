@@ -10,6 +10,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Company;
 use App\Models\Import;
 use App\Models\Product;
@@ -23,7 +24,9 @@ class ImportController extends Controller
         if (auth()->user()->hasRole('Super Admin')){
             $imports = Import::latest()->paginate(20);
         }elseif (auth()->user()->hasRole('Administrator')){
-            $imports = Import::where('company_id', $company->id)->paginate(20);
+            $company = Company::where('user_id', auth()->user()->id)->first();
+            $category = Category::where('company_id', $company->id)->first();
+            $imports = Import::where('category_id', $category->id)->paginate(20);
         }
         return view('pages.import.index',[
             'imports'=>$imports,

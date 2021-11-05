@@ -30,9 +30,8 @@ class CartController extends Controller
                 ->get()
                 ->whereNotNull('import')
                 ->toArray();
-            $products = array_merge($products, $products);
+//            $products = array_merge($products, $products);
         }
-
 
    /*     $_products = [];
         foreach ($products as $product){

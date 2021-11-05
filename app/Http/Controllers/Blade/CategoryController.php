@@ -67,7 +67,6 @@ class CategoryController extends Controller
         }
 
         $company = auth()->user()->companies->first();
-
         $manager = Meneger::where("branch_id", $request->Category['branch_id'])->first();
 
         $manager_id = $manager->id;

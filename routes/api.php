@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\Mobile\AuthController;
 use App\Http\Controllers\Mobile\CashierController;
 use App\Http\Controllers\Mobile\ManagerController;
+use App\Http\Controllers\Mobile\MobileResponseController;
 use App\Http\Controllers\PDFController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -57,7 +59,13 @@ Route::group(['prefix' => 'mobile', 'middleware' => 'auth:sanctum'], function ()
     Route::post('/order', [CashierController::class, 'orderCreate']);
     Route::post('/add-product', [ManagerController::class, 'addProduct']);
     Route::post('/update-product', [ManagerController::class, 'updateProduct']);
+    // Telegram
+    Route::get('search-product', [MobileResponseController::class, 'searchProductByName']);
 });
 Route::post('/upload', [ManagerController::class, 'uploadBase64Img']);
 Route::post('/decode', [ManagerController::class, 'decodeBase64Img']);
-Route::get('generate-pdf', [PDFController::class, 'printCheque']);
+Route::get('generate-pdf', [PDFController::class, 'generatePDF']);
+
+
+
+

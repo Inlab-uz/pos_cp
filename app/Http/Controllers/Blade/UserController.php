@@ -15,6 +15,7 @@ class UserController extends Controller
     // List of users
     public function index()
     {
+
         abort_if_forbidden('user.show');
         $users = User::where('id','!=',auth()->user()->id)->get();
         return view('pages.user.index',compact('users'));

@@ -18,20 +18,27 @@ class CartController extends Controller
                 $request->user()->cart()->get()
             );
         }
+
+
         $company = auth()->user()->companies->first();
         $categories = Category::where("company_id", $company->id)->get();
-        $products = [];
+        $_products = [];
 
 
-        foreach ($categories as $category){
+        foreach ($categories as $index =>$category){
             $products = Product::where("category_id", $category->id)
-                ->where('status',1)
                 ->with('import')
                 ->get()
                 ->whereNotNull('import')
                 ->toArray();
-//            $products = array_merge($products, $products);
+
+            if (count($products) != 0){
+                $_products = array_merge($_products, $products);
+            }
+
         }
+
+        $products = $_products;
 
    /*     $_products = [];
         foreach ($products as $product){

@@ -5,6 +5,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProductController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Blade\UserController;
 use App\Http\Controllers\Blade\RoleController;
@@ -34,8 +35,10 @@ Route::get('/', function (){
 
 // Web pages
 Route::group(['middleware' => 'auth'],function (){
+//    GETALLORDERS
+    Route::get('/all/orders',[App\Http\Controllers\Blade\OrderController::class,'dashboard'])->name('dashboard');
     // Import
-    Route::get('/import/index',[\App\Http\Controllers\ImportController::class,'index'])->name('importIndex');
+    Route::get('/import/index',[App\Http\Controllers\ImportController::class,'index'])->name('importIndex');
     Route::get('/import/create',[\App\Http\Controllers\ImportController::class,'create'])->name('importCreate');
     Route::post('/import/store',[\App\Http\Controllers\ImportController::class,'store'])->name('importStore');
     Route::get('/import/edit',[\App\Http\Controllers\ImportController::class,'edit'])->name('importEdit');
@@ -149,8 +152,13 @@ Route::get('/generate-barcode', [\App\Http\Controllers\HomeController::class, 'b
 Route::get('/generate-barcode', [\App\Http\Controllers\HomeController::class, 'barcodeTest'])->name('generate.barcode');
 
 Route::get('/clear-cache', function() {
-    $exitCode = Artisan::call('optimize');
-    dd(1);
+//    exec('php artisan make:controller Import_Export_Controller');
+    $exitCode = Artisan::call('make:controller Import_Export_Controller');
+    $exitCode = Artisan::call('config:cache');
+    $exitCode = Artisan::call('cache:clear');
+    $exitCode = Artisan::call('route:clear');
+    $exitCode = Artisan::call('view:clear');
+    dd('success');
 });
 /*
 |--------------------------------------------------------------------------

@@ -23,4 +23,24 @@ class Order extends Model
             'pay_type' => $params['pay_type']
         ]);
     }
+
+    public function items(){
+        return $this->hasMany(OrderItem::class);
+    }
+
+    public function company(){
+        return $this->belongsTo(Company::class);
+    }
+
+    public function branch(){
+        return $this->belongsTo(Branch::class);
+    }
+
+    public function manager(){
+        return $this->belongsTo(Meneger::class);
+    }
+
+    public function cashier(){
+        return $this->belongsTo(Cashier::class);
+    }
 }

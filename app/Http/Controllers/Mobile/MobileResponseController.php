@@ -3,13 +3,24 @@
 namespace App\Http\Controllers\Mobile;
 
 use App\Http\Controllers\Controller;
-
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use App\Http\Resources\Product\ProductIndexResource;
+use App\Models\Company;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 
 class MobileResponseController extends Controller
 {
+    public function searchProductByName(Request $request)
+    {
+        $company = Company::where('user_id', $request->user()->id)->first();
+        $products = Product::query()->where('title', 'like', '%' . $request->title . '%')->where('company_id', $company->id)->get();
+        if ($products){
+            return self::success(ProductIndexResource::collection($products));
+        }
+        return self::error('topilmadi');
+    }
+
     public function upload(Request $request)
     {
         if ($request->hasFile('image')) {

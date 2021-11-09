@@ -137,6 +137,14 @@
             </a>
         </li>
 
+
+            <li class="nav-item has-treeview">
+                <a href="{{route('orders.index')}}" class="nav-link ">
+                    <i class="nav-icon fas fa-receipt"></i>
+                    <p>Orders</p>
+                </a>
+            </li>
+
         <li class="nav-item has-treeview">
             <a href="" class="nav-link">
                 <i class="fas fa-palette"></i>

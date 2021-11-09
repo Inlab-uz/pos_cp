@@ -51,6 +51,7 @@ class Product
                 'category_id' => $request['category_id']
             ],
             [
+                'company_id' => self::company(),
                 'title' => $request['title']??"",
                 'status' => '1',
                 'barcode_formats' => $request['barcode_formats']??"",
@@ -145,8 +146,13 @@ class Product
 
     }
     public static function company(){
-        $manager = Meneger::find(auth()->user()->id);
-        return $manager->company_id;
+        $company = Company::where('user_id',auth()->user()->id);
+        if ($company){
+            return $company->id;
+        }else{
+            $manager = Meneger::find(auth()->user()->id);
+            return $manager->company_id;
+        }
     }
     public static function branch(){
         $manager = Meneger::find(auth()->user()->id);

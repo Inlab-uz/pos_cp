@@ -6,18 +6,35 @@
 
 @endsection
 @section('css')
-<link rel="stylesheet" href="{{ asset('plugins/sweetalert2/sweetalert2.min.css') }}">
+{{--<link rel="stylesheet" href="{{ asset('plugins/sweetalert2/sweetalert2.min.css') }}">--}}
 @endsection
 @section('content')
 
 <div class="card">
     <div class="card-header">
         <div class="row">
-            <div class="col-8">
-
+            <div class="col-6">
+                <form action="" method="get">
+                    <div class="input-group">
+                        <select class="form-control" name="key" id="key">
+                            <option value="title" selected>Name</option>
+                            <option value="barcode_number">Barcode</option>
+                            <option value="price">Price</option>
+                            <option value="sale_price">Sale Price</option>
+                            <option value="quantity">Quantity</option>
+                        </select>
+                        <input type="search" class="form-control" name="search"
+                               placeholder="Search product"> <span class="input-group-btn">
+                            <button type="submit" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-search">Search</span>
+                            </button>
+                            </span>
+                    </div>
+                </form>
             </div>
-            <div class="col-2">
-                <a href="{{route('products.create')}}" class="btn btn-primary">Create Product</a>
+            <div class="col-2"></div>
+            <div class="col-4">
+                <a style="float: right" href="{{route('products.create')}}" class="btn btn-primary">Create Product</a>
             </div>
         </div>
     </div>
@@ -30,10 +47,11 @@
                     <th>Image</th>
                     <th>Barcode</th>
                     <th>Price</th>
+                    <th>Sale price</th>
                     <th>Quantity</th>
                     <th>Status</th>
                     <th>Created At</th>
-                    <th>Updated At</th>
+
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -42,17 +60,41 @@
 
                 <tr>
                     <td>{{$product->id}}</td>
-                    <td>{{$product->title}}</td>
+                    <td>{{$product->title ?? $product->product->title}}</td>
                     <td><img src="{{ Storage::url($product->images) }}" alt="" width="100"></td>
-                    <td>{{$product->barcode_number}}</td>
-                    <td>{{$product->price}}</td>
-                    <td>{{$product->quantity}}</td>
+                    <td>{{$product->barcode_number ?? $product->product->barcode_number}}</td>
+                    <td>
+                        @if($key)
+                            {{$product->price ?? '0.00'}}
+                        @else
+                            {{$product->import->price ?? '0.00'}}
+                        @endif
+                    </td>
+                    <td>
+                        @if($key)
+                            {{$product->sale_price ?? '0.00'}}
+                        @else
+                            {{$product->import->sale_price ?? '0.00'}}
+                        @endif
+                    </td>
+                    <td>
+                        @if($key)
+                            {{$product->quantity ?? '0.00'}}
+                        @else
+                            {{$product->import->quantity ?? '0.00'}}
+                        @endif
+                    </td>
                     <td>
                         <span
-                            class="right badge badge-{{ $product->status ? 'success' : 'danger' }}">{{$product->status ? 'Active' : 'Inactive'}}</span>
+                            class="right badge badge-@if($key){{$product->product->status ? 'success' : 'danger'}}@else{{ $product->status ? 'success' : 'danger' }}@endif">
+                            @if($key)
+                                {{$product->product->status ? 'Active' : 'Inactive'}}
+                            @else
+                                {{$product->status ? 'Active' : 'Inactive'}}
+                            @endif
+                        </span>
                     </td>
                     <td>{{$product->created_at}}</td>
-                    <td>{{$product->updated_at}}</td>
                     <td>
                         <a href="{{ route('products.edit', $product) }}" class="btn btn-primary"><i
                                 class="fas fa-edit"></i></a>
@@ -63,7 +105,7 @@
                 @endforeach
             </tbody>
         </table>
-        {{ $products->render() }}
+        {{ $products->links() }}
     </div>
 </div>
 @endsection

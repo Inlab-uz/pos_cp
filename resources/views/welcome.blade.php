@@ -98,6 +98,7 @@
                     </ul>
                 </div>
             @endif
+
             @auth
                 <a href="{{ url('/home') }}">@lang('global.home')</a>
             @else

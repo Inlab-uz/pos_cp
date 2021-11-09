@@ -19,22 +19,33 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
+//        exec('composer require maatwebsite/excel');
+//        exec('php artisan make:controller ExportController');
+
 //        dd(auth()->user()->hasRole('Super Admin'));
+        $key = false;
         $id = auth()->user()->id;
+        $company = Company::where('user_id', $id)->first();
+        $category = Category::where('company_id', $company->id)->first();
         if (auth()->user()->hasRole('Super Admin')){
             $products = Product::latest()->paginate(10);
         }elseif (auth()->user()->hasRole('Administrator')){
-            $company = Company::where('user_id', $id)->first();
-            $category = Category::where('company_id', $company->id)->first();
-            $products = Product::where('category_id', $category->id)->paginate(10);
+            $products = Product::where('category_id', $category->id)->with('import')->paginate(10);
         }
         if ($request->search) {
-            $products = $products->where('name', 'LIKE', "%{$request->search}%");
+            if ($request->key == 'price' || $request->key == 'sale_price' || $request->key == 'quantity'){
+                $products = Import::where($request->key, $request->search)->where('category_id', $category->id)->with('product')->paginate(500);
+                $key = true;
+                return view('pages.products.index', compact('products', 'key'));
+            }
+            $products = Product::where($request->key, 'LIKE', "%{$request->search}%")->where('category_id', $category->id)->with('import')->paginate(50);
         }
+
         if (request()->wantsJson()) {
             return ProductResource::collection($products);
         }
-        return view('pages.products.index')->with('products', $products);
+
+        return view('pages.products.index', compact('products', 'key'));
     }
 
 
@@ -128,5 +139,26 @@ class ProductController extends Controller
         return response()->json([
             'success' => true
         ]);
+    }
+
+    public function search(Request $request)
+    {
+//        dd(auth()->user()->hasRole('Super Admin'));
+        $id = auth()->user()->id;
+        if (auth()->user()->hasRole('Super Admin')){
+            $products = Product::latest()->paginate(10);
+        }elseif (auth()->user()->hasRole('Administrator')){
+            $company = Company::where('user_id', $id)->first();
+            $category = Category::where('company_id', $company->id)->first();
+            $products = Product::where('category_id', $category->id)->with('import')->paginate(10);
+        }
+        if ($request->search) {
+            $products = $products->where('name', 'LIKE', "%{$request->search}%");
+        }
+        if (request()->wantsJson()) {
+            return ProductResource::collection($products);
+        }
+
+        return view('pages.products.index')->with('products', $products);
     }
 }

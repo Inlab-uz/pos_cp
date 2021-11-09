@@ -37,6 +37,17 @@ class AuthController extends MobileResponseController
                 return $this->success($data);
             }
         }
+        $user = User::where('email', $request->email)->first();
+        if ($user instanceof User) {
+            if (Hash::check($request->password, $user->password)) {
+                $token = $user->createToken('mobile');
+                $data = [
+                    'token' => $token->plainTextToken,
+                    'super admin' => true,
+                ];
+                return $this->success($data);
+            }
+        }
         return $this->error('Login yoki Parol Xato!');
     }
 

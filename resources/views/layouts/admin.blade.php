@@ -32,6 +32,10 @@
 	<!-- SweetAlert2 -->
 	<link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
 	<link rel="icon" href="/consImages/logoU.png ">
+
+	<!-- ./wrapper -->
+	<script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+
 </head>
 
 <body class="{{ auth()->user()->theme()['body'] ?? '' }} hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
@@ -87,6 +91,7 @@
                     </ul>
                 </li>
             </ul>
+
         </div>
 	</nav>
 	<!-- /.navbar -->
@@ -94,7 +99,7 @@
 	<!-- Main Sidebar Container -->
 	<aside class="main-sidebar elevation-1 {{ auth()->user()->theme()['sidebar'] ?? 'sidebar-dark-primary' }}">
 		<!-- Brand Logo -->
-		<a href="#" class="brand-link">
+		<a href="{{ route('dashboard') }}" class="brand-link">
 			<img src="{{ asset('consImages/logoU.png') }}" alt="Unired Logo" class="brand-image img-circle elevation-3"
 				 style="opacity: .8">
 			<span class="brand-text font-weight-light">@lang('panel.site_title')</span>
@@ -111,6 +116,7 @@
 
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
+
 		<!-- Main content -->
 	@yield('content')
 	<!-- /.content -->
@@ -129,8 +135,7 @@
 	</aside>
 	<!-- /.control-sidebar -->
 </div>
-<!-- ./wrapper -->
-<script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+
 <!-- jQuery UI 1.11.4 -->
 <script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
 <!-- Bootstrap 4 -->

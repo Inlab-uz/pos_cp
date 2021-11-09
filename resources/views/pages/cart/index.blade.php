@@ -57,8 +57,8 @@
                     <div class="row">
                         <div class="col">
                             <button
-                                    type="button"
-                                    class="btn btn-danger btn-block">
+                                type="button"
+                                class="btn btn-danger btn-block">
                                 Bekor qilish
                             </button>
                         </div>
@@ -75,9 +75,9 @@
             <div class="col-md-6 col-lg-7">
                 <div class="mb-2">
                     <input
-                            type="text"
-                            id="myFilter" class="form-control" onkeyup="myFunction()"
-                            placeholder="Maxsulot qidirish..."
+                        type="text"
+                        id="myFilter" class="form-control" onkeyup="myFunction()"
+                        placeholder="Maxsulot qidirish..."
                     />
                 </div>
                 <div class="order-product">
@@ -85,9 +85,10 @@
                         @foreach($products as $product)
 
 
-                            <div class="col-md-4" title="Kelgan narxi: {{number_format($product['import']['price'],2)}}">
+                            <div class="col-md-4"
+                                 title="Kelgan narxi: {{number_format($product['import']['price'],2)}}">
                                 <div class="card" id="{{$product['barcode_number']}}"
-                                        {{--                                     onclick="productClickAdd( {{$product['barcode_number']}})"--}}
+                                    {{--                                     onclick="productClickAdd( {{$product['barcode_number']}})"--}}
                                 >
                                     <div class="card-header">
 
@@ -97,7 +98,7 @@
                                             <!-- Buttons, labels, and many other things can be placed here! -->
                                             <!-- Here is a label for exa    mple -->
                                             <span
-                                                    class="badge badge-primary">{{($product['status']==1)?"Bor":"Yo'q"}}</span>
+                                                class="badge badge-primary">{{($product['status']==1)?"Bor":"Yo'q"}}</span>
                                         </div>
                                         <!-- /.card-tools -->
                                     </div>
@@ -116,7 +117,8 @@
 
                                     <!-- /.card-body -->
                                     <div class="card-footer">
-                                        <i class="fas  fa-barcode"></i> {{$product["barcode_number"]}}    <br>   <i class="fas  fa-box"></i> {{(int)$product['import']['part']}}
+                                        <i class="fas  fa-barcode"></i> {{$product["barcode_number"]}} <br> <i
+                                            class="fas  fa-box"></i> {{(int)$product['import']['part']}}
                                     </div>
                                     <!-- /.card-footer -->
                                 </div>
@@ -137,7 +139,6 @@
 <script>
     $(document).ready(function () {
 
-
         $('#myProducts .card').each(function () {
             $(this).click(function () {
                 let barcode = $(this).attr('id');
@@ -145,7 +146,7 @@
                 if (product) {
                     product.querySelector('.qty').value = +product.querySelector('.qty').value + 1;
                     let product_price = Number($(this).find('#price').text());
-                    $('#cart_price').html( Number($('#cart_price').html()) + product_price )
+                    $('#cart_price').html(Number($('#cart_price').html()) + product_price)
                 } else {
                     $('#cart_items').append(
                         `<tr id="i${barcode}">
@@ -154,8 +155,8 @@
                                     ${$(this).find('.card-title').text()}
                                 </td>
                                 <td class="d-flex align-items-center">
-                                    <input type="number" name='count[]' class="form-control-sm qty w-25" value="1" onchange="update(${barcode})"/>
-                                    <button onclick="remove(${barcode})" type="button" class="btn btn-sm btn-danger ml-2"><i class="fas fa-trash"></i></button>
+                                    <input type="number" name='count[]' class="form-control-sm qty w-25 changable" value="1" onchange="update('${barcode}')" onkeyup="update('${barcode}')"/>
+                                    <button onclick="remove('${barcode}')" type="button" class="btn btn-sm btn-danger ml-2"><i class="fas fa-trash"></i></button>
                                 </td>
                                 <td id="cart_price"> ${$(this).find('#price').text()} </td>
                         </tr>`)
@@ -165,63 +166,94 @@
             })
         })
 
-        window.remove = (barcode) =>{
+        window.remove = (barcode) => {
             let item = document.getElementById('i' + barcode);
             item.remove();
             calculateTotal();
         }
 
 
-
         window.update = (barcode) => {
-            let card = document.getElementById(barcode);
-            let product = document.getElementById('i' + barcode);
-            let quantity = product.querySelector('.qty').value;
-            let cart_items = $('#cart_items tr');
 
-            cart_items.each(function (){
-                let price = $(this).find('#cart_price');
-                $(price).html( quantity * Number($(card).find('#price').text()))
-            })
-
-
-
-            // console.log($(price).text());
-            // $(price).html( quantity * Number($(card).find('#price').text()));
-            // price.html( price.html() =+quantity * Number($(card).children('#price').text()));
-            // calculateTotal();
+            let card = $('#' + barcode);
+            let product = $('#i' + barcode);
+            let quantity = product.find('.changable').val();
+            let price = product.find('#cart_price');
+            $(price).html(quantity * Number(card.find('#price').text()))
+            console.log(quantity);
+            calculateTotal()
         }
 
 
-        function scanBarcode() {
+        window.scanBarcode = () => {
+            // let product = document.getElementById('i' + barcode)
+            // if (product) {
+            //     product.querySelector('.qty').value = +product.querySelector('.qty').value + 1;
+            //     let product_price = Number($(this).find('#price').text());
+            //     $('#cart_price').html( Number($('#cart_price').html()) + product_price )
+            // } else {
+            //     $('#cart_items').append(
+            //         `<tr id="i${barcode}">
+            //                     <td>
+            //                         <input type="hidden" name="barcode[]" value="${barcode}">
+            //                         ${$(this).find('.card-title').text()}
+            //                     </td>
+            //                     <td class="d-flex align-items-center">
+            //                         <input type="number" name='count[]' class="form-control-sm qty w-25" value="1" onchange="update(${barcode})"/>
+            //                         <button onclick="remove(${barcode})" type="button" class="btn btn-sm btn-danger ml-2"><i class="fas fa-trash"></i></button>
+            //                     </td>
+            //                     <td id="cart_price"> ${$(this).find('#price').text()} </td>
+            //             </tr>`)
+            //
+            // }
+            // calculateTotal()
             $('#myProducts .card').each(function () {
                 let card_id = $(this).attr('id');
                 let barcode = $('#barcode').val();
+                console.log(barcode)
                 let card = document.getElementById(barcode);
-                let product = document.getElementById('i' + barcode);
+                let product = document.getElementById('i' + barcode)
                 $(this).filter(function () {
                     if (card_id === barcode) {
                         if (product) {
-                            product.querySelector('.w-25').value = +product.querySelector('.w-25').value + 1;
-                            let price = product.querySelector('.text-right');
-                            price.innerHTML = +price.innerHTML + Number(card.querySelector('#price').innerHTML);
+                            // product.querySelector('.w-25').value = +product.querySelector('.w-25').value + 1;
+                            // let price = product.querySelector('.text-right');
+                            // price.innerHTML = +price.innerHTML + Number(card.querySelector('#price').innerHTML);
+                            product.querySelector('.qty').value = +product.querySelector('.qty').value + 1;
+                            let product_price = Number($(this).find('#price').text());
+                            $('#cart_price').html(Number($('#cart_price').html()) + product_price)
                             $('#barcode').val("");
+                            calculateTotal();
                         } else {
-                            console.log(this);
-                            $('#cart_items').append('<tr  id="i' + barcode + '"> <td><input type="hidden" name="barcode[]" value="' + barcode + '">' + $(this).find('.card-title').text() +
-                                '</td> <td> <label class="d-flex align-items-center"> ' +
-                                '<input type="number"  name="count[]" class="form-control form-control-sm w-25 qty" value="1"/> ' +
-                                '<a href="#" onclick="remove(' + barcode + ')" type="button" class="btn-sm btn-danger btn-delete ml-2" data-url=""><i class="fas fa-trash"></i></a> </label> </td>' +
-                                '<td id = "item_price" class="text-right">' + '' +
-                                +$(this).find('#price').text() +
-                                '</td> </tr>');
+                            $('#cart_items').append(
+                                `<tr id="i${barcode}">
+                                                <td>
+                                                    <input type="hidden" name="barcode[]" value="${barcode}">
+                                                    ${$(this).find('.card-title').text()}
+                                                </td>
+                                                <td class="d-flex align-items-center">
+                                                    <input type="number" name='count[]' class="form-control-sm qty w-25 changable" value="1" onchange="update('${barcode}')"  onkeyup="update('${barcode}')"/>
+                                                    <button onclick="remove('${barcode}')" type="button" class="btn btn-sm btn-danger ml-2"><i class="fas fa-trash"></i></button>
+                                                </td>
+                                                <td id="cart_price"> ${$(this).find('#price').text()} </td>
+                                        </tr>`)
                             $('#barcode').val("");
+                            calculateTotal();
+                            // console.log(this);
+                            // $('#cart_items').append('<tr  id="i' + barcode + '"> <td><input type="hidden" name="barcode[]" value="' + barcode + '">' + $(this).find('.card-title').text() +
+                            //     '</td> <td> <label class="d-flex align-items-center"> ' +
+                            //     '<input type="number"  name="count[]" class="form-control form-control-sm w-25 qty" value="1"/> ' +
+                            //     '<a href="#" onclick="remove(' + barcode + ')" type="button" class="btn-sm btn-danger btn-delete ml-2" data-url=""><i class="fas fa-trash"></i></a> </label> </td>' +
+                            //     '<td id = "item_price" class="text-right">' + '' +
+                            //     +$(this).find('#price').text() +
+                            //     '</td> </tr>');
+                            // $('#barcode').val("");
                         }
                     }
                 })
             })
 
-            calculateTotal();
+
         }
 
 
@@ -229,14 +261,14 @@
             let cart_items = $('#cart_items tr');
             let total = 0;
 
-            cart_items.each(function (){
+            cart_items.each(function () {
                 total = total + Number($(this).find('#cart_price').text())
             })
             $('.total').html(total);
         }
 
 
-        function myFunction() {
+        window.myFunction = () => {
             var input, filter, cards, cardContainer, title, i;
             input = document.getElementById("myFilter");
             filter = input.value.toUpperCase();
@@ -252,6 +284,6 @@
             }
         }
 
-    })
+    })  //
 </script>
 

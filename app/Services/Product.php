@@ -146,7 +146,8 @@ class Product
 
     }
     public static function company(){
-        $company = Company::where('user_id',auth()->user()->id);
+        $company = Company::where('user_id',auth()->user()->id)->first();
+
         if ($company){
             return $company->id;
         }else{

@@ -45,6 +45,7 @@ class CompanyController extends Controller
             $file_name = "" . $name . "." . $request->file('Company.logo')->extension();
             $request->file('Company.logo')->move(storage_path('company') , $file_name);
         }
+
         Company::create([
             'name' => $request->Company['name'],
             'logo' => "/company/".$file_name,

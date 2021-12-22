@@ -17,7 +17,7 @@
                                 <div class="col-6">
                                     <a href="{{ route('cashierCreate') }}" class="btn btn-xs btn-flat btn-success"
                                        style="float: right">
-                                        Add New
+                                        @lang('global.add')
                                     </a>
                                 </div>
                             </div>
@@ -28,16 +28,16 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>name</th>
-                                    <th>email</th>
+                                    <th>@lang('global.name')</th>
+                                    <th>@lang('global.login_email')</th>
 
                                 </tr>
                                 </thead>
                                 <tbody>
 
-                                @foreach($cashiers as $cashier)
+                                @foreach($cashiers as $index=>$cashier)
                                     <tr style=" align-items: center">
-                                        <td style="vertical-align: middle;">{{$cashier->id}}</td>
+                                        <td style="vertical-align: middle;">{{++$index}}</td>
                                         <td style="vertical-align: middle;">{{$cashier->name}}</td>
                                         <td style="vertical-align: middle;">{{$cashier->email}}</td>
 

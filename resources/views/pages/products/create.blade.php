@@ -149,31 +149,19 @@
     $(document).ready(function () {
         console.log(2)
         $('#nds').on('keyup',function(){
-            $('#sale_price').val( $('#nds').val() * $('#price').val());
+            var price =  parseInt($('#price').val());
+            var pr = price  * parseInt($('#nds').val())/100;
+            var total = price + pr
+            $('#sale_price').val(total);
         });
 
         bsCustomFileInput.init();
     });
 
-    // const nds = document.getElementById("nds");
-    // const salePrice = document.getElementById("sale_price");
-    // const price = document.getElementById("price");
-    //
-    // console.log(nds, price);
-    //
-    // function percentage(partitionVal, totalVal) {
-    //     return (100 * partitionVal) / totalVal;
-    // }
-    //
-    // nds.addEventListener("change", () => {
-    //     salePrice.innerHTML = percentage(Number(nds.value), Number(price.value));
-    // });
 </script>
 
 @section('js')
-
     <script src="{{ asset('plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
-
 
 @endsection
 

@@ -13,7 +13,7 @@
 <div class="card">
     <div class="card-header">
         <div class="row">
-            <div class="col-6">
+            <div class="col-5">
                 <form action="" method="get">
                     <div class="input-group">
                         <select class="form-control" name="key" id="key">
@@ -22,6 +22,8 @@
                             <option value="price">Price</option>
                             <option value="sale_price">Sale Price</option>
                             <option value="quantity">Quantity</option>
+                            <option value="inactive">Xarakatsiz</option>
+                            <option value="least">Kam qolgan tovarlar</option>
                         </select>
                         <input type="search" class="form-control" name="search"
                                placeholder="Search product"> <span class="input-group-btn">
@@ -32,8 +34,35 @@
                     </div>
                 </form>
             </div>
-            <div class="col-2"></div>
-            <div class="col-4">
+            <div class="col-5">
+                <form action="{{ url('import_excel') }}" method="POST" name="importform"
+                      enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        <div class="col-3">
+                            <a class="btn btn-primary" href="{{ asset('exemple.xlsx') }}"><i class="fas fa-download"></i> Example</a>
+                        </div>
+                        <div class="col-5">
+                            <div class="form-group">
+{{--                                <label for="file">File:</label>--}}
+                                <input id="file" type="file" name="file" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn btn-success">Import</button>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                <a class="btn btn-info" href="{{ url('export_excel') }}">Export</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </form>
+            </div>
+            <div class="col-2">
                 <a style="float: right" href="{{route('products.create')}}" class="btn btn-primary">Create Product</a>
             </div>
         </div>
@@ -50,6 +79,7 @@
                     <th>Sale price</th>
                     <th>Quantity</th>
                     <th>Status</th>
+                    <th>Xarakati</th>
                     <th>Created At</th>
 
                     <th>Actions</th>
@@ -79,9 +109,9 @@
                     </td>
                     <td>
                         @if($key)
-                            {{$product->quantity ?? '0.00'}}
+                            {{$product->part ?? '0.00'}}
                         @else
-                            {{$product->import->quantity ?? '0.00'}}
+                            {{$product->import->part ?? '0.00'}}
                         @endif
                     </td>
                     <td>
@@ -94,12 +124,13 @@
                             @endif
                         </span>
                     </td>
+                    <td>-</td>
                     <td>{{$product->created_at}}</td>
                     <td>
                         <a href="{{ route('products.edit', $product) }}" class="btn btn-primary"><i
                                 class="fas fa-edit"></i></a>
-                        <button class="btn btn-danger btn-delete" data-url="{{route('products.destroy', $product)}}"><i
-                                class="fas fa-trash"></i></button>
+                        <a href="{{route('productDelete', $product)}}" class="btn btn-danger btn-delete"><i
+                                class="fas fa-trash"></i></a>
                     </td>
                 </tr>
                 @endforeach

@@ -103,16 +103,16 @@
                 </a>
             </li>
         @endcan
-                @can('category.show')
-                <li class="nav-item">
-                    <a href="/category" class="nav-link {{ Request::is('category*') ? "active":'' }}">
-                        <i class="fa fa-list-alt" aria-hidden="true"></i>
-                        <p>
-                            @lang('cruds.category.title')
-                        </p>
-                    </a>
-                </li>
-                @endcan
+        @can('category.show')
+            <li class="nav-item">
+                <a href="/category" class="nav-link {{ Request::is('category*') ? "active":'' }}">
+                    <i class="fa fa-list-alt" aria-hidden="true"></i>
+                    <p>
+                        @lang('cruds.category.title')
+                    </p>
+                </a>
+            </li>
+        @endcan
         @can('import.show')
             <li class="nav-item">
                 <a href="{{ route('importIndex') }}" class="nav-link {{ Request::is('import*') ? "active":'' }}">
@@ -126,7 +126,7 @@
         <li class="nav-item has-treeview">
             <a href="{{ route('products.index') }}" class="nav-link ">
                 <i class="nav-icon fas fa-th-large"></i>
-                <p>Products</p>
+                <p> @lang('cruds.product.title')</p>
             </a>
         </li>
 
@@ -138,12 +138,27 @@
         </li>
 
 
-            <li class="nav-item has-treeview">
-                <a href="{{route('orders.index')}}" class="nav-link ">
-                    <i class="nav-icon fas fa-receipt"></i>
-                    <p>Orders</p>
-                </a>
-            </li>
+        <li class="nav-item has-treeview">
+            <a href="{{route('orders.index')}}" class="nav-link ">
+                <i class="nav-icon fas fa-receipt"></i>
+                <p>@lang('cruds.order.title')</p>
+            </a>
+        </li>
+
+
+        <li class="nav-item has-treeview">
+            <a href="#" class="nav-link ">
+                <i class="fas fa-users"></i>
+                <p>@lang('cruds.client.title')</p>
+            </a>
+        </li>
+
+        <li class="nav-item has-treeview">
+            <a href="#" class="nav-link ">
+                <i class="fas fa-tags"></i>
+                <p>@lang('cruds.discount.title')</p>
+            </a>
+        </li>
 
         <li class="nav-item has-treeview">
             <a href="" class="nav-link">

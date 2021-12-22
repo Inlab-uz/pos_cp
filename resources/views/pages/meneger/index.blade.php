@@ -12,12 +12,12 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-6">
-                                    <h3 class="card-title">Branch</h3>
+                                    <h3 class="card-title">@lang('cruds.manager.title_singular')</h3>
                                 </div>
                                 <div class="col-6">
                                     <a href="{{ route('menegerCreate') }}" class="btn btn-xs btn-flat btn-success"
                                        style="float: right">
-                                        Add New
+                                        @lang('global.add')
                                     </a>
                                 </div>
                             </div>
@@ -28,16 +28,16 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>name</th>
-                                    <th>email</th>
+                                    <th>@lang('global.name')</th>
+                                    <th>@lang('global.login_email')</th>
 
                                 </tr>
                                 </thead>
                                 <tbody>
 
-                                @foreach($menegers as $meneger)
+                                @foreach($menegers as $index=>$meneger)
                                     <tr style=" align-items: center">
-                                        <td style="vertical-align: middle;">{{$meneger->id}}</td>
+                                        <td style="vertical-align: middle;">{{++$index}}</td>
                                         <td style="vertical-align: middle;">{{$meneger->name}}</td>
                                         <td style="vertical-align: middle;">{{$meneger->email}}</td>
 

@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\Company;
 use App\Models\Import;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -19,27 +20,36 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-//        exec('composer require maatwebsite/excel');
-//        exec('php artisan make:controller ExportController');
 
-//        dd(auth()->user()->hasRole('Super Admin'));
         $key = false;
         $id = auth()->user()->id;
         $company = Company::where('user_id', $id)->first();
-        $category = Category::where('company_id', $company->id)->first();
+        $category = Category::select('id')->where('company_id', $company->id)->get();
         if (auth()->user()->hasRole('Super Admin')){
             $products = Product::latest()->paginate(10);
         }elseif (auth()->user()->hasRole('Administrator')){
-            $products = Product::where('category_id', $category->id)->with('import')->paginate(10);
+            $products = Product::whereIn('category_id', $category)->with('import')->paginate(10);
         }
         if ($request->search) {
             if ($request->key == 'price' || $request->key == 'sale_price' || $request->key == 'quantity'){
-                $products = Import::where($request->key, $request->search)->where('category_id', $category->id)->with('product')->paginate(500);
+                $products = Import::where($request->key, $request->search)->whereIn('category_id', $category)->with('product')->paginate(500);
                 $key = true;
                 return view('pages.products.index', compact('products', 'key'));
             }
-            $products = Product::where($request->key, 'LIKE', "%{$request->search}%")->where('category_id', $category->id)->with('import')->paginate(50);
+            if ($request->key == 'least'){
+                $products = Import::where('part','<', $request->search)->whereIn('category_id', $category)->with('product')->paginate(500);
+                $key = true;
+                return view('pages.products.index', compact('products', 'key'));
+            }
+            if ($request->key == 'inactive'){
+//                dd(date('Y-m-d', strtotime("-30 days")));
+                $products = Import::where( 'updated_at', '<', date('Y-m-d', strtotime("-".$request->search." days")))->whereIn('category_id', $category)->with('product')->paginate(500);
+                $key = true;
+                return view('pages.products.index', compact('products', 'key'));
+            }
+            $products = Product::where($request->key, 'LIKE', "%{$request->search}%")->whereIn('category_id', $category)->with('import')->paginate(50);
         }
+
 
         if (request()->wantsJson()) {
             return ProductResource::collection($products);
@@ -107,7 +117,10 @@ class ProductController extends Controller
         $product->barcode_number = $request->barcode_number;
         $import->price = $request->price;
         $import->sale_price = $request->sale_price;
-        $import->quantity = $request->quantity;
+        if ($import->part != $request->quantity){
+            $import->quantity = $request->quantity;
+            $import->part = $request->quantity;
+        }
         $product->status = $request->status;
         $product->update();
         $import->update();
@@ -129,7 +142,7 @@ class ProductController extends Controller
     }
 
 
-    public function destroy(Product $product)
+    public function destroy($product)
     {
         if ($product->image) {
             Storage::delete($product->image);
@@ -141,9 +154,19 @@ class ProductController extends Controller
         ]);
     }
 
+    public function delete(Product $product)
+    {
+        Import::where('product_id', $product->id)->delete();
+        if ($product->image) {
+            Storage::delete($product->image);
+        }
+        $product->delete();
+        success_message('Success, product have been deleted.');
+        return redirect()->back();
+    }
+
     public function search(Request $request)
     {
-//        dd(auth()->user()->hasRole('Super Admin'));
         $id = auth()->user()->id;
         if (auth()->user()->hasRole('Super Admin')){
             $products = Product::latest()->paginate(10);

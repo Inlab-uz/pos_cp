@@ -203,24 +203,12 @@ return [
         'fields'         => [
             'id'                       => 'ID',
             'id_helper'                => ' ',
-            'name'                     => 'Имя',
-            'name_helper'              => ' ',
-            'email'                    => 'Email',
-            'email_helper'             => ' ',
-            'email_verified_at'        => 'Email verified at',
-            'email_verified_at_helper' => ' ',
-            'password'                 => 'Пароль',
-            'password_helper'          => ' ',
-            'roles'                    => 'Роли',
-            'roles_helper'             => ' ',
-            'remember_token'           => 'Remember Token',
-            'remember_token_helper'    => ' ',
-            'created_at'               => 'Created at',
-            'created_at_helper'        => ' ',
-            'updated_at'               => 'Updated at',
-            'updated_at_helper'        => ' ',
-            'deleted_at'               => 'Deleted at',
-            'deleted_at_helper'        => ' ',
+            'name'                     => 'Название категории',
+            'parent'              => 'Верхний категория',
+            'company'                    => 'Компания',
+            'logo'             => 'Логотип',
+            'user'        => 'Создано пользователем',
+
         ],
     ],
 
@@ -248,6 +236,73 @@ return [
             'updated_at_helper'        => ' ',
             'deleted_at'               => 'Deleted at',
             'deleted_at_helper'        => ' ',
+        ],
+    ],
+
+    'product'           => [
+        'title'          => 'Продукты',
+        'title_singular' => 'Продукт',
+        'fields'         => [
+            'id'                       => 'ID',
+            'id_helper'                => ' ',
+            'name'                     => 'Имя',
+
+        ],
+    ],
+
+
+    'client'           => [
+        'title'          => 'Клиенты',
+        'title_singular' => 'Клиент',
+        'fields'         => [
+            'id'                       => 'ID',
+            'id_helper'                => ' ',
+            'name'                     => 'Имя',
+
+        ],
+    ],
+
+    'discount'           => [
+        'title'          => 'Скидки',
+        'title_singular' => 'Скидка',
+        'fields'         => [
+            'id'                       => 'ID',
+            'id_helper'                => ' ',
+            'name'                     => 'Имя',
+
+        ],
+    ],
+
+
+    'order'           => [
+        'title'          => 'Продажи',
+        'title_singular' => 'Продажа',
+        'fields'         => [
+            'id'                       => 'ID',
+            'id_helper'                => ' ',
+            'name'                     => 'Имя',
+
+        ],
+    ],
+
+    'pos'           => [
+        'title'          => 'POS',
+        'title_singular' => 'POS',
+        'fields'         => [
+            'barcode'                    => 'Штрих-код',
+            'cash'                       => 'Наличными',
+            'credit'                     => 'С картой',
+            'loan'                       => 'Заем',
+            'installment'                => 'Рассрочка',
+            'product_search'             => 'Поиск продуктов',
+            'product_name'               => 'Наименование товара',
+            'product_quantity'           => 'Количество',
+            'product_cost'                => 'Стоимость',
+            'cart_total'                => 'Всего',
+            'cancel'                      => 'Отмена',
+            'confirm'                    => 'Подтвердит',
+
+
         ],
     ],
 ];

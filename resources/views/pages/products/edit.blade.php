@@ -85,7 +85,7 @@
             <div class="form-group">
                 <label for="quantity">Quantity</label>
                 <input type="text" name="quantity" class="form-control @error('quantity') is-invalid @enderror"
-                    id="quantity" placeholder="Quantity" value="{{ old('quantity', $import->quantity) }}">
+                    id="quantity" placeholder="Quantity" value="{{ old('quantity', $import->part) }}">
                 @error('quantity')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>

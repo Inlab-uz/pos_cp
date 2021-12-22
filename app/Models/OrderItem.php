@@ -32,4 +32,9 @@ class OrderItem extends Model
             'discount' => $import->discount
         ]);
     }
+
+
+    public function product(){
+        return $this->belongsTo(Product::class);
+    }
 }

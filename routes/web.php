@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Blade\CategoryController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\Import_Export_Controller;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProductController;
@@ -122,6 +123,12 @@ Route::group(['middleware' => 'auth'],function (){
     Route::get('/category/view/{id}', [CategoryController::class, 'view']);
 
     Route::resource('products', ProductController::class);
+    Route::get('product/delete/{product}', [ProductController::class, 'delete'])->name('productDelete');
+
+    Route::get('import_export', [Import_Export_Controller::class, 'importExport']);
+    Route::post('import_excel', [Import_Export_Controller::class, 'import']);
+    Route::get('export_excel', [Import_Export_Controller::class, 'export']);
+
     Route::resource('orders', OrderController::class);
 
     Route::post('/order/create', [OrderController::class, 'create'])->name('order.create');
@@ -152,8 +159,6 @@ Route::get('/generate-barcode', [\App\Http\Controllers\HomeController::class, 'b
 Route::get('/generate-barcode', [\App\Http\Controllers\HomeController::class, 'barcodeTest'])->name('generate.barcode');
 
 Route::get('/clear-cache', function() {
-//    exec('php artisan make:controller Import_Export_Controller');
-    $exitCode = Artisan::call('make:controller Import_Export_Controller');
     $exitCode = Artisan::call('config:cache');
     $exitCode = Artisan::call('cache:clear');
     $exitCode = Artisan::call('route:clear');

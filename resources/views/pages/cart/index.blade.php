@@ -1,13 +1,14 @@
-@extends('layouts.admin')
+@extends('layouts.applite')
 
 @section('title', 'Open POS')
 @section('content-header', 'Open POS')
 
 @section('content')
 
-
+{{--    @dd(asset('consImages/invoice.pdf'))--}}
     <div class="container-fluid pt-3 ">
 
+        {{$name??"NO"}}
         <div class="row ">
             <div class="col-md-6 col-lg-5">
                 <form id="form_cart" onkeydown="return event.key !== 'Enter';" action="{{route("order.create")}}"
@@ -16,13 +17,15 @@
                     <div class="row mb-2">
                         <div class="col">
                             <input type="text" class="form-control" autoFocus onkeyup="scanBarcode()" id="barcode"
-                                   placeholder="Shtrix kod..."/>
+                                   placeholder="@lang('cruds.pos.fields.barcode')..."/>
 
                         </div>
                         <div class="col">
                             <select class="form-control" name="pay_type">
-                                <option value="1">Naqd</option>
-                                <option value="2">Plastik</option>
+                                <option value="1">@lang('cruds.pos.fields.cash')</option>
+                                <option value="2">@lang('cruds.pos.fields.credit')</option>
+                                <option disabled value="3">@lang('cruds.pos.fields.loan')</option>
+                                <option disabled value="4">@lang('cruds.pos.fields.installment')</option>
                                 </option>
                             </select>
                         </div>
@@ -35,9 +38,9 @@
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Maxsulot nomi</th>
-                                    <th>Soni</th>
-                                    <th class="text-right">Narxi</th>
+                                    <th>@lang('cruds.pos.fields.product_name')</th>
+                                    <th>@lang('cruds.pos.fields.product_quantity')</th>
+                                    <th class="text-right">@lang('cruds.pos.fields.product_cost')</th>
                                 </tr>
                                 </thead>
                                 <tbody id="cart_items">
@@ -49,7 +52,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col">Jami:</div>
+                        <div class="col">@lang('cruds.pos.fields.cart_total'):</div>
                         <div class="col total">
 
                         </div>
@@ -57,27 +60,33 @@
                     <div class="row">
                         <div class="col">
                             <button
-                                type="button"
-                                class="btn btn-danger btn-block">
-                                Bekor qilish
+                                    type="button"
+                                    class="btn btn-danger btn-block">
+                                @lang('cruds.pos.fields.cancel')
                             </button>
                         </div>
                         <div class="col">
                             <button id="btn_submit"
                                     type="submit"
                                     class="btn btn-primary btn-block">
-                                Tasdiqlash
+                                @lang('cruds.pos.fields.confirm')
                             </button>
                         </div>
+
+
+                        <button type="button" onclick="printJS('{{ asset('consImages/invoice01.pdf') }}')">
+                            Direct PRINT
+                        </button>
+
                     </div>
                 </form>
             </div>
             <div class="col-md-6 col-lg-7">
                 <div class="mb-2">
                     <input
-                        type="text"
-                        id="myFilter" class="form-control" onkeyup="myFunction()"
-                        placeholder="Maxsulot qidirish..."
+                            type="text"
+                            id="myFilter" class="form-control" onkeyup="myFunction()"
+                            placeholder=" @lang('cruds.pos.fields.product_search')..."
                     />
                 </div>
                 <div class="order-product">
@@ -88,7 +97,7 @@
                             <div class="col-md-4"
                                  title="Kelgan narxi: {{number_format($product['import']['price'],2)}}">
                                 <div class="card" id="{{$product['barcode_number']}}"
-                                    {{--                                     onclick="productClickAdd( {{$product['barcode_number']}})"--}}
+                                        {{--                                     onclick="productClickAdd( {{$product['barcode_number']}})"--}}
                                 >
                                     <div class="card-header">
 
@@ -98,7 +107,7 @@
                                             <!-- Buttons, labels, and many other things can be placed here! -->
                                             <!-- Here is a label for exa    mple -->
                                             <span
-                                                class="badge badge-primary">{{($product['status']==1)?"Bor":"Yo'q"}}</span>
+                                                    class="badge badge-primary">{{($product['status']==1)?"Bor":"Yo'q"}}</span>
                                         </div>
                                         <!-- /.card-tools -->
                                     </div>
@@ -118,7 +127,7 @@
                                     <!-- /.card-body -->
                                     <div class="card-footer">
                                         <i class="fas  fa-barcode"></i> {{$product["barcode_number"]}} <br> <i
-                                            class="fas  fa-box"></i> {{(int)$product['import']['part']}}
+                                                class="fas  fa-box"></i> {{(int)$product['import']['part']}}
                                     </div>
                                     <!-- /.card-footer -->
                                 </div>

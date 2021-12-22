@@ -7,7 +7,6 @@ use Barryvdh\DomPDF\Facade as PDF;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use Rawilk\Printing\Printing;
 
 class PDFController extends Controller
 {
@@ -20,17 +19,7 @@ class PDFController extends Controller
         $pdf = PDF::loadView('webPDF', compact('data', 'total'))->setPaper($customPaper, 'landscape')->stream('mobile.pdf');
 
         // List all printers
-      $printers =   Printing::printers();
-      dd($printers);
-
-// Find a specific printer
-  //      Printing::find($printerId);
-
-// Getting the configured default printer and printer ID
-   //     Printing::defaultPrinter();
-    //    Printing::defaultPrinterId();
-        return $pdf;
-        //return $pdf->setPaper('a4', 'landscape')->setWarnings(false)->stream('mobile.pdf');
+        return redirect()->back();
     }
 
     public function printCheque(

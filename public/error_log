@@ -1,0 +1,2 @@
+[22-Dec-2021 14:59:27 Asia/Tashkent] PHP Fatal error:  Cannot use PhpOffice\PhpSpreadsheet\Writer\Pdf as Pdf because the name is already in use in /home/m94284/public_html/inpos.uz/app/Http/Controllers/PDFController.php on line 10
+[22-Dec-2021 14:59:44 Asia/Tashkent] PHP Fatal error:  Cannot use PhpOffice\PhpSpreadsheet\Writer\Pdf as Pdf because the name is already in use in /home/m94284/public_html/inpos.uz/app/Http/Controllers/PDFController.php on line 10

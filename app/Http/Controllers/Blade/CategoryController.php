@@ -42,7 +42,7 @@ class CategoryController extends Controller
         }
 
         $branches = Branch::where('company_id', $company->id)->get();
-        $categories = Category::all();
+        $categories = Category::where('company_id', $company->id)->get();
 
         return view('pages.category.add', compact('categories', 'branches'));
     }
@@ -62,16 +62,18 @@ class CategoryController extends Controller
             error_message($v->errors()->first());
             return redirect()->back();
         } else {
-            $name = Str::random(40);
-
-            $file_name = "" . $name . "." . $request->file('Category.logo')->extension();
-            $request->file('Category.logo')->move(storage_path('category'), $file_name);
+            if ($request->file('Company.logo') != null) {
+                $name = Str::random(40);
+                $file_name = "" . $name . "." . $request->file('Category.logo')->extension();
+                $request->file('Category.logo')->move(storage_path('category'), $file_name);
+            } else
+                $file_name = null;
         }
 
         $company = auth()->user()->companies->first();
         $manager = Meneger::where("branch_id", $request->Category['branch_id'])->first();
 
-        $manager_id = $manager->id;
+        $manager_id = $manager->id ?? auth()->user()->id;
 
 
         Category::create([

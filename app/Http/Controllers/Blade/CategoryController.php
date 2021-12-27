@@ -34,15 +34,17 @@ class CategoryController extends Controller
     {
 
         $company = auth()->user()->companies->first();
+        if ($company == null) {
+            $categories = [];
+            $branches = [];
+            return view('pages.category.add', compact('categories', 'branches'))
+                ->with('error', 'Company not created');
+        }
 
         $branches = Branch::where('company_id', $company->id)->get();
-
-
         $categories = Category::all();
 
-        return view('pages.category.add', compact(
-            'categories', 'branches'
-        ));
+        return view('pages.category.add', compact('categories', 'branches'));
     }
 
     public function store(Request $request)
@@ -74,7 +76,7 @@ class CategoryController extends Controller
 
         Category::create([
             'name' => $request->Category['name'],
-            'parent_id' => $request->Category['parent_id']??0,
+            'parent_id' => $request->Category['parent_id'] ?? 0,
             'logo' => "/category/" . $file_name,
             'company_id' => $company->id,
             'manager_id' => $manager_id,

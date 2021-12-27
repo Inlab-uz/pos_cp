@@ -8,7 +8,6 @@
 {{--    @dd(asset('consImages/invoice.pdf'))--}}
     <div class="container-fluid pt-3 ">
 
-        {{$name??"NO"}}
         <div class="row ">
             <div class="col-md-6 col-lg-5">
                 <form id="form_cart" onkeydown="return event.key !== 'Enter';" action="{{route("order.create")}}"

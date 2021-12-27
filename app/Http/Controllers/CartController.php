@@ -21,18 +21,24 @@ class CartController extends Controller
 
 
         $company = auth()->user()->companies->first();
+        if ($company == null) {
+            $products = [];
+            return view('pages.cart.index', compact('products'));
+        }
+
         $categories = Category::where("company_id", $company->id)->get();
+
+
         $_products = [];
 
-
-        foreach ($categories as $index =>$category){
+        foreach ($categories as $index => $category) {
             $products = Product::where("category_id", $category->id)
                 ->with('import')
                 ->get()
                 ->whereNotNull('import')
                 ->toArray();
 
-            if (count($products) != 0){
+            if (count($products) != 0) {
                 $_products = array_merge($_products, $products);
             }
 
@@ -40,12 +46,6 @@ class CartController extends Controller
 
         $products = $_products;
 
-   /*     $_products = [];
-        foreach ($products as $product){
-            if ($product['import'] != null){
-                $_products[] = $product;
-            }
-        }*/
 
         return view('pages.cart.index', compact('products'));
     }

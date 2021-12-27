@@ -12,7 +12,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-6">
-                                    <h3 class="card-title">Category Add</h3>
+                                    <h3 class="card-title">@lang('cruds.category.fields.add')</h3>
                                 </div>
                                 <div class="col-6">
 
@@ -26,16 +26,16 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label for="categoryName">Name</label>
+                                            <label for="categoryName">@lang('cruds.category.fields.name')</label>
                                             <input type="text" class="form-control" id="categoryName"
-                                                   name="Category[name]" placeholder="Name of category">
+                                                   name="Category[name]" placeholder="@lang('cruds.category.fields.add_helper')">
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label for="categoryParent">Parent</label>
+                                            <label for="categoryParent">@lang('cruds.category.fields.parent')</label>
                                             <select class="form-control" name="Category[parent_id]" id="categoryParent">
-                                                <option value="">Select Parent</option>
+                                                <option value="">@lang('cruds.category.fields.parent_helper')</option>
                                                 @foreach($categories as $c)
                                                     <option value="{{$c->id}}">{{$c->name}}</option>
                                                 @endforeach
@@ -57,7 +57,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputFile">File input</label>
+                                    <label for="exampleInputFile">@lang('cruds.category.fields.category_image')</label>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="categoryLogo"
@@ -70,7 +70,7 @@
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">@lang('cruds.category.fields.create_category')</button>
                             </div>
                         </form>
                         <!-- /.card-body -->

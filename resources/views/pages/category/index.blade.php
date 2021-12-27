@@ -16,7 +16,7 @@
                                 </div>
                                 <div class="col-6">
                                     <a href="/category/add" class="btn btn-xs btn-flat btn-success" style="float: right">
-                                        Add New
+                                        @lang('cruds.category.fields.add')
                                     </a>
                                 </div>
                             </div>

@@ -242,7 +242,12 @@ return [
         'fields'         => [
             'id'                       => 'ID',
             'id_helper'                => ' ',
+            'image'                    => 'Изображение',
             'name'                     => 'Имя',
+            'state'                    => 'Статус ',
+            'movement'                 => 'Движение ',
+            'least_products'           => 'Наименее продуктов ',
+            'add'                      => 'Добавить товар',
 
         ],
     ],
@@ -294,9 +299,9 @@ return [
             'product_search'             => 'Поиск продуктов',
             'product_name'               => 'Наименование товара',
             'product_quantity'           => 'Количество',
-            'product_cost'                => 'Стоимость',
-            'cart_total'                => 'Всего',
-            'cancel'                      => 'Отмена',
+            'product_cost'               => 'Стоимость',
+            'cart_total'                 => 'Всего',
+            'cancel'                     => 'Отмена',
             'confirm'                    => 'Подтвердит',
 
 

@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\Blade\BranchController;
+use App\Http\Controllers\Blade\CashierController;
 use App\Http\Controllers\Blade\CategoryController;
+use App\Http\Controllers\Blade\MenagerController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Import_Export_Controller;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProductController;
@@ -40,42 +44,42 @@ Route::group(['middleware' => 'auth'],function (){
     Route::get('/all/orders',[App\Http\Controllers\Blade\OrderController::class,'dashboard'])->name('dashboard');
     // Import
     Route::get('/import/index',[App\Http\Controllers\ImportController::class,'index'])->name('importIndex');
-    Route::get('/import/create',[\App\Http\Controllers\ImportController::class,'create'])->name('importCreate');
-    Route::post('/import/store',[\App\Http\Controllers\ImportController::class,'store'])->name('importStore');
-    Route::get('/import/edit',[\App\Http\Controllers\ImportController::class,'edit'])->name('importEdit');
+    Route::get('/import/create',[ImportController::class,'create'])->name('importCreate');
+    Route::post('/import/store',[ImportController::class,'store'])->name('importStore');
+    Route::get('/import/edit',[ImportController::class,'edit'])->name('importEdit');
     // Company
-    Route::get('/company/index',[\App\Http\Controllers\Blade\CompanyController::class,'index'])->name('companyIndex');
-    Route::get('/company/create',[\App\Http\Controllers\Blade\CompanyController::class,'create'])->name('companyCreate');
-    Route::post('/company/store',[\App\Http\Controllers\Blade\CompanyController::class,'store'])->name('companyStore');
-    Route::get('/company/img',[\App\Http\Controllers\Blade\CompanyController::class,'img'])->name('companyImg');
-    Route::get('/company/edit/{id}',[\App\Http\Controllers\Blade\CompanyController::class,'edit'])->name('companyEdit');
-    Route::post('/company/update/{id}',[\App\Http\Controllers\Blade\CompanyController::class,'update'])->name('companyUpdate');
-    Route::get('/company/view/{id}',[\App\Http\Controllers\Blade\CompanyController::class,'view'])->name('companyView');
+    Route::get('/company/index',[CompanyController::class,'index'])->name('companyIndex');
+    Route::get('/company/create',[CompanyController::class,'create'])->name('companyCreate');
+    Route::post('/company/store',[CompanyController::class,'store'])->name('companyStore');
+    Route::get('/company/img',[CompanyController::class,'img'])->name('companyImg');
+    Route::get('/company/edit/{id}',[CompanyController::class,'edit'])->name('companyEdit');
+    Route::post('/company/update/{id}',[CompanyController::class,'update'])->name('companyUpdate');
+    Route::get('/company/view/{id}',[CompanyController::class,'view'])->name('companyView');
     // Branch
-    Route::get('/branch/index',[\App\Http\Controllers\Blade\BranchController::class,'index'])->name('branchIndex');
-    Route::get('/branch/create',[\App\Http\Controllers\Blade\BranchController::class,'create'])->name('branchCreate');
-    Route::post('/branch/store',[\App\Http\Controllers\Blade\BranchController::class,'store'])->name('branchStore');
-    Route::get('/branch/edit/{id}',[\App\Http\Controllers\Blade\BranchController::class,'edit'])->name('branchEdit');
-    Route::post('/branch/update/{id}',[\App\Http\Controllers\Blade\BranchController::class,'update'])->name('branchUpdate');
-    Route::get('/branch/view/{id}',[\App\Http\Controllers\Blade\BranchController::class,'view'])->name('branchView');
+    Route::get('/branch/index',[BranchController::class,'index'])->name('branchIndex');
+    Route::get('/branch/create',[BranchController::class,'create'])->name('branchCreate');
+    Route::post('/branch/store',[BranchController::class,'store'])->name('branchStore');
+    Route::get('/branch/edit/{id}',[BranchController::class,'edit'])->name('branchEdit');
+    Route::post('/branch/update/{id}',[BranchController::class,'update'])->name('branchUpdate');
+    Route::get('/branch/view/{id}',[BranchController::class,'view'])->name('branchView');
 //    MENEGER
-    Route::get('/meneger/index',[\App\Http\Controllers\Blade\MenagerController::class,'index'])->name('menegerIndex');
-    Route::get('/meneger/create',[\App\Http\Controllers\Blade\MenagerController::class,'create'])->name('menegerCreate');
-    Route::post('/meneger/store',[\App\Http\Controllers\Blade\MenagerController::class,'store'])->name('menegerStore');
-    Route::get('/meneger/edit/{id}',[\App\Http\Controllers\Blade\MenagerController::class,'edit'])->name('menegerEdit');
-    Route::post('/meneger/update/{id}',[\App\Http\Controllers\Blade\MenagerController::class,'update'])->name('menegerUpdate');
-    Route::any('/meneger/delete/{id}',[\App\Http\Controllers\Blade\MenagerController::class,'destroy'])->name('managerDelete');
+    Route::get('/meneger/index',[MenagerController::class,'index'])->name('menegerIndex');
+    Route::get('/meneger/create',[MenagerController::class,'create'])->name('menegerCreate');
+    Route::post('/meneger/store',[MenagerController::class,'store'])->name('menegerStore');
+    Route::get('/meneger/edit/{id}',[MenagerController::class,'edit'])->name('menegerEdit');
+    Route::post('/meneger/update/{id}',[MenagerController::class,'update'])->name('menegerUpdate');
+    Route::any('/meneger/delete/{id}',[MenagerController::class,'destroy'])->name('managerDelete');
 //    MENGER END
 //    =======================================
 //    CASHIER
-    Route::get('/cashier/index',[\App\Http\Controllers\Blade\CashierController::class,'index'])->name('cashierIndex');
-    Route::get('/cashier/create',[\App\Http\Controllers\Blade\CashierController::class,'create'])->name('cashierCreate');
-    Route::post('/cashier/store',[\App\Http\Controllers\Blade\CashierController::class,'store'])->name('cashierStore');
-    Route::get('/cashier/edit/{id}',[\App\Http\Controllers\Blade\CashierController::class,'edit'])->name('cashierEdit');
-    Route::post('/cashier/update/{id}',[\App\Http\Controllers\Blade\CashierController::class,'update'])->name('cashierUpdate');
-    Route::any('/cashier/delete/{id}',[\App\Http\Controllers\Blade\CashierController::class,'destroy'])->name('cashierDelete');
+    Route::get('/cashier/index',[CashierController::class,'index'])->name('cashierIndex');
+    Route::get('/cashier/create',[CashierController::class,'create'])->name('cashierCreate');
+    Route::post('/cashier/store',[CashierController::class,'store'])->name('cashierStore');
+    Route::get('/cashier/edit/{id}',[CashierController::class,'edit'])->name('cashierEdit');
+    Route::post('/cashier/update/{id}',[CashierController::class,'update'])->name('cashierUpdate');
+    Route::any('/cashier/delete/{id}',[CashierController::class,'destroy'])->name('cashierDelete');
 //    CASHIER END
-    Route::post('/import/barcode',[\App\Http\Controllers\ImportController::class,'getbarcode'])->name('getBarCode');
+    Route::post('/import/barcode',[ImportController::class,'getbarcode'])->name('getBarCode');
     // there should be graphics, diagrams about total conditions
     Route::get('/home', [HomeController::class,'index'])->name('home');
 
@@ -158,13 +162,6 @@ Route::get('/language/{lang}',function ($lang){
 Route::get('/generate-barcode', [\App\Http\Controllers\HomeController::class, 'barcodeTest'])->name('generate.barcode');
 Route::get('/generate-barcode', [\App\Http\Controllers\HomeController::class, 'barcodeTest'])->name('generate.barcode');
 
-Route::get('/clear-cache', function() {
-    $exitCode = Artisan::call('config:cache');
-    $exitCode = Artisan::call('cache:clear');
-    $exitCode = Artisan::call('route:clear');
-    $exitCode = Artisan::call('view:clear');
-    dd('success');
-});
 /*
 |--------------------------------------------------------------------------
 | This is the end of Blade (front-end) Routes

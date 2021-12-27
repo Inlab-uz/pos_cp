@@ -43,6 +43,7 @@
                         <div class="form-group">
                             <label for="barcode_number">@lang('cruds.pos.fields.barcode')</label>
                             <input type="text" name="barcode_number"
+                                   autofocus
                                    class="form-control @error('barcode_number') is-invalid @enderror"
                                    id="barcode_number" placeholder="xxxxxxxx" value="{{ old('barcode_number') }}">
                             @error('barcode_number')

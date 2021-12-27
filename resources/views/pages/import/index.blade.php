@@ -53,11 +53,11 @@
                                         <td>{{ $import->product->title }}</td>
                                         <td>Chegirma</td>
                                         <td>{{ $import->measure }}</td>
-                                        <td>{{ $import->quantity }}</td>
-                                        <td>{{ $import->part }}</td>
-                                        <td>{{ $import->price }}</td>
-                                        <td>{{ $import->sale_price }}</td>
+                                        <td>{{ number_format($import->quantity ,2, '.','' )}}</td>
+                                        <td>{{ number_format($import->part ,2, '.','' )}}</td>
+                                        <td>{{ number_format($import->price ,2, '.','' )}}</td>
                                         <td>{{ $import->nds }}</td>
+                                        <td>{{ number_format($import->sale_price ,2, '.','' )}}</td>
                                         <th>
                                             <a style="margin-left: 10px" href="{{route('importEdit',$import->id)}}" class="float-left fa fa-edit btn btn-info btn-sm" ></a>
                                         </th>

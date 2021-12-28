@@ -45,6 +45,18 @@
 
         </div>
 
+        <div class="card-header">
+            <h3 class="card-title">@lang('cruds.order.title_singular')</h3>
+
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-3"></div>
+                <div class="col-3"></div>
+                <div class="col-3"></div>
+            </div>
+
+        </div>
+
         <div class="card-body">
 
             <table class="table">
@@ -122,9 +134,9 @@
                             </div>
 
                             <a href="{{ route('orders.edit', $order) }}" class="btn btn-primary"><i
-                                        class="fas fa-edit"></i></a>
+                                    class="fas fa-edit"></i></a>
                             <button class="btn btn-danger btn-delete" data-url="{{route('orders.destroy', $order)}}"><i
-                                        class="fas fa-trash"></i></button>
+                                    class="fas fa-trash"></i></button>
                         </td>
                     </tr>
                 @endforeach
@@ -139,8 +151,11 @@
 
 @section('js')
     <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+
     <script>
         $(document).ready(function () {
+
+
             $(document).on('click', '.btn-delete', function () {
                 $this = $(this);
                 const swalWithBootstrapButtons = Swal.mixin({

@@ -41,7 +41,7 @@ Route::get('/', function (){
 // Web pages
 Route::group(['middleware' => 'auth'],function (){
 //    GETALLORDERS
-    Route::get('/all/orders',[App\Http\Controllers\Blade\OrderController::class,'dashboard'])->name('dashboard');
+    Route::get('/all/orders',[App\Http\Controllers\Blade\DashboardController::class,'dashboard'])->name('dashboard');
     // Import
     Route::get('/import/index',[App\Http\Controllers\ImportController::class,'index'])->name('importIndex');
     Route::get('/import/create',[ImportController::class,'create'])->name('importCreate');

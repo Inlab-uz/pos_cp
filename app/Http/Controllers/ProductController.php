@@ -24,26 +24,32 @@ class ProductController extends Controller
         $key = false;
         $id = auth()->user()->id;
         $company = Company::where('user_id', $id)->first();
+
+        if ($company == null)
+            // later need to implement error message
+            abort(404);
+
         $category = Category::select('id')->where('company_id', $company->id)->get();
-        if (auth()->user()->hasRole('Super Admin')){
+
+        if (auth()->user()->hasRole('Super Admin')) {
             $products = Product::latest()->paginate(10);
-        }elseif (auth()->user()->hasRole('Administrator')){
+        } elseif (auth()->user()->hasRole('Administrator')) {
             $products = Product::whereIn('category_id', $category)->with('import')->paginate(10);
         }
         if ($request->search) {
-            if ($request->key == 'price' || $request->key == 'sale_price' || $request->key == 'quantity'){
+            if ($request->key == 'price' || $request->key == 'sale_price' || $request->key == 'quantity') {
                 $products = Import::where($request->key, $request->search)->whereIn('category_id', $category)->with('product')->paginate(500);
                 $key = true;
                 return view('pages.products.index', compact('products', 'key'));
             }
-            if ($request->key == 'least'){
-                $products = Import::where('part','<', $request->search)->whereIn('category_id', $category)->with('product')->paginate(500);
+            if ($request->key == 'least') {
+                $products = Import::where('part', '<', $request->search)->whereIn('category_id', $category)->with('product')->paginate(500);
                 $key = true;
                 return view('pages.products.index', compact('products', 'key'));
             }
-            if ($request->key == 'inactive'){
+            if ($request->key == 'inactive') {
 //                dd(date('Y-m-d', strtotime("-30 days")));
-                $products = Import::where( 'updated_at', '<', date('Y-m-d', strtotime("-".$request->search." days")))->whereIn('category_id', $category)->with('product')->paginate(500);
+                $products = Import::where('updated_at', '<', date('Y-m-d', strtotime("-" . $request->search . " days")))->whereIn('category_id', $category)->with('product')->paginate(500);
                 $key = true;
                 return view('pages.products.index', compact('products', 'key'));
             }
@@ -105,19 +111,23 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $import = Import::where('product_id', $product->id)->first();
-        return view('pages.products.edit', compact('import', 'product'));
+        $company = auth()->user()->companies->first();
+
+        $categories = Category::where('company_id', $company->id)->get();
+        return view('pages.products.edit', compact('import', 'product', 'categories'));
     }
 
 
     public function update(ProductUpdateRequest $request, Product $product)
     {
+
         $import = Import::where('product_id', $product->id)->first();
-        $product->title = $request->name;
+        $product->title = $request->title;
         $product->description = $request->description;
         $product->barcode_number = $request->barcode_number;
         $import->price = $request->price;
         $import->sale_price = $request->sale_price;
-        if ($import->part != $request->quantity){
+        if ($import->part != $request->quantity) {
             $import->quantity = $request->quantity;
             $import->part = $request->quantity;
         }
@@ -168,9 +178,9 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         $id = auth()->user()->id;
-        if (auth()->user()->hasRole('Super Admin')){
+        if (auth()->user()->hasRole('Super Admin')) {
             $products = Product::latest()->paginate(10);
-        }elseif (auth()->user()->hasRole('Administrator')){
+        } elseif (auth()->user()->hasRole('Administrator')) {
             $company = Company::where('user_id', $id)->first();
             $category = Category::where('company_id', $company->id)->first();
             $products = Product::where('category_id', $category->id)->with('import')->paginate(10);

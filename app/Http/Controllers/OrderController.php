@@ -29,9 +29,13 @@ class OrderController extends Controller
         $id = auth()->user()->id;
         $company = Company::where('user_id', $id)->first();
 
+        if ($company == null)
+            // later need to implement error message
+            abort(404);
+
         $orders = $orders->where('company_id', $company->id);
 
-        $sale = $orders->where('created_at','like',date('Y-m-d', time())."%");
+        $sale = $orders->where('created_at', 'like', date('Y-m-d', time()) . "%");
 
         $count = $sale->count();
 

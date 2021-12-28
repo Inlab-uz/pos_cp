@@ -32,7 +32,14 @@ class OrderController extends Controller
 
         $user_id = auth()->user()->id;
         $company = Company::find($user_id);
+
+
+        if ($company == null)
+            // later need to implement error message
+            abort(404);
+
         $company_id = $company->id;
+
 
         $orders_price = DB::table('orders')
             ->where('company_id', '=', $company_id)

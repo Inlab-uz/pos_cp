@@ -158,9 +158,9 @@
 
     <script>
 
-        var labele = {!! json_encode($yearly['months']) !!};
-        var counte = {!! json_encode($yearly['counts']) !!};
-        var sume = {!! json_encode($yearly['sums']) !!};
+        var labele = {!! json_encode($yearly['months']??"") !!};
+        var counte = {!! json_encode($yearly['counts']??"") !!};
+        var sume = {!! json_encode($yearly['sums']??"") !!};
 
         console.log(labele)
         console.log(counte)

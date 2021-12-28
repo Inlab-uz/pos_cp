@@ -78,6 +78,8 @@ class OrderController extends Controller
     public function create(Request $request)
     {
         $cart = $request->all();
+
+        $cheque = $request->get('cheque');
         $company = Company::where('user_id', auth()->user()->id)->first();
         $cashier = Cashier::where('company_id', $company->id)->first();
         $branch = Branch::where('company_id', $company->id)->first();
@@ -129,7 +131,7 @@ class OrderController extends Controller
             $order->total_price = $summ;
             $order->save();
 
-            return (new PDFController)->generatePDF($data, $summ);
+            return (new PDFController)->generatePDF($data, $summ, $cheque);
         }
 
         return redirect('/cart');

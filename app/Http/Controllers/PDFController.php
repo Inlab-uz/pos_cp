@@ -7,19 +7,20 @@ use Barryvdh\DomPDF\Facade as PDF;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Storage;
 
 class PDFController extends Controller
 {
-    public function generatePDF($data, $total)
+    public function generatePDF($data, $total, $cheque)
     {
 
 
+        $customPaper = array(0, 0, 567.00, 150.80);
+        $pdf = PDF::loadView('webPDF', compact('data', 'total'))->setPaper($customPaper, 'landscape');
 
-        $customPaper = array(0,0,567.00,150.80);
-        $pdf = PDF::loadView('webPDF', compact('data', 'total'))->setPaper($customPaper, 'landscape')->stream('mobile.pdf');
-
+        Storage::put("public/pdf/$cheque.pdf", $pdf->output());
         // List all printers
-        return redirect()->back();
+        return redirect()->back()->with('has_cheque', $cheque . ".pdf");
     }
 
     public function printCheque(
@@ -56,9 +57,6 @@ class PDFController extends Controller
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadHTML($html);
         return $pdf->stream();
-
-
-
 
     }
 }

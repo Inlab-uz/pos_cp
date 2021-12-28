@@ -5,8 +5,13 @@
 
 @section('content')
 
-{{--    @dd(asset('consImages/invoice.pdf'))--}}
+
     <div class="container-fluid pt-3 ">
+
+        @php
+            $cheque = time();
+
+        @endphp
 
         <div class="row ">
             <div class="col-md-6 col-lg-5">
@@ -29,6 +34,8 @@
                             </select>
                         </div>
                     </div>
+
+                    <input hidden name="cheque" value="{{$cheque}}">
 
                     <div class="user-cart">
                         <div class="card">
@@ -59,23 +66,23 @@
                     <div class="row">
                         <div class="col">
                             <button
-                                    type="button"
-                                    class="btn btn-danger btn-block">
+                                type="button"
+                                class="btn btn-danger btn-block">
                                 @lang('cruds.pos.fields.cancel')
                             </button>
                         </div>
                         <div class="col">
                             <button id="btn_submit"
+{{--                            <button id="btn_submit" onclick="printJS('{{ Storage::url("public/pdf/$cheque.pdf") }}')"--}}
                                     type="submit"
                                     class="btn btn-primary btn-block">
                                 @lang('cruds.pos.fields.confirm')
                             </button>
                         </div>
 
-
-                        <button type="button" onclick="printJS('{{ asset('consImages/invoice01.pdf') }}')">
-                            Direct PRINT
-                        </button>
+                        {{-- <button type="button" >
+                             Direct PRINT
+                         </button>--}}
 
                     </div>
                 </form>
@@ -83,9 +90,9 @@
             <div class="col-md-6 col-lg-7">
                 <div class="mb-2">
                     <input
-                            type="text"
-                            id="myFilter" class="form-control" onkeyup="myFunction()"
-                            placeholder=" @lang('cruds.pos.fields.product_search')..."
+                        type="text"
+                        id="myFilter" class="form-control" onkeyup="myFunction()"
+                        placeholder=" @lang('cruds.pos.fields.product_search')..."
                     />
                 </div>
                 <div class="order-product">
@@ -96,7 +103,7 @@
                             <div class="col-md-4"
                                  title="Kelgan narxi: {{number_format($product['import']['price'],2)}}">
                                 <div class="card" id="{{$product['barcode_number']}}"
-                                        {{--                                     onclick="productClickAdd( {{$product['barcode_number']}})"--}}
+                                    {{--                                     onclick="productClickAdd( {{$product['barcode_number']}})"--}}
                                 >
                                     <div class="card-header">
 
@@ -106,7 +113,7 @@
                                             <!-- Buttons, labels, and many other things can be placed here! -->
                                             <!-- Here is a label for exa    mple -->
                                             <span
-                                                    class="badge badge-primary">{{($product['status']==1)?"Bor":"Yo'q"}}</span>
+                                                class="badge badge-primary">{{($product['status']==1)?"Bor":"Yo'q"}}</span>
                                         </div>
                                         <!-- /.card-tools -->
                                     </div>
@@ -126,7 +133,7 @@
                                     <!-- /.card-body -->
                                     <div class="card-footer">
                                         <i class="fas  fa-barcode"></i> {{$product["barcode_number"]}} <br> <i
-                                                class="fas  fa-box"></i> {{(int)$product['import']['part']}}
+                                            class="fas  fa-box"></i> {{(int)$product['import']['part']}}
                                     </div>
                                     <!-- /.card-footer -->
                                 </div>
@@ -146,6 +153,7 @@
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
 <script>
     $(document).ready(function () {
+
 
         $('#myProducts .card').each(function () {
             $(this).click(function () {
@@ -293,5 +301,14 @@
         }
 
     })  //
+</script>
+
+<script>
+    $(document).ready(function () {
+        if ({{session()->get( 'has_cheque' ) !=null}}) {
+            printJS('{{ Storage::url("public/pdf/".session()->get( 'has_cheque' )) }}')
+        }
+
+    });
 </script>
 

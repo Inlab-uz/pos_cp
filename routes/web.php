@@ -140,10 +140,13 @@ Route::group(['middleware' => 'auth'],function (){
 
 
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+
     Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
     Route::post('/cart/change-qty', [CartController::class, 'changeQty']);
     Route::any('/cart/delete/{product_id}', [CartController::class, 'delete'])->name('cart.delete');
     Route::delete('/cart/empty', [CartController::class, 'empty']);
+
+    Route::get('/v2cart', [CartController::class, 'v2index'])->name('cart.v2index');
 
 });
 

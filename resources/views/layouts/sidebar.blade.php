@@ -137,6 +137,12 @@
             </a>
         </li>
 
+        <li class="nav-item has-treeview">
+            <a href="{{route('cart.v2index')}}" class="nav-link ">
+                <i class="nav-icon fas fa-cart-plus"></i>
+                <p>Open POS 2.0 <sup>BETA</sup></p>
+            </a>
+        </li>
 
         <li class="nav-item has-treeview">
             <a href="{{route('orders.index')}}" class="nav-link ">

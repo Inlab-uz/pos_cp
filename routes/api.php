@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Mobile\AuthController;
 use App\Http\Controllers\Mobile\CashierController;
@@ -61,6 +62,14 @@ Route::group(['prefix' => 'mobile', 'middleware' => 'auth:sanctum'], function ()
     Route::post('/update-product', [ManagerController::class, 'updateProduct']);
     // Telegram
     Route::get('search-product', [MobileResponseController::class, 'searchProductByName']);
+});
+
+
+Route::group(['prefix' => 'web'], function () {
+
+    Route::post('/get-product/by-barcode/{cid}/{barcode}', [CartController::class, 'v2searchBarcode']);
+    Route::post('/get-product/by-name/{cid}/{key}', [CartController::class, 'v2searchProduct']);
+
 });
 Route::post('/upload', [ManagerController::class, 'uploadBase64Img']);
 Route::post('/decode', [ManagerController::class, 'decodeBase64Img']);
